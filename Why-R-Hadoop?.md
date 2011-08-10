@@ -1,0 +1,1 @@
+Some introductory text on why R/Hadoop can do real work
