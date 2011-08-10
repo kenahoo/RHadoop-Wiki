@@ -2,6 +2,7 @@
 ### * [[RevoHStream]]
 ### * [[RevoHDFS]]
 ### * [[RevoHBase]]
+### * [[Downloads]]
 ### * [[How to contribute to this project]]
 ### * [[Roadmap]]
 ## News
