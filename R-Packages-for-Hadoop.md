@@ -1,4 +1,4 @@
-### * Why R/Hadoop?
+### * [Why R/Hadoop?}
 ### * RevoHStream
 ### * RevoHDFS
 ### * RevoHBase
