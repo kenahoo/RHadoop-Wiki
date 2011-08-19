@@ -1,8 +1,8 @@
 # The theory
 It’s actually harder to explain it than to do it but here is an attempt to define what it takes to write a composable map reduce job.
 The revoMapReduce function is designed to allow people to chain jobs such as in 
-    revoMapReduce(input = 
-        revoMapReduce(input = …, 
+    revoMapReduce(input =
+        revoMapReduce(input = …,
                       map = somefilter(k,v) …)
                   map = someotherfilter(k,v) …)
 Suppose that, according to accepted software practices, we want to encapsulate a useful job into a new function while preserving its composability as in the above example. What properties does your composable job need to satisfy?
