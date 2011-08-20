@@ -1,4 +1,5 @@
 # The theory
+![kmeans animation](2011-08-11\ 13\:23\:54.gif)
 It’s actually harder to explain it than to do it but here is an attempt to define what it takes to write a composable map reduce job.
 The revoMapReduce function is designed to allow people to chain jobs such as in 
 ```
