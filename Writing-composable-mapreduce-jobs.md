@@ -1,3 +1,4 @@
+![conn comp animation](http://s1134.photobucket.com/albums/m613/piccolbo/?action=view&current=randmate.gif)
 # The theory
 ![kmeans animation](2011-08-11\ 13\:23\:54.gif)
 It’s actually harder to explain it than to do it but here is an attempt to define what it takes to write a composable map reduce job.
