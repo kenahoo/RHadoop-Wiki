@@ -36,7 +36,7 @@ First we move the data into HDFS with `rhwrite`. As we said earlier, this is not
 ## Wordcount
 
 The word count program has become a sort of "hello world" of the mapreduce world. For a review of the same task accomplished in several languages but always for map reduce, see this [blog entry](http://blog.piccolboni.info/2011/04/map-reduce-algorithm-for-connected.html).
-[[someimage.gif]]
+
 
     rhwordcount = function(input, output = NULL, **pattern** = " ") {
         revoMapReduce(input = input ,
@@ -319,6 +319,7 @@ fire up rhkmeans
 
 
 with a little extra work you can even get pretty visualizations like this one
+[[kmeans.gif]]
 
 Linear Least Squares
 
