@@ -1,46 +1,22 @@
+# Map Reduce in R
+## with Revolution RevoHStream
 
-Map Reduce in R
+## My first mapreduce job
 
-with Revolution RevoHStream
-
-My first map-reduce job
-
+Conceptually, mapreduce is not very different than a combination of lapplys and a tapply: transform elements of a list, comput an index -- key in mapreduce jargon -- and process the groups thus defined. Let's start with the simplext example, from a simple lapply:
+ 
     small.ints = 1:10
     out = lapply(small.ints, function(x) x^2)
 
+The example is trivial, just computing the first 10 squares, but we just want to get the basics here, there are interesting examples later on. Now to the mapreduce equivalent:
+
     small.ints = rhwrite(1:10)
     out = revoMapReduce(input = small.ints, map = function(k,v) keyval(k^2))
-    rhread(out)
-
-
-
-
-revoMapReduce(input = out, ...)
-
-
-
-
-(reveal more code on empty lines)
-
-We start by showing how using RevoHStream, is, at its simplest level, not much different from writing a lapply.
-
-
-
-
-Here you are seeing the simplest of lapplys, computing the first 10 squares. 
-
-Now you want to do this in map reduce. You need to get your data onto HDFS, because that's the data storage behind hadoop map reduce.
-
-
-
-
-It takes just this one line. Of course this works because 1:10 fits in memory, which by definition won't be the case for big data, but rhwrite is great to generate test data and other support uses.
-
-
-
-
-Then the main call, which replaces lapply with revoMapReduce and it's better to name the arguments because the interface is a bit more complicated than lapply when you are using it to the full power, but defaults are helpful. Another difference is that the map function takes a key and a value a returns a pair, returned by the keyval function. In this case we are using only the key, but the general case needs both. So we have small differences but the complexity is about the same, and you have access to the power of hadoop.
-
+	
+And this is it. There are some difference that we will go through, but the first thing to notice is that it isn't all that different, and just two lines of code. There are some superficial differences and some more fundamental ones. The first line puts the data into HDFS, where the bulk of the data has to be for mapreduce to operate on. Of course, we are unlikely to write out big data with `rhwrite`, certainly not in a scalable way. `rhwrite` is nontheless very useful for a variety of niche or not so niche uses like writing test cases, REPL and HPC-type uses of mapreduce -- that is, small data but big CPU demands. `rhwrite` can put the data in a file of your own choosing, but if you don't specify one it will create tempfiles and clean them up when done. The return value is a an object that you can use as a "big data" object. You can assign it to variables, pass it to functions, mapreduce jobs or read it back in. Now onto the second line. It has `revoMapReduce` replace `lapply`. We prefer named arguments with `revoMapReduce` because there's quite a few possible arguments, but one could do otherwise. The input is the variable `out` which contains the output of `rhwrite`, that is our small number data set in its HDFS version, but there are other choices as we will see. The function to apply, which is called a map function in contrast with the reduce function, which we are not using here, is a regular R function with a few constraints:
+1. It's a function of two arguments, a key and a value
+1. It returns a key value pair as returned by the helper function `keyval`, which takes any one or two R objects as arguments -- the second defaults to `NULL`; you can also return a list of such objects, or `NULL`.
+In this example, we are not using the value at all, only the key, but we still need both to support the general mapreduce case. Ther return value is a big data object just like the one returned by `rhwrite`, so you can read it into memory with `rhread(out)` or use it as input to other jobs as in `revoMapReduce(input = out, ...)`. `rhread` is the complement to `rhwrite`. It returns a list of key-value pairs, which is the most general data type that mapreduce can handle. If you prefer data frames to lists, a data frame interface is in the works which is of course not fully general but covers very important use cases.
 
 
 
