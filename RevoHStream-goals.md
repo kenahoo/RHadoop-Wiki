@@ -2,7 +2,7 @@
 1. For map-reduce programmers: 
 1. the easiest, most productive, most elegant  way to write map reduce jobs. One-two orders of magnitude less code than Java. Readable, reusable, extensible.
 2. A great prototyping, executable spec and research language and, to my knowledge, the only interpreted one.
-3. General, no crippled language trap. Any map reduce algorithm can be implemented with this package.
+3. General, no crippled language trap. Any map reduce algorithm can be implemented with this package. With Alan Kay: "Simple things should be simple, complex things should be possible."
 1. For R programmers: 
 1. a way to access the Map Reduce programming paradigm.
 2. a way to work on big data sets in a way that is “natural” or “R-like”.
