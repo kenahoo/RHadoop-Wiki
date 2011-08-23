@@ -70,7 +70,7 @@ rhLogisticRegression = function(input, iterations, dims, alpha){
             combine = T))
         plane = plane + alpha * gradient&#91;&#91;1&#93;&#93;$val }
     plane }
-
+</pre>
     
 
 
