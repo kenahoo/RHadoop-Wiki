@@ -17,13 +17,13 @@ composable job need to satisfy?
 or `rhread`  call:
 
 <pre> 
-    reusableJob = function(input, …) {
-        some work here
-        revoMapReduce(input = input, ...)}
+reusableJob = function(input, …) {
+    some work here
+    revoMapReduce(input = input, ...)}
 </pre>		
 
 Since lists of such input objects are also allowed, you could in principle do manipulations on those lists, but not on the individual objects, for instance:
-    
+
 <pre>
 multiInputReusableJob = function(inputs = c(...)) {
     mergeJob(input = lapply(inputs,
@@ -32,7 +32,7 @@ multiInputReusableJob = function(inputs = c(...)) {
 <li> accept an output option with a default of NULL and pass it onto the last of the jobs your are going to execute
 <li> Return as output the output of the last job your function executes, or a vector thereof as in the previous example.
 <li> Alternatively to the last two points, rhread the results and return
-    them when their size makes it feasible and preferable. 	
+them when their size makes it feasible and preferable. 	
 	This way the results can be passed to other R functions, not to other jobs, but the jobs can still be used in complex expressions and assignments and so are considered composable.
 <li> accept a profilenodes option with a default of FALSE and pass it onto any job you may execute
 </ol>
