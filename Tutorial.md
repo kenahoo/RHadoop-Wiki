@@ -61,18 +61,22 @@ We are going to define one function that encapsulates this job. This may not loo
 
 Now onto an example from supervised learning, specifically logistic regression by gradient descent. Again we are going to create a 
 
-<ol>
-<li><pre>rhLogisticRegression = function(input, iterations, dims, alpha){</li></pre>
-<li><pre>    <b>plane</b> = rep(0, dims) </li></pre>
-<li><pre>    <b>g</b> = function(z) 1/(1 + exp(-z)) </li></pre>
-<li><pre>    for (i in 1:iterations) {</li></pre>
-<li><pre>        gradient = rhread(revoMapReduce(input,</li></pre>
-<li><pre>            map = function(k, v) keyval(1, v$y\*v$x\*<b>g</b> (-v$y\*(<b>plane</b> %\*% v$x))),</li></pre>
-<li><pre>            reduce = function(k, vv) keyval(k,apply(do.call(rbind,vv),2,sum)),</li></pre>
-<li><pre>            combine = T)) </li></pre>
-<li><pre>        plane = plane + alpha * gradient&#91;&#91;1&#93;&#93;$val }</li></pre>
-<li><pre>    plane }</li></pre>
-</ol>
+<pre>
+rhLogisticRegression = function(input, iterations, dims, alpha){
+    <b>plane</b> = rep(0, dims)
+    <b>g</b> = function(z) 1/(1 + exp(-z))
+    for (i in 1:iterations) {
+        gradient = rhread(revoMapReduce(input,
+            map = function(k, v) keyval(1, v$y\*v$x\*<b>g</b> (-v$y\*(<b>plane</b> %\*% v$x))),
+            reduce = function(k, vv) keyval(k,apply(do.call(rbind,vv),2,sum)),
+            combine = T))
+        plane = plane + alpha * gradient&#91;&#91;1&#93;&#93;$val }
+    plane }
+</pre>
+    
+
+
+
 
 
 
