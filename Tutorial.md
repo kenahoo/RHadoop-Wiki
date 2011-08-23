@@ -12,16 +12,38 @@ The example is trivial, just computing the first 10 squares, but we just want to
     small.ints = rhwrite(1:10)
     out = revoMapReduce(input = small.ints, map = function(k,v) keyval(k^2))
 	
-And this is it. There are some difference that we will go through, but the first thing to notice is that it isn't all that different, and just two lines of code. There are some superficial differences and some more fundamental ones. The first line puts the data into HDFS, where the bulk of the data has to be for mapreduce to operate on. Of course, we are unlikely to write out big data with `rhwrite`, certainly not in a scalable way. `rhwrite` is nontheless very useful for a variety of niche or not so niche uses like writing test cases, REPL and HPC-type uses of mapreduce -- that is, small data but big CPU demands. `rhwrite` can put the data in a file of your own choosing, but if you don't specify one it will create tempfiles and clean them up when done. The return value is a an object that you can use as a "big data" object. You can assign it to variables, pass it to functions, mapreduce jobs or read it back in. Now onto the second line. It has `revoMapReduce` replace `lapply`. We prefer named arguments with `revoMapReduce` because there's quite a few possible arguments, but one could do otherwise. The input is the variable `out` which contains the output of `rhwrite`, that is our small number data set in its HDFS version, but there are other choices as we will see. The function to apply, which is called a map function in contrast with the reduce function, which we are not using here, is a regular R function with a few constraints:
-1. It's a function of two arguments, a key and a value
-1. It returns a key value pair as returned by the helper function `keyval`, which takes any one or two R objects as arguments -- the second defaults to `NULL`; you can also return a list of such objects, or `NULL`.
-In this example, we are not using the value at all, only the key, but we still need both to support the general mapreduce case. Ther return value is a big data object just like the one returned by `rhwrite`, so you can read it into memory with `rhread(out)` or use it as input to other jobs as in `revoMapReduce(input = out, ...)`. `rhread` is the complement to `rhwrite`. It returns a list of key-value pairs, which is the most general data type that mapreduce can handle. If you prefer data frames to lists, a data frame interface is in the works which is of course not fully general but covers very important use cases.
+And this is it. There are some difference that we will go through, but the first thing to notice is that it isn't all that different, and
+just two lines of code. There are some superficial differences and some more fundamental ones. The first line puts the data into HDFS, where
+the bulk of the data has to be for mapreduce to operate on. Of course, we are unlikely to write out big data with `rhwrite`, certainly not
+in a scalable way. `rhwrite` is nontheless very useful for a variety of niche or not so niche uses like writing test cases, REPL and
+HPC-type uses of mapreduce -- that is, small data but big CPU demands. `rhwrite` can put the data in a file of your own choosing, but if you
+don't specify one it will create tempfiles and clean them up when done. The return value is a an object that you can use as a "big data"
+object. You can assign it to variables, pass it to functions, mapreduce jobs or read it back in. Now onto the second line. It has
+`revoMapReduce` replace `lapply`. We prefer named arguments with `revoMapReduce` because there's quite a few possible arguments, but one
+could do otherwise. The input is the variable `out` which contains the output of `rhwrite`, that is our small number data set in its HDFS
+version, but there are other choices as we will see. The function to apply, which is called a map function in contrast with the reduce
+function, which we are not using here, is a regular R function with a few constraints:
 
-The return value is an object, actually a closure, and you can pass it as input to other jobs or read it into memory (watch out, not good for big data) with rhread. `rhread` is the dual of `rhwrite`. It returns a list of key value pairs, which is the most general data type that mapreduce can handle. If you prefer data frames to lists, we are working on a simplified interface that accepts and returns data frames instead of lists of pairs, which will cover many  many important use cases. `rhread` is useful in defining practical map reduce algorithms whenever a mapreduce job produces something of reasonable size, like a summary, that can fit in memory and needs to be inspected to decide on the next steps, or to visualize it.
+1. It's a function of two arguments, a key and a value
+1. It returns a key value pair as returned by the helper function `keyval`, which takes any one or two R objects as arguments -- the second defaults
+to `NULL`; you can also return a list of such objects, or `NULL`.
+In this example, we are not using the value at all, only the key, but we still need both to support the general mapreduce case. Ther return value is a 
+big data object just like the one returned by `rhwrite`, so you can read it into memory with `rhread(out)` or use it as input to other jobs as in 
+`revoMapReduce(input = out, ...)`. `rhread` is the complement to `rhwrite`. It returns a list of key-value pairs, which is the most general data type
+that mapreduce can handle. If you prefer data frames to lists, a data frame interface is in the works which is of course not fully general but covers 
+very important use cases.
+
+The return value is an object, actually a closure, and you can pass it as input to other jobs or read it into memory (watch out, not good
+for big data) with rhread. `rhread` is the dual of `rhwrite`. It returns a list of key value pairs, which is the most general data type that
+mapreduce can handle. If you prefer data frames to lists, we are working on a simplified interface that accepts and returns data frames
+instead of lists of pairs, which will cover many many important use cases. `rhread` is useful in defining practical map reduce algorithms
+whenever a mapreduce job produces something of reasonable size, like a summary, that can fit in memory and needs to be inspected to decide
+on the next steps, or to visualize it.
 
 ##My second map-reduce job
 
-We've just created a simple job that was logically equivalent to a lapply but can run on big data. That job had only a map. Now to the reduce part. The closest equivalent in R I think is a tapply. So here is the example from the R docs:
+We've just created a simple job that was logically equivalent to a lapply but can run on big data. That job had only a map. Now to the
+reduce part. The closest equivalent in R I think is a tapply. So here is the example from the R docs:
 
     groups = rbinom(32, n = 50, prob = 0.4)
     tapply(groups, groups, length)
@@ -31,11 +53,23 @@ This creates a sample from the binomial and counts how many times each outcome o
     groups = rhwrite(groups)
     revoMapReduce(input = groups, reduce = function(k,vv) keyval(k, length(vv)))
 
-First we move the data into HDFS with `rhwrite`. As we said earlier, this is not the normal way in which big data will enter HDFS; it is normally the responsibility of scalable data collection systems such as Flume or Sqoop. In that case we would just specify the HDFS path to the data as input to `revoMapReduce`. But in this case the input is the variable `groups` which points to where the data is temporarily stored, and the naming and clean up is taken care of for you. All you need to know is how you can use it. There isn't a map function, so it is set to default which is like an identity but consistent with the map requirements, that is `function(k,v) keyval(k,v)`. The reduce function takes two arguments, one is a key and the other is a list of all the values associated with that key. Like in the map case, the reduce function can return `NULL`, a key value pair as generated by the function `keyval` or a list thereof. The default is somewhat equivalent to an identity function, under the constraints of a reduce function, that is `function(k, vv) lapply(vv, function(v) keyval(k,v))`. In this case they key is one possible outcome of the binomial and the values are all `NULL` and the only important thing is how many there are, so `length` gets the job done. Looking back at this second example, there are some small differences with `tapply` but the overall complexity is very similar.
+First we move the data into HDFS with `rhwrite`. As we said earlier, this is not the normal way in which big data will enter HDFS; it is
+normally the responsibility of scalable data collection systems such as Flume or Sqoop. In that case we would just specify the HDFS path to
+the data as input to `revoMapReduce`. But in this case the input is the variable `groups` which points to where the data is temporarily
+stored, and the naming and clean up is taken care of for you. All you need to know is how you can use it. There isn't a map function, so it
+is set to default which is like an identity but consistent with the map requirements, that is `function(k,v) keyval(k,v)`. The reduce
+function takes two arguments, one is a key and the other is a list of all the values associated with that key. Like in the map case, the
+reduce function can return `NULL`, a key value pair as generated by the function `keyval` or a list thereof. The default is somewhat
+equivalent to an identity function, under the constraints of a reduce function, that is `function(k, vv) lapply(vv, function(v)
+keyval(k,v))`. In this case they key is one possible outcome of the binomial and the values are all `NULL` and the only important thing is
+how many there are, so `length` gets the job done. Looking back at this second example, there are some small differences with `tapply` but
+the overall complexity is very similar.
 
 ## Wordcount
 
-The word count program has become a sort of "hello world" of the mapreduce world. For a review of how the same task can be accomplished in several languages, but always for map reduce, see this [blog entry](http://blog.piccolboni.info/2011/04/map-reduce-algorithm-for-connected.html).
+The word count program has become a sort of "hello world" of the mapreduce world. For a review of how the same task can be accomplished in
+several languages, but always for map reduce, see this
+[blog entry](http://blog.piccolboni.info/2011/04/map-reduce-algorithm-for-connected.html).
 
 <pre>
 rhwordcount = function(input, output = NULL, <strong>pattern</strong> = " ") {
@@ -49,7 +83,24 @@ rhwordcount = function(input, output = NULL, <strong>pattern</strong> = " ") {
          combine = T)}
 </pre>
 
-We are going to define one function that encapsulates this job. This may not look like a big deal but it is important. Our main goal was not simply to make it easy to run a MR job but to make MR jobs first class citizen of the R environment and to make it easy to create abstractions based on them. For instance, we wanted to be able to assign the result of a MR job to a variable and to create complex expressions including MR jobs. We take the first step here by creating a function that is itself a job, can be chained with other jobs, executed in a loop etc. Let's now look at the signature. There is an input and optional output and a pattern that defines what a word is for the user. The implementation is just a single call to `revoMapReduce`. Therein, the input can be an HDFS path, the return value of `rhwrite` or another job or a list thereof -- potentially, a mix of all three cases, as in `list("a/long/path", rhwrite(...), revoMapReduce(...), ...)`. The output can be an HDFS path but if it is `NULL` some temporary file will be generated and wrapped in a big data object like the ones generated by `rhwrite`. In either event, the job will return the information about the output, either the path or the big data object. So we simply pass along the input and output of the`rhwordcount` function to the `revoMapReduce` call and return whatever it returns. That way the new function also behaves like a proper MR job -- almost, more details [here](Writing-composable-map-reduce-jobs). The `textinputformat` allows us to specify a parser for the input. The default is a JSON-based format that can cover many different use cases. In this case we just want to read a text file, so the `rawtextinputformat` will create key value pairs with a `NULL`key and a line of text as value. You can easily specify your own input and output formats and even support binary formats with the arguments `inputformat` and `outputformat`, but those take Java classes as values. The map function, as we know already, takes two arguments, a key and a value. The key here is not important, indeed always `NULL`. The value contains one line of text, which gets split according to a pattern. Here you can see that pattern is accessible in the mapper without any particular work on the programmer side and according to normal R scoping rules. In fact this is no different or harder than writing a lapply - tapply combination for the same task.
+We are going to define one function that encapsulates this job. This may not look like a big deal but it is important. Our main goal was not
+simply to make it easy to run a MR job but to make MR jobs first class citizen of the R environment and to make it easy to create
+abstractions based on them. For instance, we wanted to be able to assign the result of a MR job to a variable and to create complex
+expressions including MR jobs. We take the first step here by creating a function that is itself a job, can be chained with other jobs,
+executed in a loop etc. Let's now look at the signature. There is an input and optional output and a pattern that defines what a word is for
+the user. The implementation is just a single call to `revoMapReduce`. Therein, the input can be an HDFS path, the return value of `rhwrite`
+or another job or a list thereof -- potentially, a mix of all three cases, as in `list("a/long/path", rhwrite(...), revoMapReduce(...),
+...)`. The output can be an HDFS path but if it is `NULL` some temporary file will be generated and wrapped in a big data object like the
+ones generated by `rhwrite`. In either event, the job will return the information about the output, either the path or the big data object.
+So we simply pass along the input and output of the`rhwordcount` function to the `revoMapReduce` call and return whatever it returns. That
+way the new function also behaves like a proper MR job -- almost, more details [here](Writing-composable-mapreduce-jobs). The
+`textinputformat` allows us to specify a parser for the input. The default is a JSON-based format that can cover many different use cases.
+In this case we just want to read a text file, so the `rawtextinputformat` will create key value pairs with a `NULL`key and a line of text
+as value. You can easily specify your own input and output formats and even support binary formats with the arguments `inputformat` and
+`outputformat`, but those take Java classes as values. The map function, as we know already, takes two arguments, a key and a value. The key
+here is not important, indeed always `NULL`. The value contains one line of text, which gets split according to a pattern. Here you can see
+that pattern is accessible in the mapper without any particular work on the programmer side and according to normal R scoping rules. In fact
+this is no different or harder than writing a lapply - tapply combination for the same task.
 
 
 
