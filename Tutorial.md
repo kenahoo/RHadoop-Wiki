@@ -78,7 +78,7 @@ The reduce function takes a key and a list of values as input and simply sums up
 <a name="logisticregression">
 ## Logistic Regression
 
-Now onto an example from supervised learning, specifically logistic regression by gradient descent. Again we are going to create a function that encapsulate this algorithm. 
+Now onto an example from supervised learning, specifically logistic regression by gradient descent. Again we are going to create a function that encapsulates this algorithm. 
 
 <pre>
 rhLogisticRegression = function(input, iterations, dims, alpha){
@@ -164,7 +164,8 @@ Next is the call actually performing a map reduce job. Its input is a set of poi
 To perform a sample run, we need some data. We can create is very easily from the R prompt:
 
 ```
-clustdata = lapply(1:100, function(i) keyval(i, c(rnorm(1, mean = i%%3, sd = 0.01), rnorm(1, mean = i%%4, sd = 0.01))))
+clustdata = lapply(1:100, function(i) keyval(i, c(rnorm(1, mean = i%%3, sd = 0.01), 
+                                                  rnorm(1, mean = i%%4, sd = 0.01))))
 rhwrite(clustdata, "/tmp/clustdata")
 ```
 
@@ -186,13 +187,14 @@ rhkmeans(
 								    rnorm(1, mean = i%%4, sd = 0.01))))), 12)
 ```
 
-With a little extra work you can even get pretty visualizations like this one (code in source under `tests`
+With a little extra work you can even get pretty visualizations like this one (code in source under `tests`)
 
 [[kmeans.gif]]
 
+<a name="linearleastsquares">
 ## Linear Least Squares
 
-X√ü = y
+**X** **&beta;** = **y**
 
 
 
