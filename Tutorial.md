@@ -74,32 +74,25 @@ The reduce function takes a key and a list of values as input and simply sums up
 
 ## Logistic Regression
 
-Now onto an example from supervised learning, specifically logistic regression by gradient descent. Again we are going to create a function that abstracts
-
+Now onto an example from supervised learning, specifically logistic regression by gradient descent. Again we are going to create a function that encapsulate this algorithm. 
 <pre>
 rhLogisticRegression = function(input, iterations, dims, alpha){
     <b>plane</b> = rep(0, dims)
     <b>g</b> = function(z) 1/(1 + exp(-z))
     for (i in 1:iterations) {
         gradient = rhread(revoMapReduce(input,
-            map = function(k, v) keyval(1, v$y\*v$x\*<b>g</b> (-v$y\*(<b>plane</b> %\*% v$x))),
+            map = function(k, v) keyval(1, v$y&lowast;v$x&lowast;<b>g</b> (-v$y&lowast;(<b>plane</b> %&lowast;% v$x))),
             reduce = function(k, vv) keyval(k,apply(do.call(rbind,vv),2,sum)),
             combine = T))
         plane = plane + alpha * gradient&#91;&#91;1&#93;&#93;$val }
     plane }
 </pre>
     
-As you can see we have an input with the training data. For simplicity we ask to specify a fixed number of iterations, but it would be marginally more difficult to implement a convergence criterion. Then we need to specify the dimension of the problem, which is a bit redundant because it can be inferred after seeing the first line of input, but we didn't want to put additional logic in the map function so it's a  small compromise and then we have the learning rate alpha.
+As you can see we have an input with the training data. For simplicity we ask to specify a fixed number of iterations, but it would be marginally more difficult to implement a convergence criterion &mdash; or, as a teacher of mine used to say, "is left as a trivial exercise for the student". Then we need to specify the dimension of the problem, which is a bit redundant because it can be inferred after seeing the first line of input, but we didn't want to put additional logic in the map function so it's a  small compromise and then we have the learning rate alpha.
 
+We start by initializing the separating plane and defining the logistic function. As before, those identifiers are in bold because they will be used inside the map function, that is they will travel across interpreter and processor and network barriers to be available where the developer needs them and where a traditional, meaning sequential, R developer expects them to be available according to scope rules.
 
-
-
-We start by initializing the separating plane and defining the logistic function. Those identifiers are in bold because they will be used inside the map function, that is they will travel across interpreter and processor and network barriers to be available where the developer needs them and where a traditional, meaning sequential, R developer expects them to be available.
-
-
-
-
-Now to the main loop where computing the gradient of a loss  function is the duty of a map reduce job, whose output is brought straight into main memory with an rhread &mdash; there are temp files being created and destroyed behind the scenes but you don't need to know. The only important thing is that, reasonably, the gradient is going to fit in memory so we can do an rhread to get it with impunity.
+Then we have the main loop where computing the gradient of the loss function is the duty of a map reduce job, whose output is brought straight into main memory with an rhread &mdash; there are temp files being created and destroyed behind the scenes but you don't need to know. The only important thing is that, reasonably, the gradient is going to fit in memory so we can do an rhread to get it with impunity.
 
 This map reduce job as the input we specified in the first place, the training data. 
 
