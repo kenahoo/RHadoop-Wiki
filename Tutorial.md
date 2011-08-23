@@ -2,7 +2,8 @@
 
 ## My first mapreduce job
 
-Conceptually, mapreduce is not very different than a combination of lapplys and a tapply: transform elements of a list, comput an index -- key in mapreduce jargon -- and process the groups thus defined. Let's start with the simplext example, from a simple lapply:
+Conceptually, mapreduce is not very different than a combination of lapplys and a tapply: transform elements of a list, comput an index &mdash; key in mapreduce jargon &mdash; 
+and process the groups thus defined. Let's start with the simplext example, from a simple lapply:
  
     small.ints = 1:10
     out = lapply(small.ints, function(x) x^2)
@@ -12,10 +13,17 @@ The example is trivial, just computing the first 10 squares, but we just want to
     small.ints = rhwrite(1:10)
     out = revoMapReduce(input = small.ints, map = function(k,v) keyval(k^2))
 	
-And this is it. There are some difference that we will go through, but the first thing to notice is that it isn't all that different, and just two lines of code. There are some superficial differences and some more fundamental ones. The first line puts the data into HDFS, where the bulk of the data has to be for mapreduce to operate on. Of course, we are unlikely to write out big data with `rhwrite`, certainly not in a scalable way. `rhwrite` is nontheless very useful for a variety of niche or not so niche uses like writing test cases, REPL and HPC-type uses of mapreduce -- that is, small data but big CPU demands. `rhwrite` can put the data in a file of your own choosing, but if you don't specify one it will create tempfiles and clean them up when done. The return value is a an object that you can use as a "big data" object. You can assign it to variables, pass it to functions, mapreduce jobs or read it back in. Now onto the second line. It has `revoMapReduce` replace `lapply`. We prefer named arguments with `revoMapReduce` because there's quite a few possible arguments, but one could do otherwise. The input is the variable `out` which contains the output of `rhwrite`, that is our small number data set in its HDFS version, but there are other choices as we will see. The function to apply, which is called a map function in contrast with the reduce function, which we are not using here, is a regular R function with a few constraints:
+And this is it. There are some difference that we will go through, but the first thing to notice is that it isn't all that different, and just two lines of code. There are some superficial differences and
+some more fundamental ones. The first line puts the data into HDFS, where the bulk of the data has to be for mapreduce to operate on. Of course, we are unlikely to write out big data with
+`rhwrite`, certainly not in a scalable way. `rhwrite` is nontheless very useful for a variety of niche or not so niche uses like writing test cases, REPL and HPC-type uses of mapreduce &mdash; that
+is, small data but big CPU demands. `rhwrite` can put the data in a file of your own choosing, but if you don't specify one it will create tempfiles and clean them up when done. The return value is
+a an object that you can use as a "big data" object. You can assign it to variables, pass it to functions, mapreduce jobs or read it back in. Now onto the second line. It has `revoMapReduce` replace
+`lapply`. We prefer named arguments with `revoMapReduce` because there's quite a few possible arguments, but one could do otherwise. The input is the variable `out` which contains the output
+of `rhwrite`, that is our small number data set in its HDFS version, but there are other choices as we will see. The function to apply, which is called a map function in contrast with the reduce
+function, which we are not using here, is a regular R function with a few constraints:
 
 1. It's a function of two arguments, a key and a value
-1. It returns a key value pair as returned by the helper function `keyval`, which takes any one or two R objects as arguments -- the second defaults
+1. It returns a key value pair as returned by the helper function `keyval`, which takes any one or two R objects as arguments &mdash; the second defaults
 to `NULL`; you can also return a list of such objects, or `NULL`.
 In this example, we are not using the value at all, only the key, but we still need both to support the general mapreduce case. Ther return value is a 
 big data object just like the one returned by `rhwrite`, so you can read it into memory with `rhread(out)` or use it as input to other jobs as in 
@@ -25,7 +33,7 @@ very important use cases.
 
 The return value is an object, actually a closure, and you can pass it as input to other jobs or read it into memory (watch out, not good for big data) with rhread. `rhread` is the dual of `rhwrite`. It returns a list of key value pairs, which is the most general data type that mapreduce can handle. If you prefer data frames to lists, we are working on a simplified interface that accepts and returns data frames instead of lists of pairs, which will cover many many important use cases. `rhread` is useful in defining practical map reduce algorithms whenever a mapreduce job produces something of reasonable size, like a summary, that can fit in memory and needs to be inspected to decide on the next steps, or to visualize it.
 
-##My second mapreduce job
+## My second mapreduce job
 
 We've just created a simple job that was logically equivalent to a lapply but can run on big data. That job had only a map. Now to the reduce part. The closest equivalent in R is arguably a tapply. So here is the example from the R docs:
 
@@ -55,11 +63,17 @@ rhwordcount = function(input, output = NULL, <strong>pattern</strong> = " ") {
          combine = T)}
 </pre>
 
-We are going to define one function that encapsulates this job. This may not look like a big deal but it is important. Our main goal was not simply to make it easy to run a MR job but to make MR jobs first class citizen of the R environment and to make it easy to create abstractions based on them. For instance, we wanted to be able to assign the result of a MR job to a variable and to create complex expressions including MR jobs. We take the first step here by creating a function that is itself a job, can be chained with other jobs, executed in a loop etc. Let's now look at the signature. There is an input and optional output and a pattern that defines what a word is for the user. The implementation is just a single call to `revoMapReduce`. Therein, the input can be an HDFS path, the return value of `rhwrite` or another job or a list thereof -- potentially, a mix of all three cases, as in `list("a/long/path", rhwrite(...), revoMapReduce(...), ...)`. The output can be an HDFS path but if it is `NULL` some temporary file will be generated and wrapped in a big data object like the ones generated by `rhwrite`. In either event, the job will return the information about the output, either the path or the big data object.  So we simply pass along the input and output of the`rhwordcount` function to the `revoMapReduce` call and return whatever it returns. That way the new function also behaves like a proper MR job -- almost, more details [here](Writing-composable-mapreduce-jobs). The `textinputformat` allows us to specify a parser for the input. The default is a JSON-based format that can cover many different use cases.  In this case we just want to read a text file, so the `rawtextinputformat` will create key value pairs with a `NULL`key and a line of text as value. You can easily specify your own input and output formats and even support binary formats with the arguments `inputformat` and `outputformat`, but those take Java classes as values. The map function, as we know already, takes two arguments, a key and a value. The key here is not important, indeed always `NULL`. The value contains one line of text, which gets split according to a pattern. Here you can see that pattern is accessible in the mapper without any particular work on the programmer side and according to normal R scope rules. It is in bold to draw attention to the fact that `pattern` has to travel across R interpreters, machines, even racks and maybe one day even data centers to get from where it's initialized to where it's used and that happens not only without much complication at all, but simply in keeping with normal scope rules. For each word, a key value pair (w, 1) is generated with `keyval` and the list of all of them is the return value of the mapper. Then we have a reduce function that takes a key and a list of values as input and  simply sums up all the counts and returns the pair word, count using the same helper function, `keyval`. Finally, specifying the use of a combiner is necessary to guarantee the scalability of this algorithm.
+We are defining a function, `rhwordcount`, that encapsulates this job. This may not look like a big deal but it is important. Our main goal was not simply to make it easy to run a MR job but to make MR jobs first class citizens of the R environment and to make it easy to create abstractions based on them. For instance, we wanted to be able to assign the result of a MR job to a variable &mdash; and I mean *the result*, not some error code or diagnostics &mdash; and to create complex expressions including MR jobs. We take the first step here by creating a function that is itself a job, can be chained with other jobs, executed in a loop etc.  
+
+Let's now look at the signature. There is an input and optional output and a pattern that defines what a word is for the user. The implementation is just a single call to `revoMapReduce`. Therein, the input can be an HDFS path, the return value of `rhwrite` or another job or a list thereof &mdash; potentially, a mix of all three cases, as in `list("a/long/path", rhwrite(...), revoMapReduce(...), ...)`. The output can be an HDFS path but if it is `NULL` some temporary file will be generated and wrapped in a big data object like the ones generated by `rhwrite`. In either event, the job will return the information about the output, either the path or the big data object.  So we simply pass along the input and output of the`rhwordcount` function to the `revoMapReduce` call and return whatever it returns. That way the new function also behaves like a proper MR job &mdash; almost, more details [here](Writing-composable-mapreduce-jobs). The `textinputformat` argument allows us to specify a parser for the input. The default is a JSON-based format that can cover many different use cases.  In this case we just want to read a text file, so the `rawtextinputformat` will create key value pairs with a `NULL`key and a line of text as value. You can easily specify your own input and output formats and even support binary formats with the arguments `inputformat` and `outputformat`, but those take Java classes as values. 
+
+The map function, as we know already, takes two arguments, a key and a value. The key here is not important, indeed always `NULL`. The value contains one line of text, which gets split according to a pattern. Here you can see that `pattern` is accessible in the mapper without any particular work on the programmer side and according to normal R scope rules. It is in bold to draw attention to the fact that `pattern` has to travel across R interpreters, machines, even racks and maybe one day even data centers to get from where it's initialized to where it's used and that happens not only without much fuss at all, but simply in keeping with normal scope rules. For each word, a key value pair (w, 1) is generated with `keyval` and the list of all of them is the return value of the mapper. 
+
+The reduce function takes a key and a list of values as input and simply sums up all the counts and returns the pair word, count using the same helper function, `keyval`. Finally, specifying the use of a combiner is necessary to guarantee the scalability of this algorithm.
 
 ## Logistic Regression
 
-Now onto an example from supervised learning, specifically logistic regression by gradient descent. Again we are going to create a 
+Now onto an example from supervised learning, specifically logistic regression by gradient descent. Again we are going to create a function that abstracts
 
 <pre>
 rhLogisticRegression = function(input, iterations, dims, alpha){
@@ -74,15 +88,7 @@ rhLogisticRegression = function(input, iterations, dims, alpha){
     plane }
 </pre>
     
-
-
-
-
-
-
-
-
-As you can see we have of course an input with the training data. For simplicity we ask to specify a fixed number of iterations, but it would incrementally more difficult to specify a convergence criterion. Then we need to specify the dimension of the problem, which is a bit redundant because it can be inferred after seeing the first line of input, but we didn't want to put additional logic in the map function so it's a  small compromise and then we have the learning rate alpha.
+As you can see we have an input with the training data. For simplicity we ask to specify a fixed number of iterations, but it would be marginally more difficult to implement a convergence criterion. Then we need to specify the dimension of the problem, which is a bit redundant because it can be inferred after seeing the first line of input, but we didn't want to put additional logic in the map function so it's a  small compromise and then we have the learning rate alpha.
 
 
 
@@ -92,14 +98,14 @@ We start by initializing the separating plane and defining the logistic function
 
 
 
-Now to the main loop where computing the gradient of a loss  function is the duty of a map reduce job, whose output is brought straight into main memory with an rhread -- there are temp files being created and destroyed behind the scenes but you don't need to know. The only important thing is that, reasonably, the gradient is going to fit in memory so we can do an rhread to get it with impunity.
+Now to the main loop where computing the gradient of a loss  function is the duty of a map reduce job, whose output is brought straight into main memory with an rhread &mdash; there are temp files being created and destroyed behind the scenes but you don't need to know. The only important thing is that, reasonably, the gradient is going to fit in memory so we can do an rhread to get it with impunity.
 
 This map reduce job as the input we specified in the first place, the training data. 
 
 
 
 
-The map function simply computes the contribution of an individual point to the gradient, Please note the variables g and plane making their necessary appearance here without any work on the developer's part. The access here is read only but you could even modify them if you wanted -- the semantics is copy on assign, which is consistent with how R works and easily supported by hadoop. Since in the next step we just want to add everything together, we emit a dummy, constant key for each record.
+The map function simply computes the contribution of an individual point to the gradient, Please note the variables g and plane making their necessary appearance here without any work on the developer's part. The access here is read only but you could even modify them if you wanted &mdash; the semantics is copy on assign, which is consistent with how R works and easily supported by hadoop. Since in the next step we just want to add everything together, we emit a dummy, constant key for each record.
 
 
 
@@ -152,7 +158,7 @@ rhkmeans =
 
 
 
-
+Compare with http://www.hortonworks.com/new-apache-pig-features-part-2-embedding/
 
 We are now going to cover a simple but significant clustering algorithm and the complexity will go up just a little bit
 
