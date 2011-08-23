@@ -254,81 +254,45 @@ rhTranspose = function(input, output = NULL){
 It takes an input, an optional output and returns the return value of the map reduce job. It passes input and output to it and the map function we've just defined and that's it for transpose.
 
 
-detour: Relational Joins
-
-A = BC     a<sub>ij</sub> = &Sigma;<sub>k</sub> b<sub>ik</sub> c<sub>kj</sub>
-
-
-
-
-rhRelationalJoin = function(
-
-  leftinput = NULL,
-
-  rightinput = NULL,
-
-  input = NULL,
-
-  output = NULL,
-
-  leftouter = F,
-
-  rightouter = F,
-
-  fullouter = F,
-
-  map.left= mkMap(identity),
-
-  map.right= mkMap(identity),
-
-  reduce = function (k, vl, vr) keyval(k, list(left=vl, right=vr)))
+<a name="relationaljoins">
+### Detour: Relational Joins
 
 Now we would like to tackle matrix multiplication but we need a short detour first. This takes one step further in hadoop mastery as we need to combine and process two files into one map reduce job. By default revoMapReduce supports merging two inputs the way hadoop does, that is once can specify multiple inputs and the only guarantee is that every record will go through one mapper. No order or grouping of  any sort is guaranteed as the mappers are processing the input files.
 
 
+What we need here is a very orderly merging so that we can multiply matrix elements that share an index and then sum them together. It actually looks like a join on one specific index. It turns out that joins are a very important subtask in many mapreduce algorithms and are more or less supported in a number of hadoop dialects. A generalized join is implemented in one of the examples packaged with RevoHStream and as soon as it's ready for prime time we'll move it to the library or to a add-on. Here is how to use it.
 
 
-What we need here is a very orderly merging so that we can multiply matrix elements that share an index and then sum them together. It actually looks like a join on one specific index. It turns out that joins are a very important subtask in many map reduce algorithms and are more or less supported in a number of hadoop dialects. A generalized join is implemented in one of the examples packaged with RevoHStream and  as soon as it's ready for prime time we'll move it to the library. Here is how to use ir.
+```
+rhRelationalJoin = function(
+    leftinput = NULL,
+    rightinput = NULL,
+    input = NULL,
+    output = NULL,
+    leftouter = F,
+    rightouter = F,
+    fullouter = F,
+    map.left= mkMap(identity),
+    map.right= mkMap(identity),
+    reduce = function (k, vl, vr) keyval(k, list(left=vl, right=vr)))
+```
 
+Instead of a single input, we have a `leftinput` and `rightinput`, as joins normally do, but in case we want to perform a self join, we can skip the first two arguments and specify only the third, `input`.
 
-
-
-Instead of a single input, we have a left input and right input, as joins normally do, but in case we want to perform a self join, we can skip the first two arguments and 
-
-
-
-
-specify only the third, input.
-
-
-
-
-Then we have an output, optional as usual and 
-
-
-
-
-we can specify different flavors of join such as in left outer, right outer or full outer as usual.
-
-
-
+Then we have an output, optional as usual and we can specify different flavors of join such as in left outer, right outer or full outer as usual.
 
 Now to the interesting bits. This function is a bit relational join and a bit map reduce job. Instead of specifying join keys, we specify two separate map functions, one for the left input and one for the right input. Map functions, as usual, produce a key and a value. The join will be an equijoin on the keys. For each pair of matching records there will be a shared key and two values, one coming from the left side. By default, we have simple pass-throguh or identity mappers.
 
-
-
-
 The reduce function has three arguments, one key and two values, one coming from the left input through map.left and the other from the right input through map.right. The default is just to pass the key through and to assemble the two values into a compound value, the closest we could get to a pass-through reducer.
 
+This is a little advanced in a number of ways and also very reusable, so this will be part of the library or of an add-on soon. It has the general flavor of the composable mapreduce job, but has two inputs and two maps and the reduce has a non-standard signature. The implementation also has some technicalities related to identifying left and right input, path normalization and stuff that won't make this a newbie map reduce job, even if a basic implementation is all of 60 lines. So the bad news is that we are not going to show its implementation, the good news is that it will become a powerful addition to the library so that you don't have to deal with this. Pretty much when you need to combine two different data sets together you can recast it as a join and reuse this function. There are many examples of this and one is matrix multiplication, so back on track.
 
+<a name="linearleastsquarescontinued">
+### Linear Least Squares (continued)
 
+**A** = **BC**     
 
-This is a little advanced in a number of way  and also very reusable, so that it's a given this will be part of the library very soon. It has the general flavor of the composable map reduce job, but has two inputs and two maps and the reduce has a non-standard signature. The implementation also has some technicalities related to identifying left and right input, path normalization and stuff that won't make this a newbie map reduce job, even if a basic implementation is all of 60 lines. So the bad news is that I am not going to show the implementation of this, the good news is that it will become a powerful addition to the library so that you don't have to deal with this. Pretty much when you need to combine two different data sets together you can recast it as a join and reuse this function. There are many examples of this and one is matrix multiplication, so back on track.
-
-
-
-
-Linear Least Squares
+a<sub>ij</sub> = &Sigma;<sub>k</sub> b<sub>ik</sub> c<sub>kj</sub>
 
 matMulMap = function(i) function(k,v) keyval(k[[i]], list(pos = k, elem = v))
 
