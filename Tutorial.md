@@ -194,16 +194,24 @@ With a little extra work you can even get pretty visualizations like this one (c
 <a name="linearleastsquares">
 ## Linear Least Squares
 
+We are going to build another example, LLS, that illustrates how to build map reduce reusable abstractions and how to combine them to solve a larger task. We want to solve LLS under the assumption that we have too many data points to fit in memory but not such a huge number of variables that we need to implement the whole process as map reduce job. This is sort of a hybrid solution that is made particularly easy by the seamless integration of revoHStream with R and an example of a pragmatic approach to big data. If we have operations A, B, and C in a cascade and the data sizes decrease at each step and we have already an in-memory solution to it, than we might get away by replacing only the first step with a big data solution and then continuing with tried and true function and pacakges. To make this as easy as possible, we need the in memory and big data worlds to integrate easily if not seamlessly.
+
+
+This is the basic equation we want to solve in the least square sense: 
+
 **X** **&beta;** = **y**
 
+We are going to do it by using the function solve as in the following expression, that is solving the normal equations.
 
+```
+solve(t(X)%\*%X, t(X)%\*%y)
+```
 
+But let's assume that X is too big to fit in memory, so we have to compute the transpose and matrix products using map reduce, then we can do the solve as usual on the results. This is our general plan.
 
-solve(t(X)%*%X, t(X)%*%y)
+We are going to adopt the following representation for matrices, here in data frame form (behind the scenes it's still lists).
 
-
-
-
+```
    key1 key2        val
 
 1     1    1  0.7595035
@@ -219,75 +227,36 @@ solve(t(X)%*%X, t(X)%*%y)
 6     2    3 -2.4413680
 
 7     3    1 -0.8510856
+```
 
-
-
-
-swap = function(x) list(x[[2]], x[[1]])
-
-transposeMap = mkMap(swap, identity)
-
-
-
-
-rhTranspose = function(input, output = NULL){
-
-  revoMapReduce(input = input, output = output, map = transposeMap)
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-We are going to build another example, LLS, that illustrates how to build map reduce reusable  abstractions and how to combine them to solve a larger task. We want to solve LLS under the assumption that we have too many data points to fit in memory but not such a huge number of variables that we need to implement the whole process as map reduce job. This is sort of a hybrid solution that is made particularly easy by the seamless integration of revoHStream with R and an example of a pragmatic approach to big data. If we have operations A, B, and C in a cascade and the data sizes decrease at each step and we have already an in-memory solution to it, than we might get away by replacing only the first step with a big data solution and then continuing with tried and true function and pacakges. To make this as easy as possible, we need the in memory and big data worlds to integrate easily if not seamlessly. 
-
-
-
-
-This is the basic equation we want to solve in the least square sense and we are going to do it by
-
-
-
-
-using the function solve as in this expression, that is solving the normal equations. But now X is too big to fit in memory, so we have to compute the transpose and matrix products using map reduce, then we can do the solve as usual on the results. This is our general plan.
-
-
-
-
-We are going to adopt the following representation for matrices, here in data frame form (behind the scenes it's still lists). The key is the pair row, col and the value is the matrix element. In practice this representation makes sense only for sparse matrices, so in a real world implementation we might want to use a representation with a submatrix for each record, but this is  simpler to develop the ideas.
-
-
-
+The key is the pair row, col and the value is the matrix element. In practice this representation makes sense only for sparse matrices, so in a real world implementation we might want to use a representation with a submatrix for each record, but this is  simpler to develop the ideas.
 
 We start implementing the transpose with a tiny auxiliary function that swaps the elements of a two element list. You guessed right that this is going to be used to swap the raw index with the column index.
 
-
+```
+swap = function(x) list(x\[\[2\]\], x\[\[1\]\])
+```
 
 
 Then we define the map function for the transpose map reduce job. It uses a higher order function, mkMap, to turn two ordinary functions into a map. This is possible because they act independently on the key and on the value. What this says is: swap the elements of the key and let the value through. We could have written it just as easily without mkMap, but once you are familiar with it it is more readable this way.
 
+```
+transposeMap = mkMap(swap, identity)
+```
 
+Then we have the map reduce transpose job which is abstracted into a function rhTranspose, that we can use like any other job from now on. 
 
+```
+rhTranspose = function(input, output = NULL){
+    revoMapReduce(input = input, output = output, map = transposeMap)}
+```
 
-Then we have the map reduce transpose job which is abstracted into a function rhTranspose, that we can use like any other job from now on. It takes an input, an optional output and 
+It takes an input, an optional output and returns the return value of the map reduce job. It passes input and output to it and the map function we've just defined and that's it for transpose.
 
-
-
-
-returns the return value of the map reduce job. It passes input and output to it and the map function we've just defined and that's it for transpose.
 
 detour: Relational Joins
 
-A = BC     aij = ‚àëk bik ckj
+A = BC     a<sub>ij</sub> = &Sigma;<sub>k</sub> b<sub>ik</sub> c<sub>kj</sub>
 
 
 
