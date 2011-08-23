@@ -65,7 +65,7 @@ rhLogisticRegression = function(input, iterations, dims, alpha){
     <b>g</b> = function(z) 1/(1 + exp(-z))
     for (i in 1:iterations) {
         gradient = rhread(revoMapReduce(input,
-            map = function(k, v) keyval(1, v$y*v$x*<b>g</b> (-v$y*(<b>plane</b> %*% v$x))),
+            map = function(k, v) keyval(1, v$y\*v$x\*<b>g</b> (-v$y\*(<b>plane</b> %\*% v$x))),
             reduce = function(k, vv) keyval(k,apply(do.call(rbind,vv),2,sum)),
             combine = T))
         plane = plane + alpha * gradient&#91;&#91;1&#93;&#93;$val }
