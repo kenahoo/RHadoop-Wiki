@@ -61,7 +61,7 @@ We are going to define one function that encapsulates this job. This may not loo
 
 Now onto an example from supervised learning, specifically logistic regression by gradient descent. Again we are going to create a 
 
-
+<ol>
 <li><pre>rhLogisticRegression = function(input, iterations, dims, alpha){</li></pre>
 <li><pre>    <b>plane</b> = rep(0, dims) </li></pre>
 <li><pre>    <b>g</b> = function(z) 1/(1 + exp(-z)) </li></pre>
@@ -72,7 +72,7 @@ Now onto an example from supervised learning, specifically logistic regression b
 <li><pre>            combine = T)) </li></pre>
 <li><pre>        plane = plane + alpha * gradient&#91;&#91;1&#93;&#93;$val }</li></pre>
 <li><pre>    plane }</li></pre>
-
+</ol>
 
 
 
