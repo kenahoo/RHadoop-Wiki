@@ -25,7 +25,7 @@ very important use cases.
 
 The return value is an object, actually a closure, and you can pass it as input to other jobs or read it into memory (watch out, not good for big data) with rhread. `rhread` is the dual of `rhwrite`. It returns a list of key value pairs, which is the most general data type that mapreduce can handle. If you prefer data frames to lists, we are working on a simplified interface that accepts and returns data frames instead of lists of pairs, which will cover many many important use cases. `rhread` is useful in defining practical map reduce algorithms whenever a mapreduce job produces something of reasonable size, like a summary, that can fit in memory and needs to be inspected to decide on the next steps, or to visualize it.
 
-##My second map-reduce job
+##My second mapreduce job
 
 We've just created a simple job that was logically equivalent to a lapply but can run on big data. That job had only a map. Now to the reduce part. The closest equivalent in R is arguably a tapply. So here is the example from the R docs:
 
@@ -59,24 +59,21 @@ We are going to define one function that encapsulates this job. This may not loo
 
 ## Logistic Regression
 
-<pre>
-rhLogisticRegression = function(input, iterations, dims, alpha){
-    <b>plane</b> = rep(0, dims)
-    <b>g</b> = function(z) 1/(1 + exp(-z))
-    for (i in 1:iterations) {
-        gradient = rhread(revoMapReduce(input,
-            map = function(k, v) keyval(1, v$y\*v$x\*<b>g</b> (-v$y\*(<b>plane</b> %\*% v$x))),
-            reduce = function(k, vv) keyval(k,apply(do.call(rbind,vv),2,sum)),
-            combine = T))
-        plane = plane + alpha * gradient&#91;&#91;1&#93;&#93;$val }
-    plane }
-</pre>
-    
+Now onto an example from supervised learning, specifically logistic regression by gradient descent. Again we are going to create a 
 
 
+<li><pre>rhLogisticRegression = function(input, iterations, dims, alpha){</li></pre>
+<li><pre>    <b>plane</b> = rep(0, dims) </li></pre>
+<li><pre>    <b>g</b> = function(z) 1/(1 + exp(-z)) </li></pre>
+<li><pre>    for (i in 1:iterations) {</li></pre>
+<li><pre>        gradient = rhread(revoMapReduce(input,</li></pre>
+<li><pre>            map = function(k, v) keyval(1, v$y\*v$x\*<b>g</b> (-v$y\*(<b>plane</b> %\*% v$x))),</li></pre>
+<li><pre>            reduce = function(k, vv) keyval(k,apply(do.call(rbind,vv),2,sum)),</li></pre>
+<li><pre>            combine = T)) </li></pre>
+<li><pre>        plane = plane + alpha * gradient&#91;&#91;1&#93;&#93;$val }</li></pre>
+<li><pre>    plane }</li></pre>
 
 
-Now onto an example from supervised learning, specifically logistic regression by gradient descent.
 
 
 
