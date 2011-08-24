@@ -140,22 +140,22 @@ Now let's look at the main loop. It gets executed a user set number of times, fo
 
 Next is a call to the other flavor of `kmeans.iter`, where a set of centers rather than just the number of centers is provided. and the return value is, as before, a new set of centers. Let's now look at `kmeans.iter`
 
-```
+<pre>
 kmeans.iter =
-  function(points, distfun, ncenters = length(centers),
-           centers = NULL) {
+  function(points, <b>distfun>/b>, <b>ncenters</b> = length(centers),
+           <b>centers</b> = NULL) {
     from.dfs(
       mapreduce(input = points,
          map = if (is.null(centers)) {
-                   function(k,v)keyval(sample(1:ncenters,1),v)}
+                   function(k,v)keyval(sample(1:<b>ncenters</b>,1),v)}
                else {
                    function(k,v) {
-                       distances = lapply(centers, 
-                                          function(c) distfun(c,v))
-                   keyval(centers\[\[which.min(distances)\]\],v)}},
+                       distances = lapply(<b>centers</b>, 
+                                          function(c) <b>distfun</b>(c,v))
+                   keyval(<b>centers</b>\[\[which.min(distances)\]\],v)}},
          reduce = function(k,vv) keyval(NULL, 
 	                                    apply(do.call(rbind, vv), 2, mean))))}
-```
+</pre>
 
 This is one iteration of kmeans, implemented as a map reduce job. We are already familiar with all the paramers to this function and we know what `from.dfs` does, in this case it moves new cluster centers computed by a mapreduce job and stored in HDFS into main memory. Here we are assuming we have a lot of points, as in big data, but a small number of centers, as in they fit in RAM. It's a common case but it might not cover all applications.
 
@@ -238,10 +238,10 @@ swap = function(x) list(x\[\[2\]\], x\[\[1\]\])
 ```
 
 
-Then we define the map function for the transpose map reduce job. It uses a higher order function, mkMap, to turn two ordinary functions into a map. This is possible because they act independently on the key and on the value. What this says is: swap the elements of the key and let the value through. We could have written it just as easily without mkMap, but once you are familiar with it it is more readable this way.
+Then we define the map function for the transpose map reduce job. It uses a higher order function, `to.map`, to turn two ordinary functions into a map. This is possible because they act independently on the key and on the value. What this says is: swap the elements of the key and let the value through. We could have written it just as easily without `to.map`, but once you are familiar with it it is more readable this way.
 
 ```
-transposeMap = mkMap(swap, identity)
+transposeMap = to.map(swap, identity)
 ```
 
 Then we have the map reduce transpose job which is abstracted into a function transpose, that we can use like any other job from now on. 
@@ -269,11 +269,9 @@ relational.join = function(
     rightinput = NULL,
     input = NULL,
     output = NULL,
-    leftouter = F,
-    rightouter = F,
-    fullouter = F,
-    map.left= mkMap(identity),
-    map.right= mkMap(identity),
+	outer = NULL
+    map.left= to.map(identity),
+    map.right= to,map(identity),
     reduce = function (k, vl, vr) keyval(k, list(left=vl, right=vr)))
 ```
 
@@ -317,7 +315,7 @@ mat.mult = function(left, right, result = NULL) {
                                                           vr$pos\[\[2\]\]),
 					                                    vl$elem*vr$elem)),
         output = result,
-        reduce = mkReduce(identity, function(x) sum(unlist(x))))}
+        reduce = to.reduce(identity, function(x) sum(unlist(x))))}
 ```
 
 
