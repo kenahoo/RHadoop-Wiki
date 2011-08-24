@@ -12,8 +12,9 @@ This R package provides basic connectivity to the Hadoop Distributed File System
 * Initialization <br> 
         hdfs.init, hdfs.defaults
 
-###Environment Variables
-Access to HDFS via this R package is dependent upon the `HADOOP_HOME` and `HADOOP_CONF` environment variables. Be sure that these are properly set. If these variables are not properly set, the package will be accessing the local file system instead of HDFS
+###Prerequisites
+* This package has a dependency on rJava
+* Access to HDFS via this R package is dependent upon the `HADOOP_HOME` and `HADOOP_CONF` environment variables. Be sure that these are properly set. If these variables are not properly set, the package will be accessing the local file system instead of HDFS
 
 Examples:
 
