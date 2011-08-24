@@ -1,4 +1,3 @@
-### * [[Why R/Hadoop?]]
 ### * [[rmr]]
 ### * [[rhdfs]]
 ### * [[rhbase]]
