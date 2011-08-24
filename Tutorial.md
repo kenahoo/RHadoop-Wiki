@@ -321,7 +321,7 @@ rhMatMult = function(left, right, result = NULL) {
 ```
 
 
-The first step is a join on the the column index for the left side  and the row index from the right side, so that we bring together pairs of the  form  (b<sub>ik</sub> c<sub>kj</sub>). In the reduce we perform the multiplication and return a record with a key of (i,j) and a value equal to the multiplication. 
+The first step is a join on the the column index for the left side  and the row index from the right side, so that we bring together pairs of the  form  (b<sub>ik</sub>,c<sub>kj</sub>). In the reduce we perform the multiplication and return a record with a key of (i,j) and a value equal to the multiplication. 
 
 The following or outer mapreduce doesn't have an explicit map, that means it defaults to the pass-through one. The interesting thing is that, by default, the grouping will happen on the (i,j) pair, therefore grouping all the right products that need to be summed together.
 
@@ -339,7 +339,8 @@ Then our sought after semi-big-data LLS solution
 rhLinearLeastSquares = function(X,y) {
     Xt = rhTranspose(X)
     XtX = rhread(rhMatMult(Xt, X), todataframe = TRUE)
-    Xty = rhread(rhMatMult(Xt, y), todataframe = TRUE) solve(to.matrix(XtX),to.matrix(Xty))}
+    Xty = rhread(rhMatMult(Xt, y), todataframe = TRUE) 
+	solve(to.matrix(XtX),to.matrix(Xty))}
 ```
 
 We start with a transpose, compute the normal equations,  left and right side, and call solve on the converted data.
@@ -347,7 +348,7 @@ We start with a transpose, compute the normal equations,  left and right side, a
 <a name="whatwehavelearned">
 ##What we have learned
 
-Specify jobs using regular r functions and run them like R functions
+Specify jobs using regular R functions and run them like R functions
 
 ```
 revoMapReduce(map = function(k,v)..., reduce = function(k,vv)...)
@@ -387,7 +388,7 @@ out1 = my.job1(my.result); out2 = my.job2(my.result); merge.job(out1, out2)
 move things in an out of memory and HDFS to create hybrid big-small-data algorithms, control flow and iteration, display results etc
 
 ```
-if(length(rhread(my.job()))¬ª0){...} else {...}; ggplot2(rhread(my.job(...)), ...)
+if(length(rhread(my.job()))==0){...} else {...}; ggplot2(rhread(my.job(...)), ...)
 ```
 
 
