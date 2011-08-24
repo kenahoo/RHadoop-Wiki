@@ -3,7 +3,7 @@
 ### * [[rhbase]]
 ### * [[Downloads]]
 ### * [[How to contribute to this project]]
-### * [[Roadmap]]
+### * [[Wishlist]]
 ## News
 
 8/10/2011 - Wiki gone live
