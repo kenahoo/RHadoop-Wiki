@@ -290,168 +290,109 @@ This is a little advanced in a number of ways and also very reusable, so this wi
 <a name="linearleastsquarescontinued">
 ### Linear Least Squares (continued)
 
+Back to our matrix multiplication task, that we will implement as a specialization of the general join just shown.
+
 **A** = **BC**     
 
 a<sub>ij</sub> = &Sigma;<sub>k</sub> b<sub>ik</sub> c<sub>kj</sub>
 
-matMulMap = function(i) function(k,v) keyval(k[[i]], list(pos = k, elem = v))
+We first define the map function. It comes in two flavors, wether you want to join on the column index or on the row index, and in a matrix multiplication we need both. So here is a higher order function that generates both maps. It just produces a key-value pair with as key the desired index and as value a list with all the information, row, column and element, which we will need later on.
 
-
-
-
-rhMatMult = function(left, right, result = NULL) {
-
-  revoMapReduce(
-
-                input =
-
-                rhRelationalJoin(leftinput = left, 
-
-                                 rightinput = right,
-
-                                 map.left = matMulMap(2),
-
-                                 map.right = matMulMap(1), 
-
-                                 reduce = 
-
-                            function(k, vl, vr) keyval(c(vl$pos[[1]],                                
-
-                                      vr$pos[[2]]),vl$elem*vr$elem)),
-
-                 output = result,
-
-                 reduce = mkReduce(identity,      
-
-                                   function(x) sum(unlist(x))))}
-
-
-
-
-Back to our matrix multiplication task, that we will implement as a specialization of the general join just shown.
-
-
-
-
-We first define the map function. It comes in two flavor, wether you want to join on the column index or on the row index, and in a matrix multiplication  we need both. So here is a higher order function that generates both maps. It just produces a key-value pair with as key the desired index and as value a list with all the information, row, column and element, which we will need later on.
-
-
+```
+matMulMap = function(i) function(k,v) keyval(k\[\[i\]\], list(pos = k, elem = v))
+```
 
 
 And finally to the actual matrix multiplication. It is implemented as the composition of two jobs. One does the multiplications and the other the sums. There are other ways of implementing it but this is the most straightforward.
 
+```
+rhMatMult = function(left, right, result = NULL) {
+    revoMapReduce(
+        input = rhRelationalJoin(
+		            leftinput = left, 
+                    rightinput = right,
+                    map.left = matMulMap(2),
+                    map.right = matMulMap(1), 
+                    reduce = function(k, vl, vr) keyval(c(vl$pos\[\[1\]\],                                
+                                                          vr$pos\[\[2\]\]),
+					                                    vl$elem*vr$elem)),
+        output = result,
+        reduce = mkReduce(identity, function(x) sum(unlist(x))))}
+```
 
 
+The first step is a join on the the column index for the left side  and the row index from the right side, so that we bring together pairs of the  form  (b<sub>ik</sub> c<sub>kj</sub>). In the reduce we perform the multiplication and return a record with a key of (i,j) and a value equal to the multiplication. 
 
-So the first step is a join on the the column index for the left side  and the row index from the right side, so that we bring together element of the  form  bik ckj. In the reduce we perform the multiplication and return a record with a key of i,j and a value equal to the multiplication. 
+The following or outer mapreduce doesn't have an explicit map, that means it defaults to the pass-through one. The interesting thing is that, by default, the grouping will happen on the (i,j) pair, therefore grouping all the right products that need to be summed together.
 
+We now have all the elements in place to solve LLS: mapreduce transpose and matrix multiplication and old fashioned solve().
 
+We need a simple function to turn matrices represented in list form and sparse format, that we use with mapreduce, into regular dense in memory R matrices. We rely on a feature of `rhread` that turns lists into data frames whenever possible so that this function just has to go from dataframe to dense matrix, using the `Matrix` package and `sparseMatrix` in particular.
 
-
-The following or outer map reduce doesn't have an explicit map, that means it defaults to the pass-through one. The interesting thing is that, by default, the grouping will happen on the (i,j) pair, therefore grouping all the right products that need to be summed together.
-
-
-
-
-
-
-
-Linear Least Squares
-
-
+```
 to.matrix = function(df) as.matrix(sparseMatrix(i=df$key1, j=df$key2, x=df$val))
-
-
-
-
-rhLinearLeastSquares = function(X,y) {
-Xt = rhTranspose(X)
-XtX = rhread(rhMatMult(Xt, X), todataframe = TRUE)
-Xty = rhread(rhMatMult(Xt, y), todataframe = TRUE) solve(to.matrix(XtX),to.matrix(Xty))}
-
-We now have all the elements in place to solve our LLS: map reduce transpose and matrix multiplication and old fashioned solve()
-
-
-
-
-Well we need a little function to turn matrices represented in list form and sparse format, that we use with map reduce, into regular dense in memory R matrices. We rely on a feature of rhread that turns lists into data frames whenever possible so that this function just has to go from dataframe to dense matrix, using the Matrix package and sparse matrix in particular
-
-
-
+```
 
 Then our sought after semi-big-data LLS solution
 
+```
+rhLinearLeastSquares = function(X,y) {
+    Xt = rhTranspose(X)
+    XtX = rhread(rhMatMult(Xt, X), todataframe = TRUE)
+    Xty = rhread(rhMatMult(Xt, y), todataframe = TRUE) solve(to.matrix(XtX),to.matrix(Xty))}
+```
 
+We start with a transpose, compute the normal equations,  left and right side, and call solve on the converted data.
 
+<a name="whatwehavelearned">
+##What we have learned
 
-Start with a transpose
+Specify jobs using regular r functions and run them like R functions
 
-
-
-
-compute the normal equations left and right side
-
-
-
-
-and call solve on the converted data.
-
-
-
-
-
-
-
-What we have learned
-
+```
 revoMapReduce(map = function(k,v)..., reduce = function(k,vv)...)
-
-revoMapReduce(revoMapReduce(...
-
-revoMapReduce(output = "my-result-file")
-
-my.result = revoMapReduce(...)
-
-my.job = function(x,y,z) { .... out = revoMapreduce(...);  ... out}
-
-out1 = my.job1(my.result); out2 = my.job2(my.result); merge.job(out1, out2)
-
-if(length(rhread(my.job()))¬ª0){...} else {...}; ggplot2(rhread(my.job(...)), ...)
-
-specify jobs using regular r functions and 
-
-
-
-
-run them like R functions
-
-
-
+```
 
 compose jobs like functions
 
-
-
+```
+revoMapReduce(revoMapReduce(...
+```
 
 store results where you want
 
-
-
+```
+revoMapReduce(output = "my-result-file")
+```
 
 or in a variable
 
+```
+my.result = revoMapReduce(...)
 
-
+```
 
 create abstractions
 
-
-
+```
+my.job = function(x,y,z) { .... out = revoMapreduce(...);  ... out}
+```
 
 describe any data flow
 
-
-
+```
+out1 = my.job1(my.result); out2 = my.job2(my.result); merge.job(out1, out2)
+```
 
 move things in an out of memory and HDFS to create hybrid big-small-data algorithms, control flow and iteration, display results etc
+
+```
+if(length(rhread(my.job()))¬ª0){...} else {...}; ggplot2(rhread(my.job(...)), ...)
+```
+
+
+
+
+
+
 
