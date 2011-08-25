@@ -16,4 +16,4 @@ What rmr is not trying to be:
 
 2. Map reduce programs written in rmr are not going to be the most efficient. While aiming to reduce the gap over time to extend its applicability, it is unlikely to ever be the most effective way to implement massive production jobs.
 
-3. rmr does not provide a map reduce version of any of the more than 3000 packages available for R. It does not solve the problem of parallel programming. You still have to write parallel algorithms for any problem you need to solve, but you can focus only on the interesting aspects. Some problem are believed not to be amenable to a parallel solution and using the map reduce paradigm or RevoHStream does not create an exception.
+3. rmr does not provide a map reduce version of any of the more than 3000 packages available for R. It does not solve the problem of parallel programming. You still have to write parallel algorithms for any problem you need to solve, but you can focus only on the interesting aspects. Some problem are believed not to be amenable to a parallel solution and using the map reduce paradigm or rmr does not create an exception.
