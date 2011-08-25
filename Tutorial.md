@@ -3,7 +3,7 @@
 <a name="myfirstmapreducejob">
 ## My first mapreduce job
 
-Conceptually, mapreduce is not very different than a combination of lapplys and a tapply: transform elements of a list, comput an index &mdash; key in mapreduce jargon &mdash; 
+Conceptually, mapreduce is not very different than a combination of lapplys and a tapply: transform elements of a list, compute an index &mdash; key in mapreduce jargon &mdash; 
 and process the groups thus defined. Let's start with the simplext example, from a simple lapply:
  
     small.ints = 1:10
