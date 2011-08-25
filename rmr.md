@@ -6,6 +6,8 @@ This R package allows an R programmer to perform statistical analysis via MapRed
 * R installed on each node of the cluster (developed and tested on 2.13.0) 
 * Install the following dependent R packages on each node: rjson, itertools and digest
 
+rmr itself needs to be installed on each node.
+
 ###[[Philosophy]]
 ###[[Tutorial]]
 ###[[Writing composable mapreduce jobs]] 
