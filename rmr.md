@@ -7,11 +7,10 @@ This R package allows an R programmer to perform statistical analysis via MapRed
 * Install the following dependent R packages on each node: rjson, itertools and digest
 * rmr itself needs to be installed on each node.
 * Make sure that the environment variables `HADOOP_HOME` and `HADOOP_CONF` are properly set.
+  Examples:
 
-Examples:
-
-    HADOOP_HOME=/usr/lib/hadoop  
-    HADOOP_CONF=/etc/hadoop/conf
+      HADOOP_HOME=/usr/lib/hadoop  
+      HADOOP_CONF=/etc/hadoop/conf
 
 
 ###[[Philosophy]]
