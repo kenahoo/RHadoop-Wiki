@@ -1,3 +1,5 @@
+(Just a couple of notes &mdash; not a complete doc by any means)
+
 1. Explicit transfer from a to HDFS with `from.dfs` and `to.dfs` as opposed to implicit.
    1. Impossible for mapreduce to make an educated guess on what the input means: is a list of character strings a list of HDFS paths or literally the input
    1. It's going to be difficult to decide automatically whether to keep results in HDFS or bring them into memory and it's very unlikely we can make it transparent to the programmer, so `from.dfs` has to be a deliberate decision
