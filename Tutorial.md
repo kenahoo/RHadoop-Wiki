@@ -297,7 +297,7 @@ a<sub>ij</sub> = &Sigma;<sub>k</sub> b<sub>ik</sub> c<sub>kj</sub>
 We first define the map function. It comes in two flavors, wether you want to join on the column index or on the row index, and in a matrix multiplication we need both. So here is a higher order function that generates both maps. It just produces a key-value pair with as key the desired index and as value a list with all the information, row, column and element, which we will need later on.
 
 ```
-matMulMap = function(i) function(k,v) keyval(k\[\[i\]\], list(pos = k, elem = v))
+matMulMap = function(i) function(k,v) keyval(k\\[\[i\]\], list(pos = k, elem = v))
 ```
 
 
