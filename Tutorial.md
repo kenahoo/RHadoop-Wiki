@@ -260,7 +260,7 @@ It takes an input, an optional output and returns the return value of the map re
 Now we would like to tackle matrix multiplication but we need a short detour first. This takes one step further in hadoop mastery as we need to combine and process two files into one map reduce job. By default mapreduce supports merging two inputs the way hadoop does, that is once can specify multiple inputs and the only guarantee is that every record will go through one mapper. No order or grouping of  any sort is guaranteed as the mappers are processing the input files.
 
 
-What we need here is a very orderly merging so that we can multiply matrix elements that share an index and then sum them together. It actually looks like a join on one specific index. It turns out that joins are a very important subtask in many mapreduce algorithms and are more or less supported in a number of hadoop dialects. A generalized join is implemented in one of the examples packaged with RevoHStream and as soon as it's ready for prime time we'll move it to the library or to a add-on. Here is how to use it.
+What we need here is a very orderly merging so that we can multiply matrix elements that share an index and then sum them together. It actually looks like a join on one specific index. It turns out that joins are a very important subtask in many mapreduce algorithms and are more or less supported in a number of hadoop dialects. A generalized join is implemented in one of the examples packaged with rmr and as soon as it's ready for prime time we'll move it to the library or to a add-on. Here is how to use it.
 
 
 ```
@@ -374,7 +374,7 @@ my.result = mapreduce(...)
 create abstractions
 
 ```
-my.job = function(x,y,z) { .... out = revoMapreduce(...);  ... out}
+my.job = function(x,y,z) { .... out = mapreduce(...);  ... out}
 ```
 
 describe any data flow
