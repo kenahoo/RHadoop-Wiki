@@ -118,7 +118,7 @@ We are now going to cover a simple but significant clustering algorithm and the 
 
 We are talking about k-means and we are going to implement it in two parts: a function that controls the iterations and termination of the algorithm and one, essentially a mapreduce job, that does the grunt work of computing distances and electing centers. This is not a production ready implementation, but should be illustrative of the power of this package. You simply can not do this in pig or hive alone and it would take hundreds of lines of code in java.
 
-```
+<pre>
 kmeans =
   function(points, ncenters, iterations = 10, 
            distfun = 
@@ -129,8 +129,7 @@ kmeans =
       newCenters = lapply(values(newCenters), unlist)
       newCenters = kmeans.iter(points, distfun, centers=newCenters)}
     newCenters}
-```
-
+</pre>
 
 This is the controlling program. Most of its lines are executed locally, meaning in the same interpreter where the main function is called. We define a function that  takes a set of points, a desired number of centers, a number of iterations (a convergence test would be better, just for illustration purposes) and a distance function defaulting to euclidean distance.
 
@@ -142,7 +141,7 @@ Next is a call to the other flavor of `kmeans.iter`, where a set of centers rath
 
 <pre>
 kmeans.iter =
-  function(points, <b>distfun>/b>, <b>ncenters</b> = length(centers),
+  function(points, <b>distfun</b>, <b>ncenters</b> = length(centers),
            <b>centers</b> = NULL) {
     from.dfs(
       mapreduce(input = points,
@@ -152,7 +151,7 @@ kmeans.iter =
                    function(k,v) {
                        distances = lapply(<b>centers</b>, 
                                           function(c) <b>distfun</b>(c,v))
-                   keyval(<b>centers</b>\[\[which.min(distances)\]\],v)}},
+                   keyval(<b>centers</b>&#91;&#91;which.min(distances)&#93;&#93;,v)}},
          reduce = function(k,vv) keyval(NULL, 
 	                                    apply(do.call(rbind, vv), 2, mean))))}
 </pre>
@@ -163,29 +162,29 @@ Next is the call actually performing a map reduce job. Its input is a set of poi
 
 To perform a sample run, we need some data. We can create is very easily from the R prompt:
 
-```
+<pre>
 clustdata = lapply(1:100, function(i) keyval(i, c(rnorm(1, mean = i%%3, sd = 0.01), 
                                                   rnorm(1, mean = i%%4, sd = 0.01))))
 to.dfs(clustdata, "/tmp/clustdata")
-```
+</pre>
 
 That is, create some arbitrary data in the form of a list of key value pairs, the key here doesn't really matter and write it out to hdfs.
 And this is a simple test of what we've just implemented, 
 
-```
+<pre>
 kmeans ("/tmp/clustdata", 12)
-```
+</pre>
 
 Or for short:
 
-```
+<pre>
 kmeans(
     to.dfs(
 	    lapply(1:100, 
                function(i) keyval(i, 
 			                      c(rnorm(1, mean = i%%3, sd = 0.01), 
 								    rnorm(1, mean = i%%4, sd = 0.01))))), 12)
-```
+</pre>
 
 With a little extra work you can even get pretty visualizations like this one (code in source under `tests`)
 
@@ -203,15 +202,15 @@ This is the basic equation we want to solve in the least square sense:
 
 We are going to do it by using the function solve as in the following expression, that is solving the normal equations.
 
-```
-solve(t(X)%\*%X, t(X)%\*%y)
-```
+<pre>
+solve(t(X)%*%X, t(X)%*%y)
+</pre>
 
 But let's assume that X is too big to fit in memory, so we have to compute the transpose and matrix products using map reduce, then we can do the solve as usual on the results. This is our general plan.
 
 We are going to adopt the following representation for matrices, here in data frame form (behind the scenes it's still lists).
 
-```
+<pre>
    key1 key2        val
 
 1     1    1  0.7595035
@@ -227,29 +226,29 @@ We are going to adopt the following representation for matrices, here in data fr
 6     2    3 -2.4413680
 
 7     3    1 -0.8510856
-```
+</pre>
 
 The key is the pair row, col and the value is the matrix element. In practice this representation makes sense only for sparse matrices, so in a real world implementation we might want to use a representation with a submatrix for each record, but this is  simpler to develop the ideas.
 
 We start implementing the transpose with a tiny auxiliary function that swaps the elements of a two element list. You guessed right that this is going to be used to swap the raw index with the column index.
 
-```
-swap = function(x) list(x\[\[2\]\], x\[\[1\]\])
-```
+<pre>
+swap = function(x) list(x&#91;&#91;2&#93;&#93;, &#91;&#91;1&#93;&#93;)
+</pre>
 
 
 Then we define the map function for the transpose map reduce job. It uses a higher order function, `to.map`, to turn two ordinary functions into a map. This is possible because they act independently on the key and on the value. What this says is: swap the elements of the key and let the value through. We could have written it just as easily without `to.map`, but once you are familiar with it it is more readable this way.
 
-```
+<pre>
 transposeMap = to.map(swap, identity)
-```
+</pre>
 
 Then we have the map reduce transpose job which is abstracted into a function transpose, that we can use like any other job from now on. 
 
-```
+<pre>
 transpose = function(input, output = NULL){
     mapreduce(input = input, output = output, map = transposeMap)}
-```
+</pre>
 
 It takes an input, an optional output and returns the return value of the map reduce job. It passes input and output to it and the map function we've just defined and that's it for transpose.
 
@@ -263,7 +262,7 @@ Now we would like to tackle matrix multiplication but we need a short detour fir
 What we need here is a very orderly merging so that we can multiply matrix elements that share an index and then sum them together. It actually looks like a join on one specific index. It turns out that joins are a very important subtask in many mapreduce algorithms and are more or less supported in a number of hadoop dialects. A generalized join is implemented in one of the examples packaged with rmr and as soon as it's ready for prime time we'll move it to the library or to a add-on. Here is how to use it.
 
 
-```
+<pre>
 relational.join = function(
     leftinput = NULL,
     rightinput = NULL,
@@ -273,7 +272,7 @@ relational.join = function(
     map.left= to.map(identity),
     map.right= to,map(identity),
     reduce = function (k, vl, vr) keyval(k, list(left=vl, right=vr)))
-```
+</pre>
 
 Instead of a single input, we have a `leftinput` and `rightinput`, as joins normally do, but in case we want to perform a self join, we can skip the first two arguments and specify only the third, `input`.
 
@@ -296,14 +295,14 @@ a<sub>ij</sub> = &Sigma;<sub>k</sub> b<sub>ik</sub> c<sub>kj</sub>
 
 We first define the map function. It comes in two flavors, wether you want to join on the column index or on the row index, and in a matrix multiplication we need both. So here is a higher order function that generates both maps. It just produces a key-value pair with as key the desired index and as value a list with all the information, row, column and element, which we will need later on.
 
-```
-matMulMap = function(i) function(k,v) keyval(k\[\[i\]\], list(pos = k, elem = v))
-```
+<pre>
+matMulMap = function(i) function(k,v) keyval(k&#91;&#91;i&#93;&#93;, list(pos = k, elem = v))
+</pre>
 
 
 And finally to the actual matrix multiplication. It is implemented as the composition of two jobs. One does the multiplications and the other the sums. There are other ways of implementing it but this is the most straightforward.
 
-```
+<pre>
 mat.mult = function(left, right, result = NULL) {
     mapreduce(
         input = relational.join(
@@ -311,12 +310,12 @@ mat.mult = function(left, right, result = NULL) {
                     rightinput = right,
                     map.left = matMulMap(2),
                     map.right = matMulMap(1), 
-                    reduce = function(k, vl, vr) keyval(c(vl$pos\[\[1\]\],                                
-                                                          vr$pos\[\[2\]\]),
+                    reduce = function(k, vl, vr) keyval(c(vl$pos&#91;&#91;1&#93;&#93;,                                
+                                                          vr$pos&#91;&#91;2&#93;&#93;),
 					                                    vl$elem*vr$elem)),
         output = result,
         reduce = to.reduce(identity, function(x) sum(unlist(x))))}
-```
+</pre>
 
 
 The first step is a join on the the column index for the left side  and the row index from the right side, so that we bring together pairs of the  form  (b<sub>ik</sub>,c<sub>kj</sub>). In the reduce we perform the multiplication and return a record with a key of (i,j) and a value equal to the multiplication. 
@@ -327,19 +326,19 @@ We now have all the elements in place to solve LLS: mapreduce transpose and matr
 
 We need a simple function to turn matrices represented in list form and sparse format, that we use with mapreduce, into regular dense in memory R matrices. We rely on a feature of `from.dfs` that turns lists into data frames whenever possible so that this function just has to go from dataframe to dense matrix, using the `Matrix` package and `sparseMatrix` in particular.
 
-```
+<pre>
 to.matrix = function(df) as.matrix(sparseMatrix(i=df$key1, j=df$key2, x=df$val))
-```
+</pre>
 
 Then our sought after semi-big-data LLS solution
 
-```
+<pre>
 linear.least.squares = function(X,y) {
     Xt = transpose(X)
     XtX = from.dfs(mat.mult(Xt, X), todataframe = TRUE)
     Xty = from.dfs(mat.mult(Xt, y), todataframe = TRUE) 
 	solve(to.matrix(XtX),to.matrix(Xty))}
-```
+</pre>
 
 We start with a transpose, compute the normal equations,  left and right side, and call solve on the converted data.
 
@@ -348,46 +347,45 @@ We start with a transpose, compute the normal equations,  left and right side, a
 
 Specify jobs using regular R functions and run them like R functions
 
-```
+<pre>
 mapreduce(map = function(k,v)..., reduce = function(k,vv)...)
-```
+</pre>
 
 compose jobs like functions
 
-```
+<pre>
 mapreduce(mapreduce(...
-```
+</pre>
 
 store results where you want
 
-```
+<pre>
 mapreduce(output = "my-result-file")
-```
+</pre>
 
 or in a variable
 
-```
+<pre>
 my.result = mapreduce(...)
-
-```
+</pre>
 
 create abstractions
 
-```
+<pre>
 my.job = function(x,y,z) { .... out = mapreduce(...);  ... out}
-```
+</pre>
 
 describe any data flow
 
-```
+<pre>
 out1 = my.job1(my.result); out2 = my.job2(my.result); merge.job(out1, out2)
-```
+</pre>
 
 move things in an out of memory and HDFS to create hybrid big-small-data algorithms, control flow and iteration, display results etc
 
-```
+<pre>
 if(length(from.dfs(my.job()))==0){...} else {...}; ggplot2(from.dfs(my.job(...)), ...)
-```
+</pre>
 
 
 
