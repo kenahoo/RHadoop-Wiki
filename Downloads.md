@@ -7,7 +7,7 @@ The current version of the packages is 1.0
 
 ###Installation and Prerequisites
 
-•Haddop - A working Hadoop cluster (this package was developed and tested on CDH3 standalone, and CDH3 distributed).  Make sure that the environment variables HADOOP_HOME and HADOOP_CONF are properly set.
+•Hadoop - A working Hadoop cluster (this package was developed and tested on CDH3 standalone, and CDH3 distributed).  Make sure that the environment variables HADOOP_HOME and HADOOP_CONF are properly set.
 Examples:
 <pre>
   HADOOP_HOME=/usr/lib/hadoop  
