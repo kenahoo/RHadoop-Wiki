@@ -18,7 +18,7 @@ Examples:
 
 •Dependent Packages - 'rhdfs' depends on rJava.  'rmr' depends on RSJSONIO, itertools and digest
 
-•Dependent Libraries - 'rhbase' use Thrift (see the wiki page [[rhbase]] for more details on Thrift.  
+•Dependent Libraries - 'rhbase' use Thrift (see the wiki page [[rhbase]] for more details).
 
 Packages should be installed from the command line using:  <b>R CMD INSTALL 'package filename'</b>  Note:  'rmr' needs to be installed on each node of the Hadoop Cluster.
 
