@@ -29,3 +29,5 @@ Packages should be installed from the command line using:  <b>R CMD INSTALL 'pac
 * [rmr - dev](https://s3.amazonaws.com/rhadoop/dev/rmr_1.0.tar.gz )
 * [rhdfs - dev](https://s3.amazonaws.com/rhadoop/dev/rhdfs_1.0.tar.gz  )
 * [rhbase - dev](https://s3.amazonaws.com/rhadoop/dev/rhbase_1.0.tar.gz  )
+
+Contact: rhadoop@revolutionanalytics.com
