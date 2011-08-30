@@ -9,6 +9,7 @@ RHadoop consists of the following packages:
 <font size=4><b>[[How to contribute to this project]] </b></font> <br>
 <font size=4><b>[[Wishlist]] </b></font> <br>
 
+Contact: rhadoop@revolutionanalytics.com
 ## News
 
 8/10/2011 - Wiki gone live
