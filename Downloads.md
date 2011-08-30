@@ -5,7 +5,8 @@ The current version of the packages is 1.0
 * [rhdfs - 1.0](https://s3.amazonaws.com/rhadoop/master/rhdfs_1.0.tar.gz)
 * [rhbase - 1.0](https://s3.amazonaws.com/rhadoop/master/rhbase_1.0.tar.gz)
 
-###Prerequisites - all
+###Installation and Prerequisites
+
 •Haddop - A working Hadoop cluster (this package was developed and tested on CDH3 standalone, and CDH3 distributed).  Make sure that the environment variables HADOOP_HOME and HADOOP_CONF are properly set.
 Examples:
 <pre>
