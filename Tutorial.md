@@ -12,7 +12,7 @@ and process the groups thus defined. Let's start with the simplext example, from
 The example is trivial, just computing the first 10 squares, but we just want to get the basics here, there are interesting examples later on. Now to the mapreduce equivalent:
 
     small.ints = to.dfs(1:10)
-    out = mapreduce(input = small.ints, map = function(k,v) keyval(k^2))
+    out = mapreduce(input = small.ints, map = function(k,v) keyval(k, k^2))
 	
 And this is it. There are some difference that we will go through, but the first thing to notice is that it isn't all that different, and just two lines of code. There are some superficial differences and
 some more fundamental ones. The first line puts the data into HDFS, where the bulk of the data has to be for mapreduce to operate on. Of course, we are unlikely to write out big data with
