@@ -233,7 +233,7 @@ The key is the pair row, col and the value is the matrix element. In practice th
 We start implementing the transpose with a tiny auxiliary function that swaps the elements of a two element list. You guessed right that this is going to be used to swap the raw index with the column index.
 
 <pre>
-swap = function(x) list(x&#91;&#91;2&#93;&#93;, &#91;&#91;1&#93;&#93;)
+swap = function(x) list(x&#91;&#91;2&#93;&#93;, x&#91;&#91;1&#93;&#93;)
 </pre>
 
 
