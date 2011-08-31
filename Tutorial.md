@@ -163,7 +163,7 @@ Next is the call actually performing a map reduce job. Its input is a set of poi
 To perform a sample run, we need some data. We can create is very easily from the R prompt:
 
 <pre>
-clustdata = lapply(1:100, function(i) keyval(i, c(rnorm(1, mean = i%%3, sd = 0.01), 
+clustdata = lapply(1:10000, function(i) keyval(i, c(rnorm(1, mean = i%%3, sd = 0.01), 
                                                   rnorm(1, mean = i%%4, sd = 0.01))))
 to.dfs(clustdata, "/tmp/clustdata")
 </pre>
@@ -180,7 +180,7 @@ Or for short:
 <pre>
 kmeans(
     to.dfs(
-	    lapply(1:100, 
+	    lapply(1:10000, 
                function(i) keyval(i, 
 			                      c(rnorm(1, mean = i%%3, sd = 0.01), 
 								    rnorm(1, mean = i%%4, sd = 0.01))))), 12)
@@ -214,17 +214,11 @@ We are going to adopt the following representation for matrices, here in data fr
    key1 key2        val
 
 1     1    1  0.7595035
-
 2     1    2  1.1731512
-
 3     1    3  0.2112339
-
 4     2    1  0.2305024
-
 5     2    2 -0.5277821
-
 6     2    3 -2.4413680
-
 7     3    1 -0.8510856
 </pre>
 
