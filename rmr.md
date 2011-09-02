@@ -16,5 +16,6 @@ Examples:
 
 ###[[Philosophy]]
 ###[[Tutorial]]
+###[[Efficient rmr techniques]]
 ###[[Writing composable mapreduce jobs]] 
 
