@@ -1,5 +1,5 @@
 ###Overview
-This R package provides basic connectivity to HBASE, using the [Thrift server](http://thrift.apache.org/). R programmers can browse, read, write, and modify files stored in HDFS. The following functions are part of this package
+This R package provides basic connectivity to HBASE, using the [Thrift server](http://thrift.apache.org/). R programmers can browse, read, write, and modify tables stored in HBASE. The following functions are part of this package
 
 * Table Maninpulation <br>
         hb.new.table, hb.delete.table, hb.describe.table, hb.set.table.mode, hb.regions.table
