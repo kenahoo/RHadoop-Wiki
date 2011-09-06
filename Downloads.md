@@ -1,28 +1,40 @@
-### Official release of the RHadoop packages  (built from the "master" branch)
-The current version of the packages is 1.0
+### Download Latest Official RHadoop Release
+
+RHadoop is currently at version 1.0
 
 * [rmr - 1.0](https://s3.amazonaws.com/rhadoop/master/rmr_1.0.tar.gz)
 * [rhdfs - 1.0](https://s3.amazonaws.com/rhadoop/master/rhdfs_1.0.tar.gz)
 * [rhbase - 1.0](https://s3.amazonaws.com/rhadoop/master/rhbase_1.0.tar.gz)
 
-###Installation and Prerequisites
+###Prerequisites
 
-•Hadoop - A working Hadoop cluster (this package was developed and tested on CDH3 standalone, and CDH3 distributed).  Make sure that the environment variables HADOOP_HOME and HADOOP_CONF are properly set.
-Examples:
-<pre>
-  HADOOP_HOME=/usr/lib/hadoop  
-  HADOOP_CONF=/etc/hadoop/conf
-</pre>
+* Hadoop 
+    * A working Hadoop cluster is required
+    * All there packages were developed and tested on CDH3 standalone, and CDH3 distributed  
+    * Make sure that the environment variables HADOOP_HOME and HADOOP_CONF are properly set.
+    Examples:
+    <pre>
+      HADOOP_HOME=/usr/lib/hadoop
+      HADOOP_CONF=/etc/hadoop/conf
+    </pre>
 
-•R - For 'rhdfs' and 'rhbase',  R client typically installed on the 'name' node of the Hadoop Cluster.  For 'rmr', R installed on each node in the Hadoop cluster. (packages tested with R 2.13.1)
+* R 
+    * For the 'rhdfs' and 'rhbase' packages,  we recommend you install the R client on the 'name' node of the Hadoop cluster.  
+    * For the 'rmr' package, install R on each node in the Hadoop cluster. 
+    *  All three packages were tested with R 2.13.1
 
-•Dependent Packages - 'rhdfs' depends on rJava.  'rmr' depends on RSJSONIO, itertools and digest
+* Package Dependencies
+    * The 'rhdfs' package is dependent on the pakage rJava.  
+    * The 'rmr' package is dependent on the packages RSJSONIO, itertools and digest
 
-•Dependent Libraries - 'rhbase' use Thrift (see the wiki page [[rhbase]] for more details).
+* Library Dependencies
+    * The 'rhbase' package requires the Thrift library. For more information, refer to the wiki page [[rhbase]] 
 
-Packages should be installed from the command line using:  <b>R CMD INSTALL 'package filename'</b>  Note:  'rmr' needs to be installed on each node of the Hadoop Cluster.
-
-
+###Installation
+1.     Download each R package
+1.     Enter the command:  <b>R CMD INSTALL 'package filename'</b>
+1.     Load the package in the R console 
+Important:  The 'rmr' package must be installed on each node of the Hadoop cluster.
 
 ### Experimental Development builds of the RHadoop packages (built from the "dev" branch)
 
