@@ -8,14 +8,18 @@ Considering here the abstract programming model, not the implementation specific
 high as the number of input records. Each record can be, in principle, processed independently and therefore in parallel. No so in the
 reduce phase. The maximum level of parallelism is determined by the cardinality of the set of keys. A single reducer has to process all the
 records associated with one key. This has the potential to negate the scalability of mapreduce. This may come as a surprise as it is often,
-incorrectly said that, once a computation is recast as a mapreduce computation, parallelism and scalability are ensured. 
-Let's consider a very simple problem, the sum of a set of numbers, a very large one. Let's assume that keys are irrelevant here, that is there is only one key. Each value contains a single number. The trivial mapreduce implementation is as follows:
+incorrectly said that, once a computation is recast as a mapreduce computation, parallelism and scalability are ensured. Let's consider a
+very simple problem, the sum of a set of numbers, a very large one. Let's assume that keys are irrelevant here, that is there is only one
+key. Each value contains a single number. The trivial mapreduce implementation is as follows:
 
 ```
 mapreduce(input = ..., reduce = function(k,vv) keyval(k, sum(unlist(vv))))
 ```
 
-This solution is not scalable because it uses a single reducer, no matter what the configuration of the hadoop cluster is. This is not an artificial example, as this situation is common, albeit perhaps not in this extreme form. In the classic word count example, the risk is that one processor has to got through all the occurrences of a single word, even the most common. This can be a problem both from a worst case analysis point of view and in real word text analysis.
+This solution is not scalable because it uses a single reducer, no matter what the configuration of the hadoop cluster is. This is not an
+artificial example, as this situation is common, albeit perhaps not in this extreme form. In the classic word count example, the risk is
+that one processor has to got through all the occurrences of a single word, even the most common. This can be a problem both from a worst
+case analysis point of view and in real word text analysis.
 
 While there aren't general solution to this problem, there are some known techniques that can help.
 
@@ -37,7 +41,7 @@ partial.sums = from.hdfs(mapreduce(input = ..., map = function(k,v) keyval(sampl
   over all processors. In a second job these partial counts are accumulated word by word.
 * Combiners. This problem is so common that a potential solution has been baked into hadoop as a special feature. Whenever the reduce
   function represents an operation on the records for each key that is associative and commutative, one can apply the reduce function on
-  arbitrary subsets and again on the results thereof. Examples are counting as above or max and min or averaging, if we express the average
+  arbitrary subsets and again onXS the results thereof. Examples are counting as above or max and min or averaging, if we express the average
   as a (total, count) pair and even the median if we accept that the median of medians is a good enough approximation independent of the
   grouping. This preliminary reduce application can be triggered simply specifying that we want a combiner. Since the combiner is run right
   after the map, on the same node, as opposed to the multiple job solution, the cost of the shuffling phase is often drastically
@@ -69,24 +73,23 @@ mapreduce(input = ..., reduce = function(k,vv) keyval(k, sum(unlist(vv))), combi
 
 ## R
 
-It is well known that the R interpreter is no speed daemon. Actually more like 50X to 100X C code, and I mean time. So what to do about it?
+It is well known that the R interpreter is no speed daemon. Actually more like 50X to 100X slower than C code. So what to do about it?
 
 * Nothing. It doesn't matter. Somebody has said that most widespread, useful algorithms take time linear in the size of the input, linear
-  programming notwithstanding, so the limiting factor is anyway I/O. This argument is great on paper and almost true with big data, but
-  doesn't seem to apply to rmr. Since hadoop goes to great lengths to optimize I/O minimizing disk seeks, in limited experiments conducted
-  so far jobs were always CPU-limited.
+  programming notwithstanding, so the limiting factor is I/O anyway. This argument is great on paper and almost true with big data where
+  linear time algorithms predominate, but doesn't seem to apply to rmr. Since hadoop goes to great lengths to optimize I/O minimizing disk
+  seeks, in limited experiments conducted so far jobs were always CPU-limited.
 * Use the compiler. While this is a promising technology that is now distributed with the main R distribution, the promised speed gains
   apply only to a subset of the language. rmr itself is not compiled yet but it will. The work on the compiler is active and improvements
   are expected this year. Expect something like 4X speedups as the compiler matures.
 * Write in C or leverage the work of people who did. R has a convenient interface for calling C functions and many library functions are
   written that way. For this approach to make a dent in the overall computing time we need most of the time to be spent outside the
-  interpreter executing optimized C code. To achieve that, any invocation to C-implemented functions from R has to get a significant chunk
+  interpreter, executing optimized C code. To achieve this, any invocation to C-implemented functions from R has to get a significant chunk
   of work done to offset the function call overhead. A programming style for rmr that makes this more feasible is one where each input
-  record is bigger than what is typical in the tutorial, where a record is set to the smallest unit of information for simplicity's sake,
-  like a single training set data point. This is an efficient style for hadoop in general. For instance, instead of a single matrix element,
-  one could store a submatrix in each record. In machine learning, one could store a subset of training data points instead of one. By doing
+  record is bigger than a single unit of data. This is an efficient style for hadoop in general. By comparison, in the [Tutorial] we mostly went the opposite route for simplicity's sake, which is the dominant consideration in that context. For instance, instead of a single matrix element,
+  we could have stored a submatrix in each record. In machine learning, one could store a subset of training data points instead of a single one. By doing
   this, one can reduce the number of records and thus the number of calls to the map and reduce functions. Then it becomes a matter of
-  implementing that function efficiently by using efficient library calls or writing the function in C. In the case of our large sum
+  implementing those functions efficiently by using efficient library calls or writing in C. In the case of our large sum
   example, we can switch to a format whereby the value is a vector of k numbers (the key is still null or constant) and modify the mapreduce call
   as follows:
   
@@ -94,17 +97,17 @@ It is well known that the R interpreter is no speed daemon. Actually more like 5
 mapreduce(input = ..., reduce = function(k,vv) keyval(k, sum(unlist(vv))), combine = T)
 ```
 
-Actually, there is no change because unlist can transform a list of vectors into a vector. But assuming that we spent r seconds in the R interpreter and c executing C code in the first version, the new version will run in roughly in r/k + c time, approaching C speed for large enough k. Further speed gains may be achieved by setting `map = reduce`, making the data reduction happen earlier in the process.
+Actually, there is no change because unlist can transform a list of vectors into a vector. But assuming that we spent r seconds in the R interpreter and c executing C code in the first version, the new version will run in roughly in r/k + c time, approaching C speed for large enough k. Further speed gains may be achieved by setting `map = reduce`, thus effecting a data reduction earlier in the process.
 
 ## rmr
 
 In the first part of this project, we focused on, as they say, "getting the API right", that is trying to achieve a seamless integration of
-mapreduce into R trying to make rmr interoperate and combine with other R features and language constructs, making rmr programs as readable
+mapreduce into R, letting rmr interoperate and combine with other R features and language constructs, making rmr programs as readable
 as possible, minimize any "surprise factor" etc. We have not focused on efficiency but we expect that to change as we gather feedback from
 users. Here are some related activities and improvements that could be helpful:
 
 * Performance testing. Testing at scale has been very limited and a new profiling feature has not been put to much use yet. We recommend
-  that people turn on profiling of the nodes during development and share their observations. We would be interested in taking a look at the
+  that users turn on profiling of the nodes during development and share their observations. We would be interested in taking a look at the
   results and helping with either code optimizations or, where warranted, optimizations in rmr itself.
 * Binary formats. Right now the default format is based on JSON (two JSON objects per line separated by a tab, for streaming
   compatibility). This is great for learning and debugging and also for interoperability with other data source (after all, we expect rmr to
