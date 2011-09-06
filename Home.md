@@ -6,7 +6,7 @@ RHadoop consists of the following packages:
 <font size=4><b>[[rhbase]] </b></font> - functions providing database management for the HBase distributed database from within R <br> <br>
 
 <font size=4><b>[[Downloads]] </b</font> <br>
-<font size=4><b>[[How to contribute to this project]] </b></font> <br>
+<font size=4><b>[[Contribute to the RHadoop project]] </b></font> <br>
 <font size=4><b>[[Wishlist]] </b></font> <br>
 
 Contact: rhadoop@revolutionanalytics.com
