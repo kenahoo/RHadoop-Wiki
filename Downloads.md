@@ -36,7 +36,8 @@ RHadoop is currently at version 1.0
 1.     Load the package in the R console 
 Important:  The 'rmr' package must be installed on each node of the Hadoop cluster.
 
-### Experimental Development builds of the RHadoop packages (built from the "dev" branch)
+### Experimental RHadoop Development builds
+The following versions are experimental and built from the ‘dev’ branch
 
 * [rmr - dev](https://s3.amazonaws.com/rhadoop/dev/rmr_1.0.tar.gz )
 * [rhdfs - dev](https://s3.amazonaws.com/rhadoop/dev/rhdfs_1.0.tar.gz  )
