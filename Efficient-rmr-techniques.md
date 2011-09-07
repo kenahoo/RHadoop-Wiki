@@ -130,13 +130,14 @@ users. Here are some related activities and improvements that could be helpful:
   files through a Java class that [performs a conversion](http://www.tomslabs.com/index.php/2011/06/use-avro-with-dumbo-for-hadoop-jobs/)
   and can use [binary formats](http://dumbotics.com/2009/02/24/hadoop-1722-and-typed-bytes/). An alternative R library for map reduce,
   RHIPE, uses Google's Protocol Buffers as the preferred data format, but doesn't use hadoop streaming to the best of my understanding.
-* Configuration. We have resisted adding options to fine tune hadoop on a per-job basis -- things like number of
-  mappers, number of reducers, number of concurrent tasks etc. -- for a number of reasons:
+* Configuration. We have resisted adding options to fine tune hadoop on a per-job basis &mdash; things like number of
+  mappers, number of reducers, number of concurrent tasks etc. &mdash; for a number of reasons:
   * to keep the API simple and clean
   * because it is not very compatible with having multiple backends (in the dev branch of `rmr` there is the option of an R-only backend for
     debugging and more may be added in the future, like a CUDA or Spark one)
-  * because of general recommendations against it by API gurus ("All tuning parameters are suspect" -- Josh Bloch)
+  * because of general recommendations against it by API gurus ("All tuning parameters are suspect" &mdash; Josh Bloch)
   * in the hope that hadoop will mature to a point where configuration issues will become less of a concern.
   
   A principled compromise on this issue may be necessary to achieve the full potential of `rmr`.
+
 * Compiler: see above. As it may be soon routine to compile map and reduce functions, the same could apply to the package itself.
