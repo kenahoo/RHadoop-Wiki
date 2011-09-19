@@ -26,13 +26,13 @@ R objects can be serialized to HDFS via the function: `hdfs.write`.  An example 
 
     model <- lm(...)
     modelfilename <- "my_smart_unique_name"
-    modelfile <- hdfs.file(modelfilename)
-    hdfs.write(modelfile, model)
+    modelfile <- hdfs.file(modelfilename, "w")
+    hdfs.write(model, modelfile)
     hdfs.close(modelfile)
 
 R objects can be deserialized to HDFS via the function: `hdfs.read`.  An example is shown below:
 
-    modelfile = hdfs.file(modelfilename)
+    modelfile = hdfs.file(modelfilename, "r")
     m <- hdfs.read(modelfile)
     model <- unserialize(m)
     hdfs.close(modelfile)
