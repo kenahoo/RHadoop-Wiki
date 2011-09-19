@@ -19,7 +19,7 @@ RHadoop is currently at version 1.0
     </pre>
 
 * R 
-    * For the 'rhdfs' and 'rhbase' packages,  we recommend you install the R client on the 'name' node of the Hadoop cluster.  
+    * For the 'rhdfs' and 'rhbase' packages,  we recommend you install R on the 'name' node of the Hadoop cluster.  
     * For the 'rmr' package, install R on each node in the Hadoop cluster. 
     *  All three packages were tested with R 2.13.1
 
