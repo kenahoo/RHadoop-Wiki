@@ -12,10 +12,8 @@ Examples:
 
       HADOOP_HOME=/usr/lib/hadoop  
       HADOOP_CONF=/etc/hadoop/conf
-
-
-###[[Philosophy]]
-###[[Tutorial]]
-###[[Efficient rmr techniques]]
-###[[Writing composable mapreduce jobs]] 
-
+<br>
+<font size=4><b>[[Philosophy]] </b</font> <br>
+<font size=4><b>[[Tutorial]] </b></font> <br>
+<font size=4><b>[[Efficient rmr techniques]] </b></font> <br>
+<font size=4><b>[[Writing composable mapreduce jobs]] </b></font> <br>
