@@ -13,15 +13,13 @@ This R package provides basic connectivity to HBASE, using the [Thrift server](h
 ###Prerequisites
 * Installing the package requires that you first [install and build Thrift](http://wiki.apache.org/thrift/ThriftInstallation).  Once you have the libraries built, be sure they are in a path where the R client can find them  (i.e. /usr/lib).  <b>This package was built and tested using Thrift 0.6.1</b>
 
-    Here is an example for building the libraries on CentOS, and installing the package:
+    Here is an example for building the libraries on CentOS:
        <br><br>
        1.  Install all Thrift pre-requisites:   http://wiki.apache.org/thrift/GettingCentOS5Packages
        2.  Build Thrfit according to instructions:  http://wiki.apache.org/thrift/ThriftInstallation
        3.  Update PKG_CONFIG_PATH:  export `PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig/`
        4.  Verifiy pkg-config path is correct:   `pkg-config --cflags thrift`    ,  returns:    `-I/usr/local/include/thrift`
        5.  Copy Thrift library  `sudo cp /usr/local/lib/libthrift.so.0 /usr/lib/`
-       6.  Build the rhbase package from source
-       7.  Install rbase package:   `R CMD INSTALL rhbase_1.0.tar.gz`
        <br><br>
 * The Thrift server by default starts on port 9090.
 
