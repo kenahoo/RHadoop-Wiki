@@ -5,11 +5,17 @@ RHadoop consists of the following packages:
 <font size=4><b>[[rhdfs]] </b></font> - functions providing file management of the HDFS from within R <br>
 <font size=4><b>[[rhbase]] </b></font> - functions providing database management for the HBase distributed database from within R <br> <br>
 
+The RHadoop packages have been tested with <a href="http://www.revolutionanalytics.com/downloads/">Revolution R 4.3</a> and <a href="http://www.cloudera.com/hadoop/">Cloudera CDH3</a>. 
+
+<h2>More information about RHadoop</h2>
+
+<a href="http://blog.revolutionanalytics.com/2011/09/mapreduce-hadoop-r.html">Overview of RHadoop</a>, from the Revolution Analytics blog.
+
+<a href="http://www.revolutionanalytics.com/news-events/free-webinars/2011/r-and-hadoop/">Slides and Replay</a> of 30-minute presentation about RHadooop, "Leveraging R in Hadoop Environments". 
+
 <font size=4><b>[[Downloads]] </b</font> <br>
 <font size=4><b>[[Contribute to the RHadoop project]] </b></font> <br>
 <font size=4><b>[[Wishlist]] </b></font> <br>
-
-The RHadoop packages have been tested with <a href="http://www.revolutionanalytics.com/downloads/">Revolution R 4.3</a> and <a href="http://www.cloudera.com/hadoop/">Cloudera CDH3</a>. 
 
 Contact: rhadoop@revolutionanalytics.com<br>
 Questions: you can use the above address or, if you don't mind sharing your question with everyone, just  [create a new issue](https://github.com/RevolutionAnalytics/RHadoop/issues/new) and tag it as type-question.
