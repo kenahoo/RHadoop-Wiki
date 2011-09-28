@@ -11,7 +11,7 @@ The RHadoop packages have been tested with <a href="http://www.revolutionanalyti
 
 <a href="http://blog.revolutionanalytics.com/2011/09/mapreduce-hadoop-r.html">Overview of RHadoop</a>, from the Revolution Analytics blog.
 
-<a href="http://www.revolutionanalytics.com/news-events/free-webinars/2011/r-and-hadoop/">Slides and Replay</a> of 30-minute presentation about RHadooop, "Leveraging R in Hadoop Environments". 
+<a href="http://www.revolutionanalytics.com/news-events/free-webinars/2011/r-and-hadoop/">Slides and Replay</a> of 30-minute presentation about RHadoop, "Leveraging R in Hadoop Environments". 
 
 <font size=4><b>[[Downloads]] </b</font> <br>
 <font size=4><b>[[Contribute to the RHadoop project]] </b></font> <br>
