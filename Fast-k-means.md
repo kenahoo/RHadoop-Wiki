@@ -1,13 +1,28 @@
-We have covered a basic k-means implementation with `rmr` in the [Tutorial]. But if you tried it out you probably have noticed that its performance leaves to be desired and wonder if anything can be done  about it. Or your have read [Efficient rmr techniques] and would like to see those suggestions put to work beyond the trivial "large sums" example used therein. You are in the right place since we will cover an implementation that is modestly more complex and is 200x faster.
+We have covered a basic k-means implementation with `rmr` in the [Tutorial]. But if you tried it out you probably have noticed that its
+performance leaves to be desired and wonder if anything can be done about it. Or your have read [Efficient rmr techniques] and would like to
+see those suggestions put to work beyond the trivial "large sums" example used therein. Then this page should be of interest to you since we
+will cover an implementation that is modestly more complex and is two orders of magnitude faster. To make the most of the following
+explanation, it's recommended that you read the other two documents first.
 
+First we need to reorganize our data representation a little, creating bulkier records that contain a small subset of the data set, but more
+than a single point. So instead of storing one point per record we will store a matrix thereof per record, with on data point per row. We'll
+set the number of rows to 1000 which is enough to reap the advantages of using "vectorised" functions in R but not big enough to create
+memory problems. So this is how a sample call would look like, with the first argument being a sample dataset.
 
 ```r
+recsize = 1000
 kmeans(to.dfs(lapply(1:100, function(i) keyval(NULL, 
                                                cbind(sample(0:2, recsize, replace = T) + rnorm(recsize, sd = .1), 
                                                            sample(0:3, recsize, replace = T) + 
                                                              rnorm(recsize, sd = .1))))), 12, iterations = 5, fast = T)
 ```
 
+This creates and operates on a dataset with 100,000 data points, organized in 100 records. For a larger data set you would need to increase
+the number of records only, the size of each record can stay the same. As you may recall, the implementation of kmeans we described in the
+tutorial was organized in two functions, one containing the main itaration loop and the other doing the work of computing distances and new
+centers. The good news is the first function can stay exactly the same but for the addition of a flag that tells whether to use the
+optimized version of the "inner" function, so we don't need to cover it here (the code is un the source under tests, only in dev branch for
+now). Therefore we only need to define a `kmeans.iter.fast` as an alternative to `kmeans.iter` in the implementation in the Tutorial.
 
 ```r
 kmeans.iter.fast = 
