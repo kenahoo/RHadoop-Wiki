@@ -11,20 +11,25 @@ problems. So this is how a sample call would look like, with the first argument 
 
 ```r
 recsize = 1000
-kmeans(to.dfs(lapply(1:100, function(i) keyval(NULL, 
-                                               cbind(sample(0:2, recsize, replace = T) + 
-											         rnorm(recsize, sd = .1), 
-                                                     sample(0:3, recsize, replace = T) + 
-                                                     rnorm(recsize, sd = .1))))), 
-											   12, iterations = 5, fast = T)
+kmeans(
+  to.dfs(
+    lapply(
+	  1:100, 
+      function(i) keyval(
+	    NULL, 
+        cbind(sample(0:2, recsize, replace = T) + 
+		        rnorm(recsize, sd = .1), 
+              sample(0:3, recsize, replace = T) + 
+                rnorm(recsize, sd = .1))))), 
+	    12, iterations = 5, fast = T)
 ```
 
-This creates and operates on a dataset with 100,000 data points, organized in 100 records. For a larger data set you would need to increase
+This creates and processes a dataset with 100,000 data points, organized in 100 records. For a larger data set you would need to increase
 the number of records only, the size of each record can stay the same. As you may recall, the implementation of kmeans we described in the
 tutorial was organized in two functions, one containing the main iteration loop and the other computing distances and new centers. The good
 news is the first function can stay largely the same but for the addition of a flag that tells whether to use the optimized version of the
 "inner" function, so we don't need to cover it here (the code is un the source under tests, only in dev branch for now) and a different
-default for the distance function (more on this soome). The important and quite radical changes are in the `kmeans.iter.fast` fucntion,
+default for the distance function &mdash; more on this soon. The important and quite radical changes are in the `kmeans.iter.fast` function,
 which provides an alternative to the `kmeans.iter` function in the original implementation. Let's first discuss why we need a different
 default distance function, and in general why we need to give the distance function a different signature for the fast version. On of the
 most CPU intensive tasks in this algorithm is computing distances between a candidate center and each data point. If we don't implement this
@@ -33,8 +38,8 @@ function in R, we need to get a significant amount of work done for each call. T
 function of two points, we will switch to a function of one point and and a set thereof that returns that distance between the first
 argument and each element of the second. In this implementation we will us a matrix instead of a set, since there are powerful primitives
 available to operate on matrices. The following is the default distance function with this new signature, where we can see that we avoided
-any explicit loops over the rows of the matrix `yy`. There are two implicit loops (`Reduce` and `lapply`) but internally they used vectorized
-operators.
+any explicit loops over the rows of the matrix `yy`. There are two implicit loops, `Reduce` and `lapply`, but internally they used
+vectorized operators.
 
 ```r
     fast.dist = function(yy, x) { #compute all the distances between x and rows of yy
@@ -55,16 +60,30 @@ conversion function that allows us to work around a limitation in the RJSONIO li
 deserialized matrix returns a list of vectors, which we can easily turn into a matrix again. Whenever you have doubts whether the R object
 you intend to use as an argument or return value of a mapper or reducer will be encoded and decoded correctly, an option is to try
 `RJSONIO::fromJSON(RJSONIO::toJSON(x))` where `x` is the object of interest. This a price to pay for using a language agnostic serialization
-scheme. 
+scheme.
 
 ```r
     list.to.matrix = function(l) do.call(rbind,l) # this is a little workaround for RJSONIO not handling matrices properly
 ```
 
+The next is the main mapreduce call, which, as in the Tutorial, can have two different map function: let's look at each in detal.
 ```r
     newCenters = from.dfs(
       mapreduce(
         input = points,
+```
+
+The first of the two map functions is used only for the first iteration, when no set of cluster centers is available, only a number, and
+randomly assigns each point to a center, so nothing new w.r.t. the Tutorial, but here the argument `v` represents multiple data points and
+we need to assign each of them to a center efficiently. Moreover, we are going to switch from computing the means of data points in a
+cluster to computing their sums and  counts, dealaying taking the ratio of the two as much as possible. This way we can apply early data
+reduction as will be clear soon. The first step in the mapper is devoted to that, that is extend the matrix of points with a column of
+counts, all initialized to one. The next line assigns points to clusters using `sample`. This assignment is then supplied to the function `by`
+which applies a column sum to each cluster-defined group of rows in the matrix `v` of data points. This is where we apply the `sum`
+operation at the earliest possible stage &mdash; you can see it as a in-map combiner. Also, since the first column of the matrix is now
+devoted to counts, we are updating those as well. In the last line, the only thing left is to generate a list of keyvalue pairs, one per
+center, and return it.
+```r
         map = 
           if (is.null(centers)) {
             function(k, v) {
@@ -73,6 +92,18 @@ scheme.
               centers = sample(1:ncenters, dim(v)[[1]], replace = TRUE) 
               clusters = unclass(by(v,centers,function(x) apply(x,2,sum)))
               lapply(names(clusters), function(cl) keyval(as.integer(cl), clusters[[cl]]))}}
+```
+
+For all iterations after the first, the assignment of points to centers follows a min distance criterion. The first lines back-converts `v`
+to a matrix whereas the second uses the aforementioned `fast.dist` function in combination with `apply` to generate a data points x centers
+matrix of distances. The next assignment, which takes a few lines, aims to compute the row by row min of this distance matrix and return the
+index of a column containing the minimum for each row. We can not use the customary function `min` to accomplish this as it returns only a
+single number, so we would need to call it for each data point. So we need to use its parallel, less known version `pmin` and apply it to
+the columns of the distance matrix. The output of this is a two column matrix where each row as the index of a row and the column index of
+the index of the min for that row. The following assignment sorts this matrix so that the results are in the same order as the `v`
+matrix. The last few steps are the same as for the first type of map.
+
+```r
           else {
             function(k, v) {
               v = list.to.matrix(v)
@@ -88,10 +119,23 @@ scheme.
               v = cbind(1, v)
               clusters = unclass(by(v,closest.centers$col,function(x) apply(x,2,sum))) #group by closest center and sum up, kind of an early combiner
               lapply(names(clusters), function(cl) keyval(as.integer(cl), clusters[[cl]]))}},
+```
+
+In the reduce function, we simply sum over the colums of the matrix of points associated with the same cluster center. Actually, since we
+have started adding over sugroups of points in the mapper itself, what we are adding here are already partial sums and partial counts (in
+the first column, you may rememeber, we store counts). Since this is an associative and commutative operation, it only helps to also switch
+the combiner on.
+
+```r
        reduce = function(k, vv) {
                keyval(NULL, apply(list.to.matrix(vv), 2, sum))},
-     reduceondataframe = F,
-     combine = F),
+     combine = T),
+```
+
+The last few lines are an optional argument to `from.dfs` that operates a conversion from list to dataframe when it is possible, the
+selection of centers with at least a count of one associated point and, at the very last step, converting sums into averages.
+
+```r
 todataframe = T)
     ## convention is iteration returns sum of points not average and first element of each sum is the count
     newCenters = newCenters[newCenters[,1] > 0,]
