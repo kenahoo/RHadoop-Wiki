@@ -95,11 +95,10 @@ center, and return it.
 For all iterations after the first, the assignment of points to centers follows a min distance criterion. The first lines back-converts `v`
 to a matrix whereas the second uses the aforementioned `fast.dist` function in combination with `apply` to generate a data points x centers
 matrix of distances. The next assignment, which takes a few lines, aims to compute the row by row min of this distance matrix and return the
-index of a column containing the minimum for each row. We can not use the customary function `min` to accomplish this as it returns only a
-single number, so we would need to call it for each data point. So we need to use its parallel, less known version `pmin` and apply it to
+index of a column containing the minimum for each row. We can not use the customary function `min` to accomplish this as it returns only one number, so we would need to call it for each data point. So we need to use its parallel, less known relative `pmin` and apply it to
 the columns of the distance matrix. The output of this is a two column matrix where each row as the index of a row and the column index of
 the index of the min for that row. The following assignment sorts this matrix so that the results are in the same order as the `v`
-matrix. The last few steps are the same as for the first type of map.
+matrix. The last few steps are the same as for the first type of map and implement the early reduction we talked about.
 
 ```r
           else {
@@ -120,9 +119,9 @@ matrix. The last few steps are the same as for the first type of map.
 ```
 
 In the reduce function, we simply sum over the colums of the matrix of points associated with the same cluster center. Actually, since we
-have started adding over sugroups of points in the mapper itself, what we are adding here are already partial sums and partial counts (in
-the first column, you may rememeber, we store counts). Since this is an associative and commutative operation, it only helps to also switch
-the combiner on.
+have started adding over subgroups of points in the mapper itself, what we are adding here are already partial sums and partial counts
+(which we store in the first column, as you may recall). Since this is an associative and commutative operation, it only helps to
+also switch the combiner on.
 
 ```r
         reduce = function(k, vv) {
@@ -130,11 +129,13 @@ the combiner on.
         combine = T),
 ```
 
-The last few lines are an optional argument to `from.dfs` that operates a conversion from list to dataframe when it is possible, the
-selection of centers with at least a count of one associated point and, at the very last step, converting sums into averages.
+The last few lines are an optional argument to `from.dfs` that operates a conversion from list to dataframe when possible, the selection of
+centers with at least a count of one associated point and, at the very last step, converting sums into averages.
 
 ```r
       todataframe = T)
   newCenters = newCenters[newCenters[,1] > 0,]
     (newCenters/newCenters[,1])[,-1]}
 ```
+
+
