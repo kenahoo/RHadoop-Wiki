@@ -21,31 +21,30 @@ kmeans(
 		        rnorm(recsize, sd = .1), 
               sample(0:3, recsize, replace = T) + 
                 rnorm(recsize, sd = .1))))), 
-	    12, iterations = 5, fast = T)
+    12, iterations = 5, fast = T)
 ```
 
 This creates and processes a dataset with 100,000 data points, organized in 100 records. For a larger data set you would need to increase
 the number of records only, the size of each record can stay the same. As you may recall, the implementation of kmeans we described in the
 tutorial was organized in two functions, one containing the main iteration loop and the other computing distances and new centers. The good
 news is the first function can stay largely the same but for the addition of a flag that tells whether to use the optimized version of the
-"inner" function, so we don't need to cover it here (the code is un the source under tests, only in dev branch for now) and a different
-default for the distance function &mdash; more on this soon. The important and quite radical changes are in the `kmeans.iter.fast` function,
-which provides an alternative to the `kmeans.iter` function in the original implementation. Let's first discuss why we need a different
-default distance function, and in general why we need to give the distance function a different signature for the fast version. On of the
-most CPU intensive tasks in this algorithm is computing distances between a candidate center and each data point. If we don't implement this
-one in an efficient way, we can't hope for an overall efficient implementation. Since it takes about a microsecond to call the simplest
-function in R, we need to get a significant amount of work done for each call. Therefore, instead of specifying the distance function as a
-function of two points, we will switch to a function of one point and and a set thereof that returns that distance between the first
-argument and each element of the second. In this implementation we will us a matrix instead of a set, since there are powerful primitives
-available to operate on matrices. The following is the default distance function with this new signature, where we can see that we avoided
-any explicit loops over the rows of the matrix `yy`. There are two implicit loops, `Reduce` and `lapply`, but internally they used
-vectorized operators.
+"inner" function, so we don't need to cover it here (the code is in the source under `tests`, only in the dev branch for now) and a
+different default for the distance function &mdash; more on this soon. The important and quite radical changes are in the `kmeans.iter.fast`
+function, which provides an alternative to the `kmeans.iter` function in the original implementation. Let's first discuss why we need a
+different default distance function, and in general why the distance function has a different signature in the fast version. One
+of the most CPU intensive tasks in this algorithm is computing distances between a candidate center and each data point. If we don't
+implement this one in an efficient way, we can't hope for an overall efficient implementation. Since it takes about a microsecond to call
+the simplest function in R, we need to get a significant amount of work done for each call. Therefore, instead of specifying the distance
+function as a function of two points, we will switch to a function of one point and and a set thereof that returns that distance between the
+first argument and each element of the second. In this implementation we will us a matrix instead of a set, since there are powerful
+primitives available to operate on matrices. The following is the default distance function with this new signature, where we can see that
+we avoided any explicit loops over the rows of the matrix `yy`. There are two implicit loops, `Reduce` and `lapply`, but internally they
+used vectorized operators.
 
 ```r
-    fast.dist = function(yy, x) { #compute all the distances between x and rows of yy
+    fast.dist = function(yy, x) { 
       squared.diffs = (t(t(yy) - x))^2
-      ##sum the columns, take the root
-      sqrt(Reduce(`+`, lapply(1:dim(yy)[2], function(d) squared.diffs[,d])))} #loop on dimension
+      sqrt(Reduce(`+`, lapply(1:dim(yy)[2], function(d) squared.diffs[,d])))} 
 ```
 
 With fast distance computation taken care of, at least for the euclidean case, let's look at the fast implementation of the kmeans iteration.
@@ -63,7 +62,7 @@ you intend to use as an argument or return value of a mapper or reducer will be 
 scheme.
 
 ```r
-    list.to.matrix = function(l) do.call(rbind,l) # this is a little workaround for RJSONIO not handling matrices properly
+    list.to.matrix = function(l) do.call(rbind,l)
 ```
 
 The next is the main mapreduce call, which, as in the Tutorial, can have two different map function: let's look at each in detal.
@@ -88,7 +87,6 @@ center, and return it.
           if (is.null(centers)) {
             function(k, v) {
               v = cbind(1, list.to.matrix(v))
-              ##pick random centers
               centers = sample(1:ncenters, dim(v)[[1]], replace = TRUE) 
               clusters = unclass(by(v,centers,function(x) apply(x,2,sum)))
               lapply(names(clusters), function(cl) keyval(as.integer(cl), clusters[[cl]]))}}
@@ -109,7 +107,7 @@ matrix. The last few steps are the same as for the first type of map.
               v = list.to.matrix(v)
               dist.mat = apply(centers, 1, function(x) fast.dist(v, x))
               closest.centers = as.data.frame(
-                which( #this finds the index of the min row by row, but one can't loop on the rows so we must use pmin
+                which(
                   dist.mat == do.call(
                     pmin,
                     lapply(1:dim(dist.mat)[2], 
@@ -117,7 +115,7 @@ matrix. The last few steps are the same as for the first type of map.
                   arr.ind=TRUE))
               closest.centers[closest.centers$row,] = closest.centers
               v = cbind(1, v)
-              clusters = unclass(by(v,closest.centers$col,function(x) apply(x,2,sum))) #group by closest center and sum up, kind of an early combiner
+              clusters = unclass(by(v,closest.centers$col,function(x) apply(x,2,sum)))
               lapply(names(clusters), function(cl) keyval(as.integer(cl), clusters[[cl]]))}},
 ```
 
@@ -127,17 +125,16 @@ the first column, you may rememeber, we store counts). Since this is an associat
 the combiner on.
 
 ```r
-       reduce = function(k, vv) {
-               keyval(NULL, apply(list.to.matrix(vv), 2, sum))},
-     combine = T),
+        reduce = function(k, vv) {
+          keyval(NULL, apply(list.to.matrix(vv), 2, sum))},
+        combine = T),
 ```
 
 The last few lines are an optional argument to `from.dfs` that operates a conversion from list to dataframe when it is possible, the
 selection of centers with at least a count of one associated point and, at the very last step, converting sums into averages.
 
 ```r
-todataframe = T)
-    ## convention is iteration returns sum of points not average and first element of each sum is the count
-    newCenters = newCenters[newCenters[,1] > 0,]
+      todataframe = T)
+  newCenters = newCenters[newCenters[,1] > 0,]
     (newCenters/newCenters[,1])[,-1]}
 ```
