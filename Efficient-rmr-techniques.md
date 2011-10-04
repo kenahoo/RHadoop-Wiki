@@ -50,7 +50,7 @@ partial.sums = from.hdfs(mapreduce(input = ...,
   grouping. This preliminary reduce application can be triggered simply specifying that we want a combiner. Since the combiner is run right
   after the map, on the same node, as opposed to the multiple job solution, the cost of the shuffling phase is often drastically
   reduced. The combiner can be in principle a function different from the reducer, but since there isn't a guarantee that the combiner will
-  be actually applied to each record, I have yet to see a meaningful example of this. In the large sum example our we just have to write:
+  be actually applied to each record, I have yet to see a meaningful example of this. In the large sum example we just have to write:
   
 ```R
 mapreduce(input = ..., reduce = function(k,vv) keyval(k, sum(unlist(vv))), combine = T)
