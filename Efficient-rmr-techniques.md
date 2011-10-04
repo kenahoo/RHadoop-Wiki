@@ -27,7 +27,7 @@ While there aren't general solutions to this problem, there are some known techn
 
 * Sampling. One can run a sampling job, sampling at a fixed rate, to get an estimate of the word frequencies, then run a second job sampling
   at a rate inversely proportional to the initial estimates to get better estimates for the low frequency words without incurring in
-  bottlenecks. This can be genrealized to other cases such as fitting one low complexity model per key etc.
+  bottlenecks. This can be generalized to other cases such as fitting one low complexity model per key etc.
 * Randomized keys. The above example required multiple jobs and accepting some degree of approximation. In some cases we might be able to avoid
   both by artificially increasing the number of keys to achieve better load balancing and degree of parallelism. In our large sum example we
   could proceed as follows:
