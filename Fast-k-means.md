@@ -126,11 +126,15 @@ talked about.
 In the reduce function, we simply sum over the colums of the matrix of points associated with the same cluster center. Actually, since we
 have started adding over subgroups of points in the mapper itself, what we are adding here are already partial sums and partial counts
 (which we store in the first column, as you may recall). Since this is an associative and commutative operation, it can only help to also
-switch the combiner on.
+switch the combiner on. There is on subtle change necessary to do so successfully, which required some debugging even for the author of this
+document, allegedly a mapreduce expert. In a first version, the reducer returned key value pairs with a NULL key. After all, the reduce
+phase happens after the shuffle phase, so what use are keys? Not so if the combiner is turned on, as records are first shuffled into the
+combiner and then re-shuffled into the reducer. So the reducer has to set a key, usually keeping the one set by the mapper (the reducer has
+to be key-idempotent for the combiner to work)
 
 ```r
         reduce = function(k, vv) {
-          keyval(NULL, apply(list.to.matrix(vv), 2, sum))},
+          keyval(k, apply(list.to.matrix(vv), 2, sum))},
         combine = T),
 ```
 
@@ -139,7 +143,7 @@ centers with at least a count of one associated point and, at the very last step
 
 ```r
       todataframe = T)
-  newCenters = newCenters[newCenters[,1] > 0,]
+    newCenters = newCenters[newCenters[,2] > 0,-1]
     (newCenters/newCenters[,1])[,-1]}
 ```
 
@@ -150,4 +154,4 @@ that acted on all the data points in one record within a single call. Finally, w
 with the computation of pairs (sum, count), which, thanks to the associativity and commutativity of sums, can be performed on arbitrary
 subgroups as soon as they are formed, effecting an early data reduction. These transformations exemplify only a subset of the topics
 covered in [[Efficient rmr techniques]] but are enough to produce a dramatic speedup in this case. Detailed performance results will be
-added shortly.
+added shortly, but preliminary numbers are around 100x.
