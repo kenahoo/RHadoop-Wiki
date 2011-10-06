@@ -9,6 +9,7 @@
     * a way to access the Map Reduce programming paradigm.
     * a way to work on big data sets in a way that is “natural” or “R-like”.
     * a way to access massive, fault tolerant parallelism without mastering distributed programming.
+    * just a library to use, no run-time, no R patches, nothing
 
 What rmr is not trying to be:
 
