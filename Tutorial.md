@@ -381,7 +381,7 @@ move things in an out of memory and HDFS to create hybrid big-small-data algorit
 if(length(from.dfs(my.job()))==0){...} else {...}; ggplot2(from.dfs(my.job(...)), ...)
 </pre>
 
-### Resource
+### Resources
 Updated versions of all the examples can be found [here](https://github.com/RevolutionAnalytics/RHadoop/tree/dev/rmr/pkg/tests)
 
 
