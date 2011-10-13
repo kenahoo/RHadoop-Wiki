@@ -2,7 +2,7 @@
 
 We will try to collect here different observations, guidelines and examples about writing efficient and scalable programs with `rmr`. These
 observations are related to the mapreduce programming model, its specific implementation in hadoop, R as a programming language and the `rmr`
-package itself. Finally, we provide an example where these techniques are applied to a simple clustering algorithm.
+package itself. To see an example where some of these techniques are applied to a simple clustering algorithm, proceed [here](Fast-k-means)
 
 ## Mapreduce
 
@@ -141,6 +141,5 @@ users. Here are some related activities and improvements that could be helpful:
 
 * Compiler: see above. As it may be soon routine to compile map and reduce functions, the same could apply to the package itself.
 
-## Fast k-means
 
 
