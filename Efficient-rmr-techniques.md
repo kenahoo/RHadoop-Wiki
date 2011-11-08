@@ -7,7 +7,7 @@ package itself. To see an example where some of these techniques are applied to 
 ## Mapreduce
 
 Considering here the abstract programming model, not the implementation specifics, the level of available parallelism in the map phase is as
-high as the number of input records. Each record can be, in principle, processed independently and therefore in parallel. No so in the
+high as the number of input records. Each record can be, in principle, processed independently and therefore in parallel. Not so in the
 reduce phase. The maximum level of parallelism is determined by the cardinality of the set of keys. A single reducer has to process all the
 records associated with one key. This has the potential to curtail or negate the scalability of mapreduce. This may come as a surprise as it
 is often, incorrectly said that, once a computation is recast as a mapreduce computation, parallelism and scalability are ensured. Let's
