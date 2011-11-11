@@ -25,7 +25,7 @@ RHadoop is currently at version 1.0.1
 
 * Package Dependencies
     * The 'rhdfs' package is dependent on the pakage rJava.  
-    * The 'rmr' package is dependent on the packages RSJSONIO, itertools and digest
+    * The 'rmr' package is dependent on the packages RJSONIO, itertools and digest
 
 * Library Dependencies
     * The 'rhbase' package requires the Thrift library. For more information, refer to the wiki page [[rhbase]] 
