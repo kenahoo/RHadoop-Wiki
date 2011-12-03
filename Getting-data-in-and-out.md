@@ -1,4 +1,7 @@
-(Thanks Damien for the examples and Koert for conversations on the subject)
+* This document responds to several inquiries on data formats and how to get data in and out of the rmr system
+* Still more a collection of snippets than anything organized
+* Code is NOT tested
+* Thanks Damien for the examples and Koert for conversations on the subject
 
 Internally `rmr` uses JSON-ish representation (see below) internally in v1.0 and the R native serde in v1.1 (We just cut a branch for the
 release candidate as of this writing). The goal is to make you forget about representation issues. But what happens at the boundary of the
@@ -9,7 +12,7 @@ any use. This is what is available and how to extend it.
 language has decent JSON libraries. Default in v1.0, still available in v1.1. and for the foreseeable future. Parsed in C for efficiency,
 should handle large objects.
 2. CSV added support in version 1.1. A variety of actual formats modeled after `read.table`
-4. Raw: for english text. key is null and value is a string, one per line
+4. Raw: for english text. key is null and value is a string, one per line. Please don't use it for anything else.
 5. Write your own parser in R: `mycustomformat = function(line) <parsing work here> keyval(k,v);
 mapreduce(<other args here>, textinputformat = mycustomformat)`
 that is, it gets a line of text, parses it and returns a keyval pair, which goes straight into the mapper
@@ -125,7 +128,7 @@ In v1.1 this should be as simple as
 myCSVOutput = csvtextoutputformat(sep = ",")
 ```
 
-This time define an output so can extract from hdfs (cannot hdfs.get from a Rhadoop big data object)
+This time providing output argument so one can extract from hdfs (cannot hdfs.get from a Rhadoop big data object)
 
 ```r
 mapreduce(input = hdfsData,
