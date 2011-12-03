@@ -106,7 +106,7 @@ mrResult <- mapreduce(input = hdfsData,
             keyval(k, log(v$value))
         }
     },
-    reduce = function(kk, vv) keyval(kk, mean(unlist(vv)))
+    reduce = function(k, vv) keyval(k, mean(unlist(vv)))
     )
 ```
 
