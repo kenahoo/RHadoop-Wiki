@@ -27,3 +27,4 @@ If you use Globus Provision, check out this https://github.com/nbest937/gp-rhado
 * [[Efficient rmr techniques]] 
 * [[Writing composable mapreduce jobs]] 
 * [[Use cases]]
+* [[Getting data in and out]]
