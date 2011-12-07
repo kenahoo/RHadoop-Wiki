@@ -5,7 +5,7 @@ RHadoop consists of the following packages:
 <font size=4><b>[[rhdfs]] </b></font> - functions providing file management of the HDFS from within R <br>
 <font size=4><b>[[rhbase]] </b></font> - functions providing database management for the HBase distributed database from within R <br> <br>
 
-The RHadoop packages have been tested with <a href="http://www.revolutionanalytics.com/downloads/">Revolution R 4.3</a> and <a href="http://www.cloudera.com/hadoop/">Cloudera CDH3</a>. 
+The RHadoop packages have been tested with <a href="http://www.revolutionanalytics.com/downloads/">Revolution R 4.3</a> and <a href="http://www.cloudera.com/hadoop/">Cloudera CDH3</a>. In particular `rmr` needs a backport of a feature called "streaming combiners" that is present in CDH3 to support combiners.
 
 <h2>More information about RHadoop</h2>
 
