@@ -19,6 +19,9 @@ For people who use RPMs for their deployments, courtesy of jseidman, we have RPM
 
 If you use Globus Provision, check out this https://github.com/nbest937/gp-rhadoop (very alpha as of this edit), courtesy nbest.
 
+### rmr talk
+Come meet the devs! Instead of an IRC channel, we are going to use a Google Hangout. Go to this [calendar](https://www.google.com/calendar/selfsched?sstoken=UU1Dc1pfaW1zVG9FfGRlZmF1bHR8Y2RmZGFiNjUyYWQ4YWU0MWIxYzQ5ZjQwMjU4NmYxNjE) and click on one of the available slots (if you get a slot you can stay for the whole hour containing that slot, it's just a way to limit the number of people). So if you get 9:xx through 9:yy the talk will last from 9 to 10). Be sure you have a Google+ account. A headset and webcam are recommended. When it's time for the hangout, check +Antonio Piccolboni, I will publish the hangout URL before the talk starts (unfortunately, it's impossible to reserve a URL). We are all learning this medium as we go, so please arm yourself with patience.
+
 ## Contents
 
 * [[Changelog]]
