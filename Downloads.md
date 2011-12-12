@@ -1,8 +1,6 @@
 ### Download Latest Official RHadoop Release
 
-RHadoop is currently at version 1.0.1
-
-* [rmr - 1.0.1](https://s3.amazonaws.com/rhadoop/master/rmr_1.0.1.tar.gz)
+* [rmr - 1.1](https://github.com/downloads/RevolutionAnalytics/RHadoop/rmr_1.1.tar.gz)
 * [rhdfs - 1.0.1](https://s3.amazonaws.com/rhadoop/master/rhdfs_1.0.1.tar.gz)
 * [rhbase - 1.0.1](https://s3.amazonaws.com/rhadoop/master/rhbase_1.0.1.tar.gz)
 
