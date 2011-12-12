@@ -1,4 +1,4 @@
-### Download Latest Official RHadoop Release
+### Download Latest Official RHadoop Releases
 
 * [rmr - 1.1](https://github.com/downloads/RevolutionAnalytics/RHadoop/rmr_1.1.tar.gz)
 * [rhdfs - 1.0.1](https://s3.amazonaws.com/rhadoop/master/rhdfs_1.0.1.tar.gz)
