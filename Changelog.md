@@ -1,5 +1,5 @@
 #Changelog
-## Upcoming in 1.1 (version-1.1 branch)
+## rmr 1.1 (master branch)
 
 * Native R serialization/deserialization, which implies that all R objects are supported as key and value, without any conversion boilerplate code. This is the new default. JSON still supported. csv reader/writer also available -- somewhat experimental.
 * Multiple backends (hadoop and local); local backend is useful for debugging at small scale; having two backends enforces modular design, opens up further possibilities (rjava, Amazon's EMR, OpenCL have been suggested), forces to clarify semantics.
