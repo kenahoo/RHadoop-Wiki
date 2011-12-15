@@ -21,5 +21,6 @@ Contact: rhadoop@revolutionanalytics.com<br>
 Questions: you can use the above address or, if you don't mind sharing your question with everyone, just  [create a new issue](https://github.com/RevolutionAnalytics/RHadoop/issues/new) and tag it as type-question.
 
 ## News
+12/7/2011 - Version 1.1 of the package rmr is available. See the [[Changelog]] for details. <br>
 9/29/2011 - Version 1.0.1 available - fixes some minor defects with R CMD check tests on the packages <br>
 8/10/2011 - Wiki gone live
