@@ -1,11 +1,10 @@
-RHadoop is a collection of three R packages that allow users to manage and analyze data with Hadoop. The packages have been implemented and tested in Cloudera's distribution of Hadoop (CDH3) with R 2.13.0.
+RHadoop is a collection of three R packages that allow users to manage and analyze data with Hadoop. The packages have been implemented and tested in Cloudera's distribution of Hadoop <a href="http://www.cloudera.com/hadoop/">(CDH3)</a>.  and R 2.13.0.  THe packages have also been tested with <a href="http://www.revolutionanalytics.com/downloads/">Revolution R 4.3 and 5.0</a>
+
 RHadoop consists of the following packages:
 
 <font size=4><b>[[rmr]] </b></font> - functions providing Hadoop MapReduce functionality in R <br>
 <font size=4><b>[[rhdfs]] </b></font> - functions providing file management of the HDFS from within R <br>
 <font size=4><b>[[rhbase]] </b></font> - functions providing database management for the HBase distributed database from within R <br> <br>
-
-The RHadoop packages have been tested with <a href="http://www.revolutionanalytics.com/downloads/">Revolution R 4.3</a> and <a href="http://www.cloudera.com/hadoop/">Cloudera CDH3</a>. In particular `rmr` needs a backport of a feature called "streaming combiners" that is present in CDH3 to support combiners.
 
 <h2>More information about RHadoop</h2>
 
