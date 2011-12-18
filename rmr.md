@@ -33,3 +33,4 @@ Come meet the devs! Instead of an IRC channel, we are going to use a Google Hang
 * [[Writing composable mapreduce jobs]] 
 * [[Use cases]]
 * [[Getting data in and out]]
+* [[FAQ]]
