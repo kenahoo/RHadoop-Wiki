@@ -382,7 +382,8 @@ if(length(from.dfs(my.job()))==0){...} else {...}; ggplot2(from.dfs(my.job(...))
 </pre>
 
 ### Resources
-Updated versions of all the examples can be found [here](https://github.com/RevolutionAnalytics/RHadoop/tree/dev/rmr/pkg/tests)
+In case this page falls a little behind w.r.t the frantic pace of development, authoritative versions of all the examples can be found [here](https://github.com/RevolutionAnalytics/RHadoop/tree/master/rmr/pkg/tests) for the stable versions and 
+[here](https://github.com/RevolutionAnalytics/RHadoop/tree/dev/rmr/pkg/tests) for the bleeding edge (the latter, being bleeding, may or may not work on a given day)
 
 ### Related Links
 <font size=4><b>[[Comparison of high level languages for mapreduce: k means]]</b></font><br>
