@@ -13,8 +13,8 @@ RHadoop consists of the following packages:
 <a href="http://www.revolutionanalytics.com/news-events/free-webinars/2011/r-and-hadoop/">Slides and Replay</a> of 30-minute presentation about RHadoop, "Leveraging R in Hadoop Environments". 
 
 <font size=4><b>[[Downloads]] </b</font> <br>
+<font size=4><b>[[Tutorial]] </b></font> <br>
 <font size=4><b>[[Contribute to the RHadoop project]] </b></font> <br>
-<font size=4><b>[[Wishlist]] </b></font> <br>
 
 Contact: rhadoop@revolutionanalytics.com<br>
 Questions: you can use the above address or, if you don't mind sharing your question with everyone, just  [create a new issue](https://github.com/RevolutionAnalytics/RHadoop/issues/new) and tag it as type-question.
