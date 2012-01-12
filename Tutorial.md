@@ -4,7 +4,7 @@
 ## My first mapreduce job
 
 Conceptually, mapreduce is not very different than a combination of lapplys and a tapply: transform elements of a list, compute an index &mdash; key in mapreduce jargon &mdash; 
-and process the groups thus defined. Let's start with the simplext example, from a simple lapply:
+and process the groups thus defined. Let's start with a simple lapply example:
  
     small.ints = 1:10
     out = lapply(small.ints, function(x) x^2)
