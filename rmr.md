@@ -28,11 +28,11 @@ Come meet the devs! Instead of an IRC channel, we are going to use a Google Hang
 
 ## Contents
 
-* [[Changelog]]
-* [[Philosophy]]
-* [[Tutorial]]
-* [[Efficient rmr techniques]] 
-* [[Writing composable mapreduce jobs]] 
-* [[Use cases]]
-* [[Getting data in and out]]
-* [[FAQ]]
+<font size=4><b>[[Changelog]]<font size=4><b><br>
+<font size=4><b>[[Philosophy]]<font size=4><b><br>
+<font size=4><b>[[Tutorial]]<font size=4><b><br>
+<font size=4><b>[[Efficient rmr techniques]]<font size=4><b><br>
+<font size=4><b>[[Writing composable mapreduce jobs]]<font size=4><b><br>
+<font size=4><b>[[Use cases]]<font size=4><b><br>
+<font size=4><b>[[Getting data in and out]]<font size=4><b><br>
+<font size=4><b>[[FAQ]]<font size=4><b><br>
