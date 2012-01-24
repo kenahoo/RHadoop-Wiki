@@ -1,4 +1,13 @@
+<hr>
+# News
+* 24/1/2012 - Merged branch binary-io into dev. This decision was hastened by the discovery and fix of a R bug affecting the performance of large reduces in all branches. Unfortunately the patch developed for binary-io couldn't be backported, thus the decision to accelerate the merger of the binary-io branch. While dev passes all checks in the usual testing, the new binary-io features are still under development. Please consider them more experimental than what normally goes into dev. Also please note some non-backward compatible changes in the API intended to strike a compromise between flexibility and ease of use in the IO department.
+* 12/7/2011 - Version 1.1 of the package rmr is available. See the [[Changelog]] for details.
+* 9/29/2011 - Version 1.0.1 available - fixes some minor defects with R CMD check tests on the packages 
+* 8/10/2011 - Wiki gone live
+
+#About
 RHadoop is a collection of three R packages that allow users to manage and analyze data with Hadoop. The packages have been implemented and tested in Cloudera's distribution of Hadoop <a href="http://www.cloudera.com/hadoop/">(CDH3)</a>.  and R 2.13.0.  THe packages have also been tested with <a href="http://www.revolutionanalytics.com/downloads/">Revolution R 4.3 and 5.0</a>
+
 
 RHadoop consists of the following packages:
 
@@ -6,7 +15,7 @@ RHadoop consists of the following packages:
 <font size=4><b>[[rhdfs]] </b></font> - functions providing file management of the HDFS from within R <br>
 <font size=4><b>[[rhbase]] </b></font> - functions providing database management for the HBase distributed database from within R <br> <br>
 
-<h2>More information about RHadoop</h2>
+# More information about RHadoop
 
 <a href="http://blog.revolutionanalytics.com/2011/09/mapreduce-hadoop-r.html">Overview of RHadoop</a>, from the Revolution Analytics blog.
 
@@ -19,7 +28,3 @@ RHadoop consists of the following packages:
 Contact: rhadoop@revolutionanalytics.com<br>
 Questions: you can use the above address or, if you don't mind sharing your question with everyone, just  [create a new issue](https://github.com/RevolutionAnalytics/RHadoop/issues/new) and tag it as type-question.
 
-## News
-12/7/2011 - Version 1.1 of the package rmr is available. See the [[Changelog]] for details. <br>
-9/29/2011 - Version 1.0.1 available - fixes some minor defects with R CMD check tests on the packages <br>
-8/10/2011 - Wiki gone live
