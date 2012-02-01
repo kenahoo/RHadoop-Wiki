@@ -1,5 +1,6 @@
-<hr>
+&nbsp;
 # News
+* 2/1/2012 Binary format  now default, passes all normal checks. Please test. 
 * 24/1/2012 - Merged branch binary-io into dev. This decision was hastened by the discovery of a R bug affecting the performance of large reduces in all branches for which a workaround has been developed. Unfortunately the patch developed for binary-io couldn't be backported, thus the decision to accelerate the merger of the binary-io into dev. While dev passes all checks in the usual testing, the new binary-io features are still under development. Please consider them more experimental than what normally goes into dev. Also please note some non-backward compatible changes in the API intended to strike a compromise between flexibility and ease of use in the IO department.
 * 12/7/2011 - Version 1.1 of the package rmr is available. See the [[Changelog]] for details.
 * 9/29/2011 - Version 1.0.1 available - fixes some minor defects with R CMD check tests on the packages 
