@@ -5,7 +5,7 @@ This is a big one with a more than 1000 line diff in the main source file. We wo
 ##Binary I/O
 
 We now support binary I/O formats and we indeed switched to one as the internal native format. First the over the hood changes and then some
-under the hood for the devs. You don't specific I/O details with multiple mapreduce options because it was getting pretty complicated. So we
+under the hood for the devs. You don't specify I/O details with multiple mapreduce options because it was getting pretty complicated. So we
 have a concept of input specs and output specs, which are created with functions called `make.input.specs` and `make.output.specs`. In the
 simple case these functions take a string argument like `"csv"` or `"json"` and will do the right thing. And now for the developers out
 there. If you want full control, you can specify a mode, binary or text, an R function and a java class as arguments to the `make.*.specs`
