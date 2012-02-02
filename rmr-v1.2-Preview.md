@@ -101,9 +101,9 @@ Use `scatter`.
 
 ##Naming conventions
 
-We looked at the code for v1.1 and realized we had a mix of .-separated, CamelCase and nonseparated identifiers and while it think there are
-more important factors of code quality, this was a relatively easy fix that brings a little more readability and writability. We
-went with .-separated across the board. This will break your code everywhere but fixing it is as simple as search and replace. The exceptions are:
+We looked at the code for v1.1 and realized we had a mix of dot-separated, CamelCase and nonseparated identifiers and while I think there are
+more important factors to code quality, this was a relatively easy fix that brings a little more readability and writability. We
+went with dot-separated across the board. This will break your code everywhere but fixing it is as simple as search and replace. The exceptions are:
 
 * `mapreduce`: people write it as one word very often
 * `keyval, k, v, vv`: used often enough that a shorter form seems warranted (the stand for: create a key, value pair, key, value and list of values resp.)
