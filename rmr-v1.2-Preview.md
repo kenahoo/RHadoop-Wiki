@@ -2,6 +2,37 @@
 
 This is a big one with a more than 1000 line diff in the main source file. We won't cover the simple bug fixes in this document, for those there is the issue tracker.
 
+##Binary I/O
+
+We now support binary I/O formats and we indeed switched to one as the internal native format. First the over the hood changes and then some
+under the hood for the devs. You don't specific I/O details with multiple mapreduce options because it was getting pretty complicated. So we
+have a concept of input specs and output specs, which are created with functions called `make.input.specs` and `make.output.specs`. In the
+simple case these functions take a string argument like `"csv"` or `"json"` and will do the right thing. And now for the developers out
+there. If you want full control, you can specify a mode, binary or text, an R function and a java class as arguments to the `make.*.specs`
+functions above. These get called in the following order on each of the records that go though the system: 
+
+<pre>
+java input format class -> 
+  r input format function -> 
+    map -> 
+      reduce -> 
+        r output format function -> 
+          java output format class
+</pre>
+
+ One suggested route to support other formats
+is to write or use existing classes to convert whatever format to a simple serialization format called typedbytes (HADOOP-1722), then use
+the rmr:::typed.bytes.input.format function to get a key value pair of R objects. The converse is true on the output side. Issues have been
+created for HBase, Mahout, and Cassandra compatibility and now people who need those are in a position to get things done, with a little
+work.
+
+
+###Loose ends
+
+* Support for comments in CSV format
+* JSON format reads one or two JSON objects per row, uses improvements in `RJSONIO` library instead of workarounds
+
+
 ##Mapreduce Galore
 
 ###The odd case of the slow reduce
@@ -60,33 +91,12 @@ Tired of that console verbiage? Set `verbose` to `FALSE` when things are running
 impress the boss? Check out in the source the file `examples/large-kmeans-test.R`. Want to break down one large file into multiple parts?
 Use `scatter`.
 
-##Binary IO
-
-We now support binary IO formats and we indeed switched to one as the internal native format. First the over the hood changes and then some
-under the hood for the devs. You don't specific IO details with multiple mapreduce options because it was getting pretty complicated. So we
-have a concept of input specs and output specs, which are created with functions called make.input.specs and make.output.specs. In the
-simple case these functions take a string argument like "csv" or "json" and will do the right thing. And now for the developers out
-there. If you want full control, you can specify a mode, binary or text, an R function and a java class as arguments to the make.*.specs
-functions above. These get called in the following order on each of the records that go though the system: java input format class -> r
-input format function -> map -> reduce -> r output format function -> java output format class. One suggested route to support other formats
-is to write or use existing classes to convert whatever format to a simple serialization format called typedbytes (HADOOP-1722), then use
-the rmr:::typed.bytes.input.format function to get a key value pair of R objects. The converse is true on the output side. Issues have been
-created for HBase, Mahout, and Cassandra compatibility and now people who need those are in a position to get things done, with a little
-work.
-
-
-###Loose ends
-
-* Support for comments in csv
-* json format reads one or two json objects per row, uses improved RJSONIO library instead of workarounds
-
 
 ##Naming conventions
 
-We looked at the code for 1.1 and realized we had a mix of .-separated, CamelCase and nonseparated identifiers an while it think there are
-more important determinants of code quality, this was a relatively easy fix that bring a little more readability and writability as well. We
-went with .-separated across the board. This will break your code everywhere but fixing it is as simple as search and replace. The
-exceptions are (on top of my mind):
+We looked at the code for v1.1 and realized we had a mix of .-separated, CamelCase and nonseparated identifiers and while it think there are
+more important factors of code quality, this was a relatively easy fix that brings a little more readability and writability. We
+went with .-separated across the board. This will break your code everywhere but fixing it is as simple as search and replace. The exceptions are:
 
 * `mapreduce`: people write it as one word very often
 * `keyval, k, v, vv`: used often enough that a shorter form seems warranted (the stand for: create a key, value pair, key, value and list of values resp.)
