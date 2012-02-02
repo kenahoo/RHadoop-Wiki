@@ -1,8 +1,7 @@
 **This is a draft document, we haven't even branched a release candidate yet**
 
 #What is coming in 1.2
-
-This is a big one with a more than 1000 line diff in the main source file. We won't cover the simple bug fixes in this document, for those there is the issue tracker.
+Despite the minor release change, there are plenty of new features in this release, some incompatible API changes and some serious refactoring behind the scenes.
 
 ##I/O 
 
@@ -111,3 +110,4 @@ went with dot-separated across the board. This will break your code everywhere b
 ##New package options API
 
 Instead of having one call per option, we decided to go with the pair `rmr.options.set` and `rmr.options.get`, in preparation for future features.
+
