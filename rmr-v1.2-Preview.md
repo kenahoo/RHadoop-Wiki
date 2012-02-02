@@ -100,14 +100,13 @@ Tired of that console verbiage? Set `verbose` to `FALSE` when things are running
 
 ##Naming conventions
 
-We looked at the code for v1.1 and realized we had a mix of dot-separated, CamelCase and nonseparated identifiers and while I think there are
-more important factors to code quality, this was a relatively easy fix that brings a little more readability and writability. We
-went with dot-separated across the board. This will break your code everywhere but fixing it is as simple as search and replace. `reduceondataframe` becomes `reduce.on.data.frame`. The exceptions are:
+We looked at the code for v1.1 and realized we had a mix of dot-separated, CamelCase and nonseparated identifiers and while I think there are more important factors to code quality, this was a relatively easy fix that brings a little more readability and writability. We
+went with dot-separated across the board. This will break your code in multiple places but fixing it is as simple as search and replace. For example, `reduceondataframe` becomes `reduce.on.data.frame`. The exceptions are:
 
-* `mapreduce`: people very often write it as one word
-* `keyval, k, v, vv`: used often enough that a shorter form seems warranted (the stand for: create a key, value pair, key, value and list of values resp.)
+* `mapreduce`: this spelling is used elsewhere often enough that I consider it a portmanteau of map and reduce. So it's a new word and doesn't need separators.
+* `keyval`: used often enough that a shorter form seems warranted.
 
 ##New package options API
 
-Instead of having one call per option, we decided to go with the pair `rmr.options.set` and `rmr.options.get`, in preparation for future features.
+Instead of having one call per option, we decided to go with the pair `rmr.options.set` and `rmr.options.get` to set and get any option, in preparation for future features.
 
