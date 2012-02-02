@@ -2,9 +2,9 @@
 
 This is a big one with a more than 1000 line diff in the main source file. We won't cover the simple bug fixes in this document, for those there is the issue tracker.
 
-#Mapreduce Galore
+##Mapreduce Galore
 
-##The odd case of the slow reduce
+###The odd case of the slow reduce
  
 If you didn't know, appends are not constant time in R.
 
@@ -24,12 +24,12 @@ interpreter. In the meantime, we cracked the code and we have fast appends in th
 home for dinner. But let's not get complacent. The number of reduces should still scale with the size of your input and we are still
 allocating one big list for each key, so memory is a constraint. These are the rules of engagement.
 
-##Backend specific parameters
+###Backend specific parameters
 
 We've always said that we want to design a tight mapreduce abstraction, to the point that it's possible to have multiple backends, the most
 important of which is of course hadoop. Well, real life hit and we had to punch a small hole in the abstraction for performance tuning. See the `performance.tuning` parameter to `mapreduce` for details.
 
-##Automatic library loading
+###Automatic library loading
 
 Need to use additional libraries in your map or reduce functions? If they are loaded at `mapreduce` invocation they should be available with
 no additional fuss.
@@ -45,17 +45,7 @@ from.dfs(
 #and off you go
 ```
 
-##Naming conventions
-
-We looked at the code for 1.1 and realized we had a mix of .-separated, CamelCase and nonseparated identifiers an while it think there are
-more important determinants of code quality, this was a relatively easy fix that bring a little more readability and writability as well. We
-went with .-separated across the board. This will break your code everywhere but fixing it is as simple as search and replace. The
-exceptions are (on top of my mind):
-
-* `mapreduce`: people write it as one word very often
-* `keyval, k, v, vv`: used often enough that a shorter form seems warranted (the stand for: create a key, value pair, key, value and list of values resp.)
-
-##Data.frame conversions
+###Data.frame conversions
 
 For maximum generality, we use lists in crucial places of the API. `from.dfs` returns a list and the reduce function accepts a list of
 values. But the special case where data.frames would be more than enough and more convenient is common enough to support it with specific
@@ -64,13 +54,13 @@ defined. We decided to aim for a data.frame with atomic cells (no lists allowed 
 possible. This is work in progress and we found some broken cases that needed attention, and simplified a very hacky implementation. Please
 give them a spin and do not hesitate to complain.
 
-##Loose ends
+###Loose ends
 
 Tired of that console verbiage? Set `verbose` to `FALSE` when things are running smoothly. Want to try fast k-means on very large inputs to
 impress the boss? Check out in the source the file `examples/large-kmeans-test.R`. Want to break down one large file into multiple parts?
 Use `scatter`.
 
-#Binary IO
+##Binary IO
 
 We now support binary IO formats and we indeed switched to one as the internal native format. First the over the hood changes and then some
 under the hood for the devs. You don't specific IO details with multiple mapreduce options because it was getting pretty complicated. So we
@@ -85,12 +75,22 @@ created for HBase, Mahout, and Cassandra compatibility and now people who need t
 work.
 
 
-##Loose ends
+###Loose ends
 
 * Support for comments in csv
 * json format reads one or two json objects per row, uses improved RJSONIO library instead of workarounds
 
 
-#New package options API
+##Naming conventions
+
+We looked at the code for 1.1 and realized we had a mix of .-separated, CamelCase and nonseparated identifiers an while it think there are
+more important determinants of code quality, this was a relatively easy fix that bring a little more readability and writability as well. We
+went with .-separated across the board. This will break your code everywhere but fixing it is as simple as search and replace. The
+exceptions are (on top of my mind):
+
+* `mapreduce`: people write it as one word very often
+* `keyval, k, v, vv`: used often enough that a shorter form seems warranted (the stand for: create a key, value pair, key, value and list of values resp.)
+
+##New package options API
 Instead of having one call per option, we decided to go with the pair `rmr.options.set` and `rmr.options.get` across the board, in
 preparation for future features.
