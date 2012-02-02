@@ -22,8 +22,8 @@ java input format class ->
 
  One suggested route to support other formats
 is to write or use existing classes to convert whatever format to a simple serialization format called typedbytes (HADOOP-1722), then use
-the rmr:::typed.bytes.input.format function to get a key value pair of R objects. The converse is true on the output side. Issues have been
-created for HBase, Mahout, and Cassandra compatibility and now people who need those are in a position to get things done, with a little
+the `rmr:::typed.bytes.input.format` function to get a key value pair of R objects. The converse is true on the output side. Issues have been
+created for HBase, Avro, Mahout and Cassandra compatibility (#19, #44, #39 and #20) and now people who need those are in a position to get things done, with a little
 work.
 
 
