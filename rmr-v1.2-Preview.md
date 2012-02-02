@@ -1,16 +1,16 @@
 **This is a draft document, we haven't even branched a release candidate yet**
 
 #What is coming in 1.2
-Despite the minor release change, there are plenty of new features in this release, some incompatible API changes and some serious refactoring behind the scenes.
+Despite the minor release change, there are plenty of new features in this release, some backward incompatible API changes and some serious refactoring behind the scenes.
 
 ##I/O 
 
 ###Binary I/O
 
-We now support binary I/O formats and we indeed switched to one as the internal native format. You don't specify I/O details with multiple mapreduce options because it was getting pretty complicated. So we
-have a concept of input specs and output specs, which are created with functions called `make.input.specs` and `make.output.specs`. In the
+We now support binary I/O formats and we indeed switched to one as the internal native format. You don't specify I/O details with multiple mapreduce options anymore because it was getting pretty complicated. So we
+have two arguments to `mapreduce`,  `input.specs` and `output.specs`, which accept the return values of two functions, `make.input.specs` and `make.output.specs`. In the
 simple case these functions take a string argument like `"csv"` or `"json"` and will do the right thing. And now for the developers out
-there. If you want full control, you can specify a mode, `"binary"` or `"text"`, an R function and a java class as arguments to the `make.*.specs`
+there, if you want full control, instead of a string you can specify a mode, `"binary"` or `"text"`, an R function and a java class as arguments to the `make.*.specs`
 functions above. These get called in the following order on each record: 
 
 <pre>
@@ -33,9 +33,12 @@ mapreduce(<other args>,
   mode = "text"))
 ```
 
-but I am sure that there will be some kinks to iron out.
+but I am sure that there will be some kinks to iron out. 
 The converse is true on the output side. Issues have been
 created for HBase, Avro, Mahout and Cassandra compatibility (#19, #44, #39 and #20) and now people who need those are in a position to get things done, with a little work. Pull requests welcome.
+
+###Internal format is now binary
+As hinted above we now use internally and as default a binary format, a combination of R native serde and typedbytes. This gives us the highest compatibility with R, meaning any R value should be a valid key or value in the mapreduce sense. For instance, models used to cause errors, now they don't. The goal is to support everything, if you find exceptions please do not hesitate to submit an issue. If you have data stored in the old native format, don't fret, it has now been renamed `native.text`, but we would suggest to wind its use down.
 
 ###Loose ends
 
