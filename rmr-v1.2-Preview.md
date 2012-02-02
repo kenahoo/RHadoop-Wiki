@@ -8,7 +8,7 @@ We now support binary I/O formats and we indeed switched to one as the internal 
 under the hood for the devs. You don't specify I/O details with multiple mapreduce options because it was getting pretty complicated. So we
 have a concept of input specs and output specs, which are created with functions called `make.input.specs` and `make.output.specs`. In the
 simple case these functions take a string argument like `"csv"` or `"json"` and will do the right thing. And now for the developers out
-there. If you want full control, you can specify a mode, binary or text, an R function and a java class as arguments to the `make.*.specs`
+there. If you want full control, you can specify a mode, `"binary"` or `"text"`, an R function and a java class as arguments to the `make.*.specs`
 functions above. These get called in the following order on each of the records that go though the system: 
 
 <pre>
@@ -22,10 +22,18 @@ java input format class ->
 
  One suggested route to support other formats
 is to write or use existing classes to convert whatever format to a simple serialization format called typedbytes (HADOOP-1722), then use
-the `rmr:::typed.bytes.input.format` function to get a key value pair of R objects. The converse is true on the output side. Issues have been
-created for HBase, Avro, Mahout and Cassandra compatibility (#19, #44, #39 and #20) and now people who need those are in a position to get things done, with a little
-work.
+the `rmr:::typed.bytes.input.format` function to get a key value pair of R objects. Or use `org.apache.avro.mapred.AvroAsTextInputFormat` to convert Avro to JSON and then use `rmr:::json.input.format` to go from JSON to a key-value pair. It should be as simple as 
 
+```
+mapreduce(..., 
+  input.specs = make.input.specs(format = rmr:::json.input.format, 
+  streaming.input.format = "org.apache.avro.mapred.AvroAsTextInputFormat", 
+  mode = "text"))
+```
+
+but I am sure that there will be some kinks to iron out.
+The converse is true on the output side. Issues have been
+created for HBase, Avro, Mahout and Cassandra compatibility (#19, #44, #39 and #20) and now people who need those are in a position to get things done, with a little work.
 
 ###Loose ends
 
@@ -51,19 +59,18 @@ If you didn't know, appends are not constant time in R.
 ```
 
 You see? Input doubles, time quadruples. We didn't know until a client run Really Big Jobs, and it hurt. This should be fixed in the
-interpreter. In the meantime, we cracked the code and we have fast appends in the reduce phase. You can run much bigger reduces and still go
+interpreter. In the meantime, we don't let our users down, we cracked the code and we have fast appends in the reduce phase. You can run much bigger reduces and still go
 home for dinner. But let's not get complacent. The number of reduces should still scale with the size of your input and we are still
 allocating one big list for each key, so memory is a constraint. These are the rules of engagement.
 
 ###Backend specific parameters
 
 We've always said that we want to design a tight mapreduce abstraction, to the point that it's possible to have multiple backends, the most
-important of which is of course hadoop. Well, real life hit and we had to punch a small hole in the abstraction for performance tuning. See the `performance.tuning` parameter to `mapreduce` for details.
+important of which is of course hadoop. Well, real life hit and we had to punch a small hole in the abstraction for performance tuning. You can do things like setting the number of reducers on a per-job basis. See the `performance.tuning` parameter to `mapreduce` for details.
 
 ###Automatic library loading
 
-Need to use additional libraries in your map or reduce functions? If they are loaded at `mapreduce` invocation they should be available with
-no additional fuss.
+Need to use additional libraries in your map or reduce functions? If they are loaded at `mapreduce` invocation they should be available with no additional fuss.
 
 ```
 library(rmr)
@@ -82,8 +89,8 @@ For maximum generality, we use lists in crucial places of the API. `from.dfs` re
 values. But the special case where data.frames would be more than enough and more convenient is common enough to support it with specific
 options in `from.dfs` and `mapreduce`. The problem is that turning a list of anything into a data.frame is not easy and not even well
 defined. We decided to aim for a data.frame with atomic cells (no lists allowed in the data.frame) and let it fail when it's not
-possible. This is work in progress and we found some broken cases that needed attention, and simplified a very hacky implementation. Please
-give them a spin and do not hesitate to complain.
+possible. This is work in progress, more than the rest of the package, and we found some broken cases that needed attention, and simplified a very hacky implementation. Please
+give it a spin and do not hesitate to give feedback.
 
 ###Loose ends
 
@@ -102,5 +109,4 @@ went with .-separated across the board. This will break your code everywhere but
 * `keyval, k, v, vv`: used often enough that a shorter form seems warranted (the stand for: create a key, value pair, key, value and list of values resp.)
 
 ##New package options API
-Instead of having one call per option, we decided to go with the pair `rmr.options.set` and `rmr.options.get` across the board, in
-preparation for future features.
+Instead of having one call per option, we decided to go with the pair `rmr.options.set` and `rmr.options.get`, in preparation for future features.
