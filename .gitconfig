@@ -1,0 +1,6 @@
+[merge]
+tool = ediff
+
+
+[mergetool "ediff"]
+cmd = open -n -W -a /Applications/MacPorts/Emacs.app --args --eval \"(ediff-merge-files-with-ancestor \\\"$PWD/$LOCAL\\\" \\\"$PWD/$REMOTE\\\" \\\"$PWD/$BASE\\\" nil \\\"$PWD/$MERGED\\\")\"

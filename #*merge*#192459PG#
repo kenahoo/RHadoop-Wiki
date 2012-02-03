@@ -7,12 +7,11 @@ Despite the minor release change, there are plenty of new features in this relea
 
 ###Binary I/O
 
-We now support binary I/O formats. This gives you great I/O flexibility but also increase complexity, so we tried to hide this complexity
-for several common formats. Gone are the several options to `mapreduce` that controlled I/O formats. There are only two arguments,
-`input.format` and `output.format` (just `format` for `from.dfs` and `to.dfs`) and in the simplest case they take a string as value,
-like `"csv"`or `"json"`, and everyting works. If you want the full power, you can create new formats with `make.input.format` and
-`make.output.format`. They accept a `mode`, `"binary"` or `"text"`, an R function and a java class as arguments. These get called in the following order on each record: 
->>>>>>> update with simplified IO
+We now support binary I/O formats and we indeed switched to one as the internal native format. You don't specify I/O details with multiple mapreduce options anymore because it was getting pretty complicated. So we
+have two arguments to `mapreduce`,  `input.specs` and `output.specs`, which accept the return values of two functions, `make.input.specs` and `make.output.specs`. In the
+simple case these functions take a string argument like `"csv"` or `"json"` and will do the right thing. And now for the developers out
+there, if you want full control, instead of a string you can specify a mode, `"binary"` or `"text"`, an R function and a java class as arguments to the `make.*.specs`
+functions above. These get called in the following order on each record: 
 
 <pre>
 java input format class -> 
@@ -23,10 +22,9 @@ java input format class ->
           java output format class
 </pre>
 
-This gives you a lot of flexibility, but you need to make sure that the Java class and the r function, both on the input and output sides,
- agree on a common format. For instance
- One suggested route to support a variety of Hadoop-related formats is writing or using existing Java classes to convert whatever format to a simple serialization format called typedbytes (HADOOP-1722), then use
-the `rmr:::typed.bytes.input.format` function to get a key value pair of R objects. Alternatively, you can use JSON as the intermediate format. For instance you could use `org.apache.avro.mapred.AvroAsTextInputFormat` to convert Avro to JSON and then use `rmr:::json.input.format` to go from JSON to a key-value pair. It should be as simple as 
+ One suggested route to support other formats
+is writing or using existing Java classes to convert whatever format to a simple serialization format called typedbytes (HADOOP-1722), then use
+the `rmr:::typed.bytes.input.format` function to get a key value pair of R objects. Alternatively you can use JSON as the intermediate format. For instance you could use `org.apache.avro.mapred.AvroAsTextInputFormat` to convert Avro to JSON and then use `rmr:::json.input.format` to go from JSON to a key-value pair. It should be as simple as 
 
 ```
 mapreduce(<other args>, 
@@ -37,8 +35,7 @@ mapreduce(<other args>,
 
 but I am sure that there will be some kinks to iron out. 
 The converse is true on the output side. Issues have been
-created for HBase, Avro, Mahout and Cassandra compatibility (#19, #44, #39 and #20) and now people who need those are in a position to get
-things done, with a little work. Work on #19 has already started. Pull requests welcome.
+created for HBase, Avro, Mahout and Cassandra compatibility (#19, #44, #39 and #20) and now people who need those are in a position to get things done, with a little work. Pull requests welcome.
 
 ###Internal format is now binary
 As hinted above we now use internally and as default a binary format, a combination of R native serde and typedbytes. This gives us the highest compatibility with R, meaning any R value should be a valid key or value in the mapreduce sense. For instance, models used to cause errors, now they don't. The goal is to support everything, if you find exceptions please do not hesitate to submit an issue. If you have data stored in the old native format, don't fret, it has now been renamed `native.text`, but we would suggest to wind its use down.

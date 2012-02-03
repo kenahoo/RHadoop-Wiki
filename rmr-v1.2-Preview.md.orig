@@ -7,6 +7,13 @@ Despite the minor release change, there are plenty of new features in this relea
 
 ###Binary I/O
 
+<<<<<<< HEAD
+We now support binary I/O formats and we indeed switched to one as the internal native format. You don't specify I/O details with multiple mapreduce options anymore because it was getting pretty complicated. So we
+have two arguments to `mapreduce`,  `input.specs` and `output.specs`, which accept the return values of two functions, `make.input.specs` and `make.output.specs`. In the
+simple case these functions take a string argument like `"csv"` or `"json"` and will do the right thing. And now for the developers out
+there, if you want full control, instead of a string you can specify a mode, `"binary"` or `"text"`, an R function and a java class as arguments to the `make.*.specs`
+functions above. These get called in the following order on each record: 
+=======
 We now support binary I/O formats. This gives you great I/O flexibility but also increase complexity, so we tried to hide this complexity
 for several common formats. Gone are the several options to `mapreduce` that controlled I/O formats. There are only two arguments,
 `input.format` and `output.format` (just `format` for `from.dfs` and `to.dfs`) and in the simplest case they take a string as value,
