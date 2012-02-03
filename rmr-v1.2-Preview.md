@@ -79,12 +79,12 @@ Need to use additional libraries in your map or reduce functions? If they are lo
 
 ```
 library(rmr)
-library(**MASS**)
+library(MASS)
 
 from.dfs(
   mapreduce(
    to.dfs(lapply(1:5, function(i) keyval(NULL,data.frame(x=rnorm(10), y = rnorm(10))))), 
-   map = function(k,v) keyval(NULL,**rlm**(y~x, v))))
+   map = function(k,v) keyval(NULL,rlm(y~x, v))))
 ```
 
 ###Data.frame conversions
