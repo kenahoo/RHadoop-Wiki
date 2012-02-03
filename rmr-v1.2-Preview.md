@@ -63,7 +63,7 @@ If you didn't know, appends are not constant time in R.
   3.274   1.545   4.818 
 ```
 
-You see? Input doubles, time quadruples. We didn't know until a client run Really Big Jobs, and it hurt. This should be fixed in the
+You see? Input doubles, time quadruples. We didn't know until a client run Really Big Reduces, and it hurt. This should be fixed right in the
 interpreter. In the meantime, since we don't let our users down, we cracked the code and we have fast appends in the reduce phase. You can run much bigger reduces and still go
 home for dinner. But let's not get complacent. The number of reduces should still scale with the size of your input and we are still
 allocating one big list for each key, so memory is a constraint. These are the rules of engagement.
@@ -75,21 +75,21 @@ important of which is of course hadoop. Well, real life hit and we had to punch 
 
 ###Automatic library loading
 
-Need to use additional libraries in your map or reduce functions? If they are loaded at `mapreduce` invocation they should be available with no additional fuss.
+Need to use additional libraries in your map or reduce functions? If they are loaded at `mapreduce` invocation they should be available with no additional fuss, like a lapply.
 
 ```
 library(rmr)
-library(MASS)
+library(**MASS**)
 
 from.dfs(
   mapreduce(
    to.dfs(lapply(1:5, function(i) keyval(NULL,data.frame(x=rnorm(10), y = rnorm(10))))), 
-   map = function(k,v) keyval(NULL,rlm(y~x, v))))
+   map = function(k,v) keyval(NULL,**rlm**(y~x, v))))
 ```
 
 ###Data.frame conversions
 
-For maximum generality, we use lists in crucial places of the API. `from.dfs` returns a list and the reduce function accepts a list of
+Hadoop doesn't impose a lot of structure on your data, which is part of what makes it so successful. To reflect that, we use lists in crucial places of the API. `from.dfs` returns a list and the reduce function accepts a list of
 values. But the special case where data.frames would be more than enough and more convenient is common enough to support it with specific
 options in `from.dfs` and `mapreduce`. The problem is that turning a list into a data.frame under weak assumptions on the contents of the list is not easy and not even well
 defined. We decided to aim for a data.frame with atomic cells and let it fail when it's not
