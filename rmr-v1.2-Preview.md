@@ -12,7 +12,6 @@ for several common formats. Gone are the several options to `mapreduce` that con
 `input.format` and `output.format` (just `format` for `from.dfs` and `to.dfs`) and in the simplest case they take a string as value,
 like `"csv"`or `"json"`, and everyting works. If you want the full power, you can create new formats with `make.input.format` and
 `make.output.format`. They accept a `mode`, `"binary"` or `"text"`, an R function and a java class as arguments. These get called in the following order on each record: 
->>>>>>> update with simplified IO
 
 <pre>
 java input format class -> 
