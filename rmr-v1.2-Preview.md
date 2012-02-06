@@ -88,6 +88,8 @@ from.dfs(
    to.dfs(lapply(1:5, function(i) keyval(NULL,data.frame(x=rnorm(10), y = rnorm(10))))), 
    map = function(k,v) keyval(NULL,rlm(y~x, v))))
 ```
+Please remember this takes care of loading, not installing. You still have to install each package you need on each node. Ideally, you should have the same R environment (version and packages) on each node.
+
 
 ###Data.frame conversions
 
