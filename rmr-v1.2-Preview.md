@@ -8,14 +8,14 @@ Despite the minor release change, there are plenty of new features in this relea
 ###Binary I/O
 
 There are several reasons to support binary formats:
-* They are used by other components of the Hadoop system with which we would like to exchange data
-* They are potentially more space efficient than text based formats
-* They allow more direct support for R's own serialization format (see next section)
+ * They are used by other components of the Hadoop system with which we would like to exchange data
+ * They are potentially more space efficient than text based formats
+ * They allow more direct support for R's own serialization format (see next section)
 
 We need to underline that while this development paves the way for running mapreduce jobs on HBase or Mahout data, it doesn't provide this
 capabilities straight out of the box. Let's look at some of the details.
 
-We tried to encapsulate the specification of how I/O should be performed so as to keep the API simple and provide a good set of predefined
+We tried to encapsulate the specification of how I/O should be performed so as to keep the API simple for the common cases and provide a good set of predefined
 combinations. Gone are the several options to `mapreduce` that controlled I/O formats. There are only two arguments, `input.format` and
 `output.format` (just `format` for `from.dfs` and `to.dfs`) and in the simplest case they take a string as value, like `"csv"`or `"json"`,
 and everyting works. 
@@ -56,6 +56,7 @@ NULL
 attr(,"rmr.keyval")
 [1] TRUE
 
+```
 
 If you want process a csv file instead, you would just have to specify `input.format = "csv"`. Well, that is not totally true. The CSV
 format is a family of concrete formats that differ, for instance, in the character used  to separate fields. The default for `read.table` is
