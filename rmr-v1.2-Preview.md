@@ -58,20 +58,19 @@ attr(,"rmr.keyval")
 
 ```
 
-If you want process a csv file instead, you would just have to specify `input.format = "csv"`. Well, that is not totally true. The CSV
+If you want process a csv file instead, you would just have to specify `input.format = "csv"`. Well, that is not always true. The CSV
 format is a family of concrete formats that differ, for instance, in the character used  to separate fields. The default for `read.table` is
-TAB and so it is in rmr. What if we have a really comma separated  CSV format, like this
+TAB and so it is in `rmr`. What if we have a really comma separated  CSV format, like this
 
 ```
 2008,1,3,4,2003,1955,2211,2225,WN,335,N712SW,128,150,116,-14,8,IAD,TPA,810,4,8,0,,0,NA,NA,NA,NA,NA
 ```
 To deal with this case, one needs used the functions  `make.input.format` and `make.output.format` which accept a string format defintion
 such as "csv" but also additional parametes, modeled after `read.table` and `write.table`, such as `sep = ","`. Knowing this, we are ready
-to process our csv file
+to process our csv file:
 
 ```
-summary(from.dfs("../RHadoop.data/airline.1000", format = make.input.format("csv", sep = ","), to.data.frame=T))
-
+from.dfs(mapreduce("../RHadoop.data/airline.1000", input.format = make.input.format("csv", sep = ",")), to.data.frame=T)
     rmr.key V2 V3 V4   V5   V6   V7   V8 V9  V10    V11  V12 V13  V14  V15  V16 V17 V18  V19  V20  V21 V22  V23 V24  V25  V26  V27  V28  V29
 1      2008  1  3  4 2003 1955 2211 2225 WN  335 N712SW  128 150  116  -14    8 IAD TPA  810    4    8   0 <NA>   0 <NA> <NA> <NA> <NA> <NA>
 2      2008  1  3  4  754  735 1002 1000 WN 3231 N772SW  128 145  113    2   19 IAD TPA  810    5   10   0 <NA>   0 <NA> <NA> <NA> <NA> <NA>
@@ -85,7 +84,7 @@ summary(from.dfs("../RHadoop.data/airline.1000", format = make.input.format("csv
 10     2008  1  3  4 1620 1620 1639 1655 WN  810 N648SW   79  95   70  -16    0 IND MCI  451    3    6   0 <NA>   0 <NA> <NA> <NA> <NA> <NA>
 ```
 
-Notice the conversion to data frame (optional) and the fact that he column names are not particularly meaningful, we can't process headers
+Notice the conversion to data frame (optional) and the fact that the column names are not particularly meaningful, we can't process headers
 just yet.
 
 If you want the full power and extensibility of the IO subsystem, you can create new formats with `make.input.format` and
@@ -101,7 +100,7 @@ java input format class ->
           java output format class
 </pre>
 
-This gives you a lot of flexibility, but you need to make sure that the Java class and the r function, both on the input and output sides,
+This gives you a lot of flexibility, but you need to make sure that the Java class and the R function, both on the input and output sides,
  agree on a common format. For instance
  One suggested route to support a variety of Hadoop-related formats is writing or using existing Java classes to convert whatever format to a simple serialization format called typedbytes (HADOOP-1722), then use
 the `rmr:::typed.bytes.input.format` function to get a key value pair of R objects. Alternatively, you can use JSON as the intermediate format. For instance you could use `org.apache.avro.mapred.AvroAsTextInputFormat` to convert Avro to JSON and then use `rmr:::json.input.format` to go from JSON to a key-value pair. It should be as simple as 
