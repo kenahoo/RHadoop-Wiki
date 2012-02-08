@@ -18,9 +18,9 @@ capabilities straight out of the box. Let's look at some of the details.
 We tried to encapsulate the specification of how I/O should be performed so as to keep the API simple for the common cases and provide a good set of predefined
 combinations. Gone are the several options to `mapreduce` that controlled I/O formats. There are only two arguments, `input.format` and
 `output.format` (just `format` for `from.dfs` and `to.dfs`) and in the simplest case they take a string as value, like `"csv"`or `"json"`,
-and everyting works. 
+and everything (should) works. 
 
-For instance, if you run a trivial mapreduce job on this very document you would do something like
+For instance, if you run a mapreduce job on this very document you would do something like
 
 ```
 >from.dfs(mapreduce("../RHadoop.wiki/rmr-v1.2-Preview.md", input.format="text"))
@@ -58,15 +58,15 @@ attr(,"rmr.keyval")
 
 ```
 
-If you want process a csv file instead, you would just have to specify `input.format = "csv"`. Well, that is not always true. The CSV
+If you want process a CSV file instead, you would just have to specify `input.format = "csv"`. Well, that is not always true. The CSV
 format is a family of concrete formats that differ, for instance, in the character used  to separate fields. The default for `read.table` is
 TAB and so it is in `rmr`. What if we have a really comma separated  CSV format, like this
 
 ```
 2008,1,3,4,2003,1955,2211,2225,WN,335,N712SW,128,150,116,-14,8,IAD,TPA,810,4,8,0,,0,NA,NA,NA,NA,NA
 ```
-To deal with this case, one needs used the functions  `make.input.format` and `make.output.format` which accept a string format defintion
-such as "csv" but also additional parametes, modeled after `read.table` and `write.table`, such as `sep = ","`. Knowing this, we are ready
+To deal with this case, one needs the functions  `make.input.format` and `make.output.format` which accept a string format definition
+such as "csv" but also additional parameters, modeled after `read.table` and `write.table`, such as `sep = ","`. Knowing this, we are ready
 to process our csv file:
 
 ```
@@ -101,9 +101,11 @@ java input format class ->
 </pre>
 
 This gives you a lot of flexibility, but you need to make sure that the Java class and the R function, both on the input and output sides,
- agree on a common format. For instance
- One suggested route to support a variety of Hadoop-related formats is writing or using existing Java classes to convert whatever format to a simple serialization format called typedbytes (HADOOP-1722), then use
-the `rmr:::typed.bytes.input.format` function to get a key value pair of R objects. Alternatively, you can use JSON as the intermediate format. For instance you could use `org.apache.avro.mapred.AvroAsTextInputFormat` to convert Avro to JSON and then use `rmr:::json.input.format` to go from JSON to a key-value pair. It should be as simple as 
+ agree on a common format. For instance, one suggested route to support a variety of Hadoop-related formats is writing or using existing
+ Java classes to convert whatever format to a simple serialization format called typedbytes (HADOOP-1722), then use the
+ `rmr:::typed.bytes.input.format` function to get a key value pair of R objects. Alternatively, you can use JSON as the intermediate
+ format. For instance you could use `org.apache.avro.mapred.AvroAsTextInputFormat` to convert Avro to JSON and then use
+ `rmr:::json.input.format` to go from JSON to a key-value pair. It should be as simple as
 
 ```
 mapreduce(<other args>, 
@@ -118,7 +120,7 @@ created for HBase, Avro, Mahout and Cassandra compatibility (#19, #44, #39 and #
 things done, with a little work. Work on #19 has already started. Pull requests welcome.
 
 ###Internal format is now binary
-As hinted above we now use internally and as default a binary format, a combination of R native serde and typedbytes. This gives us the highest compatibility with R, meaning any R value should be a valid key or value in the mapreduce sense. For instance, models used to cause errors, now they don't. The goal is to support everything, if you find exceptions please do not hesitate to submit an issue. If you have data stored in the old native format, don't fret, it has now been renamed `native.text`, but we would suggest to wind its use down.
+As hinted above we now use internally and as default a binary format, a combination of R native serialization and deserialization and typedbytes. This gives us the highest compatibility with R, meaning any R value should be a valid key or value in the mapreduce sense. For instance, models used to cause errors, now they don't. The goal is to support everything, if you find exceptions please do not hesitate to submit an issue. If you have data stored in the old native format, don't fret, it has now been renamed `native.text`, but we would suggest to wind its use down.
 
 ###Loose ends
 
