@@ -388,15 +388,16 @@ In case this page falls a little behind w.r.t the frantic pace of development, a
 [here](https://github.com/RevolutionAnalytics/RHadoop/tree/dev/rmr/pkg/tests) for the bleeding edge (the latter, being bleeding, may or may not work on a given day)
 
 ### Related Links
-<font size=4><b>[[Comparison of high level languages for mapreduce: k means]]</b></font><br>
-<font size=4><b>[[Fast k means]]</b></font>
-<font size=4><b>[[Changelog]]</b></font><br>
-<font size=4><b>[[Philosophy]]</b></font><br>
-<font size=4><b>[[Efficient rmr techniques]]</b></font><br>
-<font size=4><b>[[Writing composable mapreduce jobs]]</b></font><br>
-<font size=4><b>[[Use cases]]</b></font><br>
-<font size=4><b>[[Getting data in and out]]</b></font><br>
-<font size=4><b>[[FAQ]]</b></font><br>
+
+ * [[Comparison of high level languages for mapreduce: k means]]
+ * [[Fast k means]]
+ * [[Changelog]]
+ * [[Philosophy]]
+ * [[Efficient rmr techniques]]
+ * [[Writing composable mapreduce jobs]]
+ * [[Use cases]]
+ * [[Getting data in and out]]
+ * [[FAQ]]
 
 
 
