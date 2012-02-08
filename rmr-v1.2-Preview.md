@@ -58,7 +58,7 @@ attr(,"rmr.keyval")
 
 ```
 
-If you want process a CSV file instead, you would just have to specify `input.format = "csv"`. Well, that is not always true. The CSV
+If you want to process a CSV file instead, you would just have to specify `input.format = "csv"`. Well, that is not always true. The CSV
 format is a family of concrete formats that differ, for instance, in the character used  to separate fields. The default for `read.table` is
 TAB and so it is in `rmr`. What if we have a really comma separated  CSV format, like this
 
@@ -109,7 +109,7 @@ This gives you a lot of flexibility, but you need to make sure that the Java cla
 
 ```
 mapreduce(<other args>, 
-  input.specs = make.input.specs(format = rmr:::json.input.format, 
+  input.format = make.input.format(format = rmr:::json.input.format, 
   streaming.input.format = "org.apache.avro.mapred.AvroAsTextInputFormat", 
   mode = "text"))
 ```
@@ -120,12 +120,16 @@ created for HBase, Avro, Mahout and Cassandra compatibility (#19, #44, #39 and #
 things done, with a little work. Work on #19 has already started. Pull requests welcome.
 
 ###Internal format is now binary
-As hinted above we now use internally and as default a binary format, a combination of R native serialization and deserialization and typedbytes. This gives us the highest compatibility with R, meaning any R value should be a valid key or value in the mapreduce sense. For instance, models used to cause errors, now they don't. The goal is to support everything, if you find exceptions please do not hesitate to submit an issue. If you have data stored in the old native format, don't fret, it has now been renamed `native.text`, but we would suggest to wind its use down.
+As hinted above we now use internally and as default a binary format, a combination of R native serialization and deserialization and
+typedbytes. This gives us the highest compatibility with R, meaning any R value should be a valid key or value in the mapreduce
+sense. Beforehand, lacking the binary option, the native format was and ASCII version of the R native serialization with some additional
+escaping. It mostly worked, but, for instance, models used to cause errors. Not anymore. The goal is to support everything, if you find exceptions please do not hesitate to submit an issue. If you have data stored in the old native format, don't fret, it has now been renamed `native.text`, but we suggest to wind its use down.
 
 ###Loose ends
 
 * Support for comments in CSV format
-* JSON format reads one or two JSON objects per row, uses improvements in `RJSONIO` library instead of workarounds
+* JSON format reads one or two JSON objects per row, uses improvements in `RJSONIO` library instead of workarounds. Nothing should change,
+  but there should be less room for errors.
 
 
 ##Mapreduce Galore
@@ -195,5 +199,6 @@ went with dot-separated across the board. This will break your code in multiple 
 
 ##New package options API
 
-Instead of having one call per option, we decided to go with the pair `rmr.options.set` and `rmr.options.get` to set and get any option, in preparation for future features.
+Instead of having one call per option, we decided to go with the pair `rmr.options.set` and `rmr.options.get` to set and get any option, in
+preparation for future features. See the R help for details.
 
