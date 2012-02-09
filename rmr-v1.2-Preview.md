@@ -122,7 +122,7 @@ things done, with a little work. Work on #19 has already started. Pull requests 
 ###Internal format is now binary
 As hinted above we now use internally and as default a binary format, a combination of R native serialization and deserialization and
 typedbytes. This gives us the highest compatibility with R, meaning any R value should be a valid key or value in the mapreduce
-sense. Beforehand, lacking the binary option, the native format was and ASCII version of the R native serialization with some additional
+sense. Beforehand, lacking the binary option, the native format was an ASCII version of the R native serialization with some additional
 escaping. It mostly worked, but, for instance, models used to cause errors. Not anymore. The goal is to support everything, if you find exceptions please do not hesitate to submit an issue. If you have data stored in the old native format, don't fret, it has now been renamed `native.text`, but we suggest to wind its use down.
 
 ###Loose ends
