@@ -70,7 +70,11 @@ such as "csv" but also additional parameters, modeled after `read.table` and `wr
 to process our csv file:
 
 ```
-from.dfs(mapreduce("../RHadoop.data/airline.1000", input.format = make.input.format("csv", sep = ",")), to.data.frame=T)
+from.dfs(
+  mapreduce("../RHadoop.data/airline.1000", 
+            input.format = make.input.format("csv", sep = ",")), 
+  to.data.frame=T)
+
     rmr.key V2 V3 V4   V5   V6   V7   V8 V9  V10    V11  V12 V13  V14  V15  V16 V17 V18  V19  V20  V21 V22  V23 V24  V25  V26  V27  V28  V29
 1      2008  1  3  4 2003 1955 2211 2225 WN  335 N712SW  128 150  116  -14    8 IAD TPA  810    4    8   0 <NA>   0 <NA> <NA> <NA> <NA> <NA>
 2      2008  1  3  4  754  735 1002 1000 WN 3231 N772SW  128 145  113    2   19 IAD TPA  810    5   10   0 <NA>   0 <NA> <NA> <NA> <NA> <NA>
