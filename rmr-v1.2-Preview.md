@@ -155,7 +155,7 @@ If you didn't know, appends are not constant time in R.
 
 You see? Input doubles, time quadruples. We didn't know until a client run Really Big Reduces, and it hurt. This should be fixed right in the
 interpreter. In the meantime, since we don't let our users down, we cracked the code and we have fast appends in the reduce phase. You can run much bigger reduces and still go
-home for dinner. But let's not get complacent. The number of reduces should still scale with the size of your input and we are still
+home for dinner. But let's not get complacent. The number of reduces should still scale with the size of the output of the map phase (or combine phase if you have a combiner) and we are still
 allocating one big list for each key, so memory is a constraint. These are the rules of engagement.
 
 ###Backend specific parameters
