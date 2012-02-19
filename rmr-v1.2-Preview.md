@@ -5,7 +5,7 @@ Despite the minor release change, there are plenty of new features in this relea
 
 ##I/O 
 
-###Binary I/O
+###Binary I/O and new I/O formats interface
 
 There are several reasons to support binary formats:
 
