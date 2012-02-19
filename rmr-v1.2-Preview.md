@@ -161,7 +161,7 @@ allocating one big list for each key, so memory is a constraint. These are the r
 ###Backend specific parameters
 
 We've always said that we want to design a tight mapreduce abstraction, to the point that it's possible to have multiple backends, the most
-important of which is of course hadoop. Well, real life hit and we had to punch a small hole in the abstraction for performance tuning. You can do things like setting the number of reducers on a per-job basis. See the `performance.tuning` parameter to `mapreduce` for details.
+important of which is of course hadoop. Well, real life hit and we had to punch a small hole in the abstraction, mostly for performance tuning. You can do things like setting the number of reducers on a per-job basis. See the `backend.parameters` argument to `mapreduce` for details. The dream is to have automatic performance tuning (see e.g. [AMR](https://www.cs.duke.edu/~shivnath/amr.html), but don't hold your breath. 
 
 ###Automatic library loading
 
@@ -176,8 +176,7 @@ from.dfs(
    to.dfs(lapply(1:5, function(i) keyval(NULL,data.frame(x=rnorm(10), y = rnorm(10))))), 
    map = function(k,v) keyval(NULL,rlm(y~x, v))))
 ```
-Please remember this takes care of loading, not installing. You still have to install each package you need on each node. Ideally, you should have the same R environment (version and packages) on each node.
-
+Please remember this takes care of loading, not installing. You still have to install each package you need on each node. Ideally, you should have the same R environment (version and packages) on each node. Also this means that if there are loaded libraries that you don't want R to also load on the nodes, you should detach them before calling `mapreduce`.
 
 ###Data.frame conversions
 
