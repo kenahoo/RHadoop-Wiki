@@ -1,7 +1,6 @@
-**This is a draft document, we haven't even branched a release candidate yet**
 
 #What is coming in 1.2
-Despite the minor release change, there are plenty of new features in this release, some backward incompatible API changes and some serious refactoring behind the scenes.
+Despite the minor release change, there are plenty of new features in this release, some backward incompatible API changes and some serious refactoring behind the scenes. Build from the v1.2 branch to give it a spin.
 
 ##I/O 
 
@@ -13,7 +12,7 @@ There are several reasons to support binary formats:
 * They are potentially more space efficient than text based formats
 * They allow more direct support for R's own serialization format (see next section)
 
-We need to underline that while this development should enable running mapreduce jobs on HBase or Mahout data, it doesn't provide this capabilities straight out of the box. Work is under way to support HBase but it won't be part of 1.2. The two binary formats provided out of the box are "native" (see next section) and "sequence.typedbytes", a sequence file, the most common hadoop file format, where both key and value are of type `TypedBytes`, a Java type with included, largely language-independent serialization format. This format can be read and written by a Java program using the Hadoop libraries or a Python program using the [Dumbo](https://github.com/klbostee/dumbo) libraries.
+We need to underline that while this development should enable running mapreduce jobs on HBase or Mahout data, it doesn't provide these capabilities straight out of the box. Work is under way to support HBase but it won't be part of 1.2. The two binary formats provided out of the box are "native" (see next section) and "sequence.typedbytes", a sequence file, the most common hadoop file format, where both key and value are of type `TypedBytes`, a Java type with an associated, largely language-independent serialization format. This format can be read and written by a Java program using the Hadoop libraries or a Python program using the [Dumbo](https://github.com/klbostee/dumbo) libraries. 
 
 Let's look at some of the details of the I/O subsystem API. We tried to encapsulate the specification of how I/O should be performed so as to keep the API simple for the common cases and provide a good set of predefined
 combinations. Gone are the several options to `mapreduce` that controlled I/O formats. There are only two arguments, `input.format` and
