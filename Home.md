@@ -28,5 +28,5 @@ RHadoop consists of the following packages:
 <font size=4><b>[[Contribute to the RHadoop project]] </b></font> <br>
 
 Contact: rhadoop@revolutionanalytics.com<br>
-Questions: you can use the above address or, if you don't mind sharing your question with everyone, just  [create a new issue](https://github.com/RevolutionAnalytics/RHadoop/issues/new) and tag it as type-question.
+Questions: Please participate in our [discussion group](https://groups.google.com/forum/?fromgroups#!forum/rhadoop). For private questions, please use the above email address.
 
