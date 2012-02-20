@@ -66,8 +66,8 @@ TAB and so it is in `rmr`. What if we have a really comma separated  CSV format,
 2008,1,3,4,2003,1955,2211,2225,WN,335,N712SW,128,150,116,-14,8,IAD,TPA,810,4,8,0,,0,NA,NA,NA,NA,NA
 ```
 To deal with this case, one needs the functions  `make.input.format` and `make.output.format` which accept a string format definition
-such as "csv" but also additional parameters, modeled after `read.table` and `write.table`, such as `sep = ","`. Knowing this, we are ready
-to process our csv file:
+such as "csv" but also additional parameters, modeled after `read.table` and `write.table`, such as `sep = ","`. This is specific to the CSV format, for JSON or `"text"` additional arguments have no effect, thankfully, as there aren't subtle variations for those formats. Knowing this, we are ready
+to process our CSV file:
 
 ```
 from.dfs(
