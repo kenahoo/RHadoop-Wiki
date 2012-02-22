@@ -28,11 +28,11 @@ Due to limited adoption the rmr talk is canceled. We are exploring alternate way
 
 ## Contents
 
-* <font size=4><b>[[Changelog]]</b></font><br>
-* <font size=4><b>[[Philosophy]]</b></font><br>
-* <font size=4><b>[[Tutorial]]</b></font><br>
-* <font size=4><b>[[Efficient rmr techniques]]</b></font><br>
-* <font size=4><b>[[Writing composable mapreduce jobs]]</b></font><br>
-* <font size=4><b>[[Use cases]]</b></font><br>
-* <font size=4><b>[[Getting data in and out]]</b></font><br>
-* <font size=4><b>[[FAQ]]</b></font><br>
+* [[Changelog]]
+* [[Philosophy]]
+* [[Tutorial]]
+* [[Efficient rmr techniques]]
+* [[Writing composable mapreduce jobs]]
+* [[Use cases]]
+* [[Getting data in and out]]
+* [[FAQ]]

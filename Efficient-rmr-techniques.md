@@ -142,8 +142,7 @@ users. Here are some related activities and improvements that could be helpful:
 * Compiler: see above. As it may be soon routine to compile map and reduce functions, the same could apply to the package itself.
 
 ### Related Links
-<font size=4><b>[[Comparison of high level languages for mapreduce: k means]]</b></font><br>
-<font size=4><b>[[Fast k means]]</b></font>
-
+* [[Comparison of high level languages for mapreduce: k means]]
+* [[Fast k means]]
 
 

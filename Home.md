@@ -13,9 +13,9 @@ RHadoop is a collection of three R packages that allow users to manage and analy
 
 RHadoop consists of the following packages:
 
-<font size=4><b>[[rmr]] </b></font> - functions providing Hadoop MapReduce functionality in R <br>
-<font size=4><b>[[rhdfs]] </b></font> - functions providing file management of the HDFS from within R <br>
-<font size=4><b>[[rhbase]] </b></font> - functions providing database management for the HBase distributed database from within R <br> <br>
+* [[rmr]] - functions providing Hadoop MapReduce functionality in R 
+* [[rhdfs]] - functions providing file management of the HDFS from within R 
+* [[rhbase]] - functions providing database management for the HBase distributed database from within R
 
 # More information about RHadoop
 
@@ -23,9 +23,9 @@ RHadoop consists of the following packages:
 
 <a href="http://www.revolutionanalytics.com/news-events/free-webinars/2011/r-and-hadoop/">Slides and Replay</a> of 30-minute presentation about RHadoop, "Leveraging R in Hadoop Environments". 
 
-<font size=4><b>[[Downloads]] </b</font> <br>
-<font size=4><b>[[Tutorial]] </b></font> <br>
-<font size=4><b>[[Contribute to the RHadoop project]] </b></font> <br>
+* [[Downloads]] 
+* [[Tutorial]] 
+* [[Contribute to the RHadoop project]] 
 
 Contact: rhadoop@revolutionanalytics.com<br>
 Questions: Please participate in our [discussion group](https://groups.google.com/forum/?fromgroups#!forum/rhadoop). For private questions, please use the above email address.
