@@ -1,4 +1,10 @@
-# Map Reduce in R
+###Warning
+
+In case this page falls a little behind w.r.t the frantic pace of development, authoritative versions of all the examples can be found [here](https://github.com/RevolutionAnalytics/RHadoop/tree/master/rmr/pkg/tests) for the stable versions and 
+[here](https://github.com/RevolutionAnalytics/RHadoop/tree/dev/rmr/pkg/tests) for the bleeding edge (the latter, being bleeding, may or may not work on a given day)
+
+
+# Mapreduce in R
 
 <a name="myfirstmapreducejob">
 ## My first mapreduce job
@@ -383,9 +389,6 @@ move things in an out of memory and HDFS to create hybrid big-small-data algorit
 if(length(from.dfs(my.job()))==0){...} else {...}; ggplot2(from.dfs(my.job(...)), ...)
 </pre>
 
-### Resources
-In case this page falls a little behind w.r.t the frantic pace of development, authoritative versions of all the examples can be found [here](https://github.com/RevolutionAnalytics/RHadoop/tree/master/rmr/pkg/tests) for the stable versions and 
-[here](https://github.com/RevolutionAnalytics/RHadoop/tree/dev/rmr/pkg/tests) for the bleeding edge (the latter, being bleeding, may or may not work on a given day)
 
 ### Related Links
 
@@ -398,7 +401,6 @@ In case this page falls a little behind w.r.t the frantic pace of development, a
  * [[Use cases]]
  * [[Getting data in and out]]
  * [[FAQ]]
-
 
 
 
