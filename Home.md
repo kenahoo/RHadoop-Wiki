@@ -24,7 +24,7 @@ RHadoop consists of the following packages:
 <a href="http://www.revolutionanalytics.com/news-events/free-webinars/2011/r-and-hadoop/">Slides and Replay</a> of 30-minute presentation about RHadoop, "Leveraging R in Hadoop Environments". 
 
 * [[Downloads]] 
-* [[Tutorial]] 
+* [[rmr tutorial]] 
 * [[Contribute to the RHadoop project]] 
 
 Contact: rhadoop@revolutionanalytics.com<br>
