@@ -23,8 +23,6 @@ For people who use EC2 (not EMR), in the dev branch only for now, in the source 
 
 If you use Globus Provision, check out this https://github.com/nbest937/gp-rhadoop (very alpha as of this edit), courtesy nbest.
 
-### rmr talk
-Due to limited adoption the rmr talk is canceled. We are exploring alternate ways to connect developers and users.
 
 ## Contents
 
