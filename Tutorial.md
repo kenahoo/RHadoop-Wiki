@@ -66,7 +66,7 @@ wordcount = function (input, output = NULL, pattern = " ") {
                       lapply(
                          strsplit(
                                   x = v,
-                                  split = pattern)#91#911#93#93,
+                                  split = pattern)&#91;&#91;1&#93;&#93;,
                          function(w) keyval(w,1))},
                 reduce = function(k,vv) {
                     keyval(k, sum(unlist(vv)))},
