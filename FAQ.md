@@ -7,7 +7,7 @@ R and  all the libraries needed, including rmr and its dependencies and any othe
 2.13.x 
  
 ### Is there any mechanism for installing R on the hadoop nodes?
-Only if you use whirr. There are also rpm packages maintained by a user, see [rmr]
+Only if you use whirr. There are also rpm packages maintained by a user, see [[rmr]]
  
 ### What happens when there are R code failures?
 
