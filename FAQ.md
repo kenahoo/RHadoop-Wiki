@@ -15,7 +15,7 @@ If they are temporary, hadoop may retry a specific task a number of times. If th
 
 ### What is debugging like on hadoop?
 
-Not a piece of cake, that's why we provide, starting in 1.1, a local backend where you can run your program without using hadoop (locally) and then debugging is exactly as in regular R. Of course you can not use the local backend with huge data sets. The semantic equivalence of the two backends is corroborated by a battery of tests, but there may still be some kinks to work out. For bugs that appear only at scale, stderr is one way to go. Writing diagnostic output is the other (always to stderr, if you write to stdout in a mapper or reducer you will make it fail). So the progression is: debug with the local backend, then go to hadoop standalone, pseudo-distributed and distributed in this order, which also corresponds to a progression from small test sets to more realistic ones to the real deal. These are general recommendations that are applicable to hadoop programming independent of rmr, with the exception of the local backend which is a specific, but not unique, feature of this package. When a realistic program run costs several hundred dollars, you simply have to minimize your failure rate by developing first at a smaller scale. I sometimes skip pseudo-distributed for simplicity, but certainly used standalone and small datasets at first, and I drop down to local backend when I can't figure it out.
+See [[Debugging rmr programs]]
  
 ### Is there some minimal set of things that an R programmer needs to know about hadoop?
 
