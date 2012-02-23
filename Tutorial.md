@@ -1,3 +1,4 @@
+
 ###Warning
 
 In case this page falls a little behind w.r.t the frantic pace of development, authoritative versions of all the examples can be found [here](https://github.com/RevolutionAnalytics/RHadoop/tree/master/rmr/pkg/tests) for the stable versions and 
@@ -188,7 +189,7 @@ With a little extra work you can even get pretty visualizations like this one (c
 <a name="linearleastsquares">
 ## Linear Least Squares
 
-We are going to build another example, LLS, that illustrates how to build map reduce reusable abstractions and how to combine them to solve a larger task. We want to solve LLS under the assumption that we have too many data points to fit in memory but not such a huge number of variables that we need to implement the whole process as map reduce job. This is sort of a hybrid solution that is made particularly easy by the seamless integration of rmr with R and an example of a pragmatic approach to big data. If we have operations A, B, and C in a cascade and the data sizes decrease at each step and we have already an in-memory solution to it, than we might get away by replacing only the first step with a big data solution and then continuing with tried and true function and pacakges. To make this as easy as possible, we need the in memory and big data worlds to integrate easily if not seamlessly.
+We are going to build another example, LLS, that illustrates how to build map reduce reusable abstractions and how to combine them to solve a larger task. We want to solve LLS under the assumption that we have too many data points to fit in memory but not such a huge number of variables that we need to implement the whole process as map reduce job. This is sort of a hybrid solution that is made particularly easy by the seamless integration of `rmr` with R and an example of a pragmatic approach to big data. If we have operations A, B, and C in a cascade and the data sizes decrease at each step and we have already an in-memory solution to it, than we might get away by replacing only the first step with a big data solution and then continuing with tried and true function and pacakges. To make this as easy as possible, we need the in memory and big data worlds to integrate easily.
 
 
 This is the basic equation we want to solve in the least square sense: 
@@ -239,7 +240,7 @@ transpose = function(input, output = NULL){
     mapreduce(input = input, output = output, map = transposeMap)}
 </pre>
 
-It takes an input, an optional output and returns the return value of the map reduce job. It passes input and output to it and the map function we've just defined and that's it for transpose.
+It takes an input, an optional output and returns the return value of the map reduce job. It passes input and output to it and the map function we've just defined and that's all.
 
 
 <a name="relationaljoins">
@@ -248,35 +249,37 @@ It takes an input, an optional output and returns the return value of the map re
 Now we would like to tackle matrix multiplication but we need a short detour first. This takes one step further in hadoop mastery as we need to combine and process two files into one map reduce job. By default mapreduce supports merging two inputs the way hadoop does, that is once can specify multiple inputs and the only guarantee is that every record will go through one mapper. No order or grouping of  any sort is guaranteed as the mappers are processing the input files.
 
 
-What we need here is a very orderly merging so that we can multiply matrix elements that share an index and then sum them together. It actually looks like a join on one specific index. It turns out that joins are a very important subtask in many mapreduce algorithms and are more or less supported in a number of hadoop dialects. A generalized join is implemented in one of the examples packaged with rmr and as soon as it's ready for prime time we'll move it to the library or to a add-on. Here is how to use it.
-
+What we need here is a very orderly merging so that we can multiply matrix elements that share an index and then sum them together. It actually looks like a join on one specific index. It turns out that joins are a very important subtask in many mapreduce algorithms and are more or less supported in a number of hadoop dialects. A generalized equijoin is part of the rmr API:
 
 <pre>
-relational.join = function(
-    leftinput = NULL,
-    rightinput = NULL,
-    input = NULL,
-    output = NULL,
-	outer = NULL
-    map.left= to.map(identity),
-    map.right= to,map(identity),
-    reduce = function (k, vl, vr) keyval(k, list(left=vl, right=vr)))
+equijoin = function(
+  left.input = NULL, 
+  right.input = NULL, 
+  input = NULL, 
+  output = NULL, 
+  outer = c("", "left", "right", "full"), 
+  map.left = to.map(identity), 
+  map.right = to.map(identity), 
+  reduce  = function(k, values.left, values.right)
+    do.call(c, 
+            lapply(values.left, 
+                   function(vl) lapply(values.right, 
+                                       function(vr) reduce.all(k, vl, vr)))), 
+  reduce.all  = function(k, vl, vr) keyval(k, list(left = vl, right = vr)))
 </pre>
 
-Instead of a single input, we have a `leftinput` and `rightinput`, as joins normally do, but in case we want to perform a self join, we can skip the first two arguments and specify only the third, `input`.
+Instead of a single input, we have a `left.input` and `right.input`, as joins normally do, but in case we want to perform a self join, we can skip the first two arguments and specify only the third, `input`.
 
-Then we have an output, optional as usual and we can specify different flavors of join such as in left outer, right outer or full outer as usual.
+Then we have an output, optional as usual, and we can specify different flavors of join such as in left outer, right outer or full outer as usual.
 
-Now to the interesting bits. This function is a bit relational join and a bit map reduce job. Instead of specifying join keys, we specify two separate map functions, one for the left input and one for the right input. Map functions, as usual, produce a key and a value. The join will be an equijoin on the keys. For each pair of matching records there will be a shared key and two values, one coming from the left side. By default, we have simple pass-throguh or identity mappers.
+Now to the interesting bits. This function is a bit relational join and a bit map reduce job. Instead of specifying join keys, we specify two separate map functions, one for the left input and one for the right input. Map functions, as usual, produce a key and a value. The join will be an equijoin on the keys. For each pair of matching records there will be a shared key and two values, one coming from each side. By default, we have simple pass-throguh or identity mappers.
 
-The reduce function has three arguments, one key and two values, one coming from the left input through map.left and the other from the right input through map.right. The default is just to pass the key through and to assemble the two values into a compound value, the closest we could get to a pass-through reducer.
-
-This is a little advanced in a number of ways and also very reusable, so this will be part of the library or of an add-on soon. It has the general flavor of the composable mapreduce job, but has two inputs and two maps and the reduce has a non-standard signature. The implementation also has some technicalities related to identifying left and right input, path normalization and stuff that won't make this a newbie map reduce job, even if a basic implementation is all of 60 lines. So the bad news is that we are not going to show its implementation, the good news is that it will become a powerful addition to the library so that you don't have to deal with this. Pretty much when you need to combine two different data sets together you can recast it as a join and reuse this function. There are many examples of this and one is matrix multiplication, so back on track.
+The reduce can be specified as usual, but an alternate interface is offered with `reduce.all` which is more SQL-like in that it is a join without a group by on the join key, whereas the reduce form implies a group by. This is a little advanced in a number of ways and also very reusable, so we made it part of the library even if it is built on top of `mapreduce`. No we are going to see its application to perform a matrix multiplication.
 
 <a name="linearleastsquarescontinued">
 ### Linear Least Squares (continued)
 
-Back to our matrix multiplication task, that we will implement as a specialization of the general join just shown.
+Back to our matrix multiplication task, which we will implement as an application of the equijoin just shown.
 
 **A** = **BC**     
 
@@ -293,17 +296,16 @@ And finally to the actual matrix multiplication. It is implemented as the compos
 
 <pre>
 mat.mult = function(left, right, result = NULL) {
-    mapreduce(
-        input = relational.join(
-		            leftinput = left, 
-                    rightinput = right,
-                    map.left = matMulMap(2),
-                    map.right = matMulMap(1), 
-                    reduce = function(k, vl, vr) keyval(c(vl$pos&#91;&#91;1&#93;&#93;,                                
-                                                          vr$pos&#91;&#91;2&#93;&#93;),
-					                                    vl$elem*vr$elem)),
-        output = result,
-        reduce = to.reduce(identity, function(x) sum(unlist(x))))}
+  mapreduce(
+                input =
+                equijoin(left.input = left, right.input = right,
+                                 map.left = mat.mult.map(2),
+                                 map.right = mat.mult.map(1), 
+                                 reduce = function(k, vvl, vvr) 
+                                   do.call(c, lapply(vvl, function(vl)
+                                     lapply(vvr, function(vr) keyval(c(vl$pos[[1]], vr$pos[[2]]), vl$elem*vr$elem))))),
+                output = result,
+                reduce = to.reduce(identity, function(x) sum(unlist(x))))}
 </pre>
 
 
@@ -316,17 +318,17 @@ We now have all the elements in place to solve LLS: mapreduce transpose and matr
 We need a simple function to turn matrices represented in list form and sparse format, that we use with mapreduce, into regular dense in memory R matrices. We rely on a feature of `from.dfs` that turns lists into data frames whenever possible so that this function just has to go from dataframe to dense matrix, using the `Matrix` package and `sparseMatrix` in particular.
 
 <pre>
-to.matrix = function(df) as.matrix(sparseMatrix(i=df$key1, j=df$key2, x=df$val))
+to.matrix = function(df) as.matrix(sparseMatrix(i=df$V1, j=df$V2, x=df$V3))
 </pre>
 
 Then our sought after semi-big-data LLS solution
 
 <pre>
 linear.least.squares = function(X,y) {
-    Xt = transpose(X)
-    XtX = from.dfs(mat.mult(Xt, X), todataframe = TRUE)
-    Xty = from.dfs(mat.mult(Xt, y), todataframe = TRUE) 
-	solve(to.matrix(XtX),to.matrix(Xty))}
+  Xt = transpose(X)
+  XtX = from.dfs(mat.mult(Xt, X), to.data.frame = TRUE)
+  Xty = from.dfs(mat.mult(Xt, y), to.data.frame = TRUE)
+  solve(to.matrix(XtX),to.matrix(Xty))}
 </pre>
 
 We start with a transpose, compute the normal equations,  left and right side, and call solve on the converted data.
@@ -334,13 +336,14 @@ We start with a transpose, compute the normal equations,  left and right side, a
 <a name="whatwehavelearned">
 ##What we have learned
 
-Specify jobs using regular R functions and run them like R functions
+We will summarize here a few ways in which we have used the functions in the library.
 
+Specify mapreduce jobs using familiar R functions:
 <pre>
-mapreduce(map = function(k,v)..., reduce = function(k,vv)...)
+mapreduce(..., map = function(k,v)..., reduce = function(k,vv)...)
 </pre>
 
-compose jobs like functions
+Compose jobs like functions
 
 <pre>
 mapreduce(mapreduce(...
@@ -349,7 +352,7 @@ mapreduce(mapreduce(...
 store results where you want
 
 <pre>
-mapreduce(output = "my-result-file")
+mapreduce(..., output = "my-result-file", ...)
 </pre>
 
 or in a variable
@@ -373,7 +376,8 @@ out1 = my.job1(my.result); out2 = my.job2(my.result); merge.job(out1, out2)
 move things in an out of memory and HDFS to create hybrid big-small-data algorithms, control flow and iteration, display results etc
 
 <pre>
-if(length(from.dfs(my.job()))==0){...} else {...}; ggplot2(from.dfs(my.job(...)), ...)
+if(length(from.dfs(my.job(...)))==0){...} else {...}
+ggplot2(from.dfs(my.job(...)), ...)
 </pre>
 
 
@@ -388,7 +392,6 @@ if(length(from.dfs(my.job()))==0){...} else {...}; ggplot2(from.dfs(my.job(...))
  * [[Use cases]]
  * [[Getting data in and out]]
  * [[FAQ]]
-
 
 
 
