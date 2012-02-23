@@ -6,6 +6,6 @@ Better yet, [[contribute to the RHadoop project]], and make this wishlist a real
 
 ###Current Wishlist
 * Add more examples
-* Mahout integration (mainly for exchanging analyses, since both systems are different)
+* Mahout integration (mainly for data format compatibility, since the two systems have different purposes)
 * Pig "modules" that call R (for example, allowing the user to compute a quantile using R, from Pig, using Pig notation).
-* Mesos/Spark integration.
+* Mesos/Spark integration (additional rmr backend?).
