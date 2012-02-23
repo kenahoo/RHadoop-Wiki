@@ -1,6 +1,5 @@
-
-#What is coming in 1.2
-Despite the minor release change, there are plenty of new features in this release, some backward incompatible API changes and some serious refactoring behind the scenes. Build from the v1.2 branch to give it a spin.
+#Overview of rmr v1.2
+Despite the minor release change, there are plenty of new features in this release, some backward incompatible API changes and some serious refactoring behind the scenes. 
 
 ##I/O 
 
