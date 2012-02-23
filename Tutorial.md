@@ -1,4 +1,3 @@
-
 ###Warning
 
 In case this page falls a little behind w.r.t the frantic pace of development, authoritative versions of all the examples can be found [here](https://github.com/RevolutionAnalytics/RHadoop/tree/master/rmr/pkg/tests) for the stable versions and 
@@ -67,7 +66,7 @@ wordcount = function (input, output = NULL, pattern = " ") {
                       lapply(
                          strsplit(
                                   x = v,
-                                  split = pattern)[[1]],
+                                  split = pattern)#91#911#93#93,
                          function(w) keyval(w,1))},
                 reduce = function(k,vv) {
                     keyval(k, sum(unlist(vv)))},
