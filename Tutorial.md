@@ -97,7 +97,7 @@ logistic.regression = function(input, iterations, dims, alpha){
       map = function(k, v) keyval (1, v$y * v$x * g(-v$y * (plane %*% v$x))),
       reduce = function(k, vv) keyval(k, apply(do.call(rbind,vv),2,sum)),
       combine = T))
-    plane = plane + alpha * gradient[[1]]$val }
+    plane = plane + alpha * gradient&#91;&#91;1&#93;&#93;$val }
   plane }</pre>
     
 As you can see we have an input with the training data. For simplicity we ask to specify a fixed number of iterations, but it would be marginally more difficult to implement a convergence criterion. Then we need to specify the dimension of the problem, which is a bit redundant because it can be inferred after seeing the first line of input, but we didn't want to put additional logic in the map function, and then we have the learning rate `alpha`.
@@ -302,7 +302,7 @@ mat.mult = function(left, right, result = NULL) {
                                  map.right = mat.mult.map(1), 
                                  reduce = function(k, vvl, vvr) 
                                    do.call(c, lapply(vvl, function(vl)
-                                     lapply(vvr, function(vr) keyval(c(vl$pos[[1]], vr$pos[[2]]), vl$elem*vr$elem))))),
+                                     lapply(vvr, function(vr) keyval(c(vl$pos&#91;&#91;1&#93;&#93;, vr$pos&#91;&#91;2&#93;&#93;), vl$elem*vr$elem))))),
                 output = result,
                 reduce = to.reduce(identity, function(x) sum(unlist(x))))}
 </pre>
@@ -391,7 +391,6 @@ ggplot2(from.dfs(my.job(...)), ...)
  * [[Use cases]]
  * [[Getting data in and out]]
  * [[FAQ]]
-
 
 
 
