@@ -1,5 +1,6 @@
 &nbsp;
 # News
+* 2/27/2012 rmr version 1.2 with binary formats and other goodies available &mdash; see [[Changelog]].
 * 2/11/2012 New version of rhbase (1.0.2) that installs with thrift 0.8 or greater.
 * 2/1/2012 Binary format  now default in dev, passes all normal checks. Please test. 
 * 24/1/2012 - Merged branch binary-io into dev.Please note some non-backward compatible changes in the API intended to strike a compromise between flexibility and ease of use in the IO department.
