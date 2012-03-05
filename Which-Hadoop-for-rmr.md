@@ -6,3 +6,5 @@ This is a partial list assembled with the help of a user. We can't confirm that 
 2. HADOOP-5450
 3. MAPREDUCE-764
 4. HADOOP-4842 
+
+We expect 0.23 to reduce or eliminate the reliance on backported patches. rmr is not tested yet on 0.23.
