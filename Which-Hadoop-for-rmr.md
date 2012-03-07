@@ -8,3 +8,5 @@ This is a partial list assembled with the help of a user. We can't confirm that 
 4. HADOOP-4842 
 
 We expect 0.23 to reduce or eliminate the reliance on backported patches. rmr is not tested yet on 0.23.
+
+You can also follow this [writeup](http://blog.ashwanthkumar.in/2012/03/patching-hadoop-to-support-rmr-12.html).
