@@ -25,7 +25,7 @@ RHadoop consists of the following packages:
 * [[Downloads]] 
 * rmr [[Tutorial]] 
 * [[Contribute to the RHadoop project]] 
-* (https://friendfeed.com/rhadoop)
+* [Live from the net](https://friendfeed.com/rhadoop)
 
 Contact: rhadoop@revolutionanalytics.com
 
