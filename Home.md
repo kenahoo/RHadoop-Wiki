@@ -20,14 +20,13 @@ RHadoop consists of the following packages:
 
 # More information about RHadoop
 
-<a href="http://blog.revolutionanalytics.com/2011/09/mapreduce-hadoop-r.html">Overview of RHadoop</a>, from the Revolution Analytics blog.
-
-<a href="http://www.revolutionanalytics.com/news-events/free-webinars/2011/r-and-hadoop/">Slides and Replay</a> of 30-minute presentation about RHadoop, "Leveraging R in Hadoop Environments". 
-
+* [Overview of RHadoop](http://blog.revolutionanalytics.com/2011/09/mapreduce-hadoop-r.html), from the [Revolution Analytics blog](http://blog.revolutionanalytics.com).
+* [Slides and Replay](http://www.revolutionanalytics.com/news-events/free-webinars/2011/r-and-hadoop/) of 30-minute presentation about RHadoop, "Leveraging R in Hadoop Environments". 
 * [[Downloads]] 
 * rmr [[Tutorial]] 
 * [[Contribute to the RHadoop project]] 
+* (https://friendfeed.com/rhadoop)
 
-Contact: rhadoop@revolutionanalytics.com<br>
+Contact: rhadoop@revolutionanalytics.com
+
 Questions: Please participate in our [discussion group](https://groups.google.com/forum/?fromgroups#!forum/rhadoop). For private questions, please use the above email address.
-
