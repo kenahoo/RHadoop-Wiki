@@ -28,3 +28,9 @@ This R package provides basic connectivity to HBASE, using the [Thrift server](h
      If you are running on rhbase on a different hostname:port you will have to change how the package is initialized
 
         hb.init(host=127.0.0.1, port=9090)
+* By default the rhbase uses "native" R serialization (serialize/unserialize) to read and write data from hbase.  You can switch this to "raw" (i.e treat everything as a string) serialization by specifying "serialization="raw"" during the initialization of the package
+
+        hb.init(serialize="raw")
+
+     See the sample " /rhbase/pkg/inst/samples/StringSerializer.r" for details
+ 
