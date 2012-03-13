@@ -2,7 +2,7 @@
 
 <font size=4><b>[rmr - 1.2](https://github.com/downloads/RevolutionAnalytics/RHadoop/rmr_1.2.tar.gz)</b></font><br>
 <font size=4><b>[rhdfs - 1.0.1](https://github.com/downloads/RevolutionAnalytics/RHadoop/rhdfs_1.0.1.tar.gz)</b></font><br>
-<font size=4><b>[rhbase - 1.0.2](https://github.com/downloads/RevolutionAnalytics/RHadoop/rhbase_1.0.2.tar.gz)</b></font><br>
+<font size=4><b>[rhbase - 1.0.3](https://github.com/downloads/RevolutionAnalytics/RHadoop/rhbase_1.0.3.tar.gz)</b></font><br>
 <!--<font size=4><b>[rhdfs - 1.0.1](https://s3.amazonaws.com/rhadoop/master/rhdfs_1.0.1.tar.gz)</b></font><br>-->
 
 ###Prerequisites
