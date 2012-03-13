@@ -1,6 +1,6 @@
 &nbsp;
 # News
-* 3/13/2021 New version of rhbase (1.0.3) that supports both "native" and "raw" serialization 
+* 3/13/2012 New version of rhbase (1.0.3) that supports both "native" and "raw" serialization 
 * 2/27/2012 rmr version 1.2 with binary formats and other goodies available &mdash; see [[Changelog]].
 * 2/11/2012 New version of rhbase (1.0.2) that installs with thrift 0.8 or greater.
 * 2/1/2012 Binary format  now default in dev, passes all normal checks. Please test. 
