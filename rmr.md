@@ -27,7 +27,7 @@ If you use Globus Provision, check out this https://github.com/nbest937/gp-rhado
 ## Contents
 
 * [[Changelog]]
-* [[Philosophy]]
+* [[Design Philosophy]]
 * [[Tutorial]]
 * [[Debugging rmr programs]]
 * [[Efficient rmr techniques]]
