@@ -110,29 +110,29 @@ And this is from folks at Revolution, in *just R*
 ```r
 
 kmeans =
-  function(points, ncenters, iterations = 10, 
-           distfun = 
-             function(a,b) norm(as.matrix(a-b), type = 'F')) {
-    newCenters = kmeans.iter(points, distfun, 
-                             ncenters = ncenters)
+  function(points, ncenters, iterations = 10, distfun = NULL) {
+    if(is.null(distfun)) 
+      distfun = 
+        function(a,b) norm(as.matrix(a-b), type = 'F')
+    newCenters = 
+      kmeans.iter(
+        points, 
+        distfun,
+        ncenters = ncenters)
     for(i in 1:iterations) {
-      newCenters = lapply(values(newCenters), unlist)
-      newCenters = kmeans.iter(points, distfun,
-                               centers=newCenters)}
+      newCenters = kmeans.iter(points, distfun, centers = newCenters)}
     newCenters}
 
 kmeans.iter =
-  function(points, distfun, ncenters = length(centers),
-           centers = NULL) {
-    from.dfs(
-      mapreduce(input = points,
-         map = if (is.null(centers)) {
-                   function(k,v)keyval(sample(1:ncenters,1),v)}
-               else {
-                   function(k,v) {
-                       distances = lapply(centers, 
-                                          function(c)distfun(c,v))
-                   keyval(centers[[which.min(distances)]],v)}},
-         reduce = function(k,vv) 
-                   keyval(NULL,apply(do.call(rbind,vv),2,mean))))}
+  function(points, distfun, ncenters = dim(centers)[1], centers = NULL) {
+    from.dfs(mapreduce(input = points,
+                         map = 
+                           if (is.null(centers)) {
+                             function(k,v) keyval(sample(1:ncenters,1),v)}
+                           else {
+                             function(k,v) {
+                               distances = apply(centers, 1, function(c) distfun(c,v))
+                               keyval(centers[which.min(distances),], v)}},
+                         reduce = function(k,vv) keyval(NULL, apply(do.call(rbind, vv), 2, mean))),
+             to.data.frame = T)}
 ```
