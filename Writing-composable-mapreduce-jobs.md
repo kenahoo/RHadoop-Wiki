@@ -1,3 +1,4 @@
+
 # The theory
 It’s actually harder to explain it than to do it but here is an attempt to define what it takes to write a composable map reduce job.
 The mapreduce function is designed to allow people to chain jobs such as in 
