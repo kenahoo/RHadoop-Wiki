@@ -17,7 +17,7 @@ This R package provides basic connectivity to HBASE, using the [Thrift server](h
        <br><br>
        1.  Install all Thrift pre-requisites:   http://wiki.apache.org/thrift/GettingCentOS5Packages
        2.  Build Thrfit according to instructions:  http://wiki.apache.org/thrift/ThriftInstallation
-       3.  Update PKG_CONFIG_PATH:  export `PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig/`
+       3.  Update PKG_CONFIG_PATH:  `export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig/`
        4.  Verifiy pkg-config path is correct:   `pkg-config --cflags thrift`    ,  returns:    `-I/usr/local/include/thrift`
        5.  Copy Thrift library  `sudo cp /usr/local/lib/libthrift.so.0 /usr/lib/`
        <br><br>
