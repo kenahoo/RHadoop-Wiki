@@ -1,5 +1,6 @@
 &nbsp;
 # News
+* 4/14/2012 rhbase (1.0.4) and rhdfs (1.0.2) minor bug fixes and some cleanup for R CMD check
 * 3/30/2012 rmr 1.2.2 fixes from.dfs for some obscure platforms and prepares for apache 1.0.2 compatibility (more flexible w.r.t. hadoop layout)
 * 3/13/2012 New version of rhbase (1.0.3) that supports both "native" and "raw" serialization 
 * 2/27/2012 rmr version 1.2 with binary formats and other goodies available &mdash; see [[Changelog]].
