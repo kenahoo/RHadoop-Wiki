@@ -7,13 +7,15 @@ This R package allows an R programmer to perform statistical analysis via MapRed
 * Install the following R packages on each node: RJSONIO (0.95-0 or later recommended), itertools and digest
 * rmr itself needs to be installed on each node.
 * Make sure that the packages are installed in a default location accessible to all users (R will run on the cluster as a different user from the one who has started the R interpreter where the mapreduce calls have been executed)
-* Make sure that the environment variables `HADOOP_HOME` and `HADOOP_CONF` are properly set.
+* Make sure that the environment variables `HADOOP_CMD`,  `HADOOP_STREAMING` and `HADOOP_CONF` are properly set.
   
 Examples:
 
-      HADOOP_HOME=/usr/lib/hadoop  
+```
+      HADOOP_CMD=/usr/bin/hadoop
+      HADOOP_STREAMING=/usr/lib/hadoop/contrib/streaming/hadoop-streaming-<version>.jar  
       HADOOP_CONF=/etc/hadoop/conf
-<br>
+```
 
 For people who use RPMs for their deployments, courtesy of jseidman, we have RPMs for rmr and its dependencies (digest, iterators, itertool, rjsonio). These RPMs are available in this repo: https://github.com/jseidman/pkgs. Note that currently there's only CentOS 5.5 64bit RPMs, but the source files to create the RPMs are in the same repo, so it should be easy to build for other RH-based distros. jseidman reports using RPMs along with Puppet to deploy all packages, applications, etc. to their (Orbitz) Hadoop clusters.
 
