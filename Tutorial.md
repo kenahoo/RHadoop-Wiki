@@ -120,6 +120,7 @@ To make this example production-level there are several things one needs to do, 
 
 <a name="kmeans">
 ## K-means
+</a>
 
 We are now going to cover a simple but significant clustering algorithm and the complexity will go up just a little bit. To cheer yourself up, you can take a look at [this alternative implementation](http://www.hortonworks.com/new-apache-pig-features-part-2-embedding/) which requires three languages, python, pig and java, to get the job done and is hailed as a model of simplicity.
 
@@ -391,7 +392,6 @@ ggplot2(from.dfs(my.job(...)), ...)
  * [[Use cases]]
  * [[Getting data in and out]]
  * [[FAQ]]
-
 
 
 
