@@ -118,9 +118,7 @@ After the map reduce job is complete and `from.dfs` has copied the only record t
 
 To make this example production-level there are several things one needs to do, like having a convergence criterion instead of a fixed iteration number an an adaptive learning rate,  but probably gradient descent just requires too many iterations to be the right approach in a big data context. But this example should give you all the elements to be able to implement, say, conjugate gradient instead. In general, when each iteration requires I/O of a large data set, the number of iterations needs to be modest and algorithms with O(log(N)) number of iterations are natural candidates, even if the work in each iteration may be more substantial.
 
-<a name="kmeans">
-## K-means
-</a>
+<h2>K-means</h2>
 
 We are now going to cover a simple but significant clustering algorithm and the complexity will go up just a little bit. To cheer yourself up, you can take a look at [this alternative implementation](http://www.hortonworks.com/new-apache-pig-features-part-2-embedding/) which requires three languages, python, pig and java, to get the job done and is hailed as a model of simplicity.
 
