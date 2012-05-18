@@ -11,7 +11,7 @@ This R package provides basic connectivity to HBASE, using the [Thrift server](h
         hb.defaults, hb.init
 
 ###Prerequisites
-* Installing the package requires that you first [install and build Thrift](http://wiki.apache.org/thrift/ThriftInstallation).  Once you have the libraries built, be sure they are in a path where the R client can find them  (i.e. /usr/lib).  <b>This package was built and tested using Thrift 0.6.1</b>
+* Installing the package requires that you first [install and build Thrift](http://wiki.apache.org/thrift/ThriftInstallation).  Once you have the libraries built, be sure they are in a path where the R client can find them  (i.e. /usr/lib).  <b>This package was built and tested using Thrift 0.8</b>
 
     Here is an example for building the libraries on CentOS:
        <br><br>
