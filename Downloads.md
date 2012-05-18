@@ -19,7 +19,7 @@
 * R 
     * For the 'rhdfs' and 'rhbase' packages,  we recommend you install R on a data node in the Hadoop cluster.  
     * For the 'rmr' package, install R on each task node in the Hadoop cluster. 
-    *  All three packages were tested with R 2.13.1
+    *  All three packages were tested with R 2.15.0
 
 * Package Dependencies
     * The 'rhdfs' package is dependent on the pakage rJava.  
