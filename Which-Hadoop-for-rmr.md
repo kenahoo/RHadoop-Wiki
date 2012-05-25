@@ -9,4 +9,4 @@ This is a partial list assembled with the help of a user. We can't confirm that 
 
 You can also follow this [writeup](http://blog.ashwanthkumar.in/2012/03/patching-hadoop-to-support-rmr-12.html).
 
-We expect 0.23 to reduce or eliminate the reliance on backported patches. rmr is not tested yet on 0.23. The upcoming Apache Hadoop 1.0.2 will have all these patches, kudos to the Hortonworks folks for including them. I run the checks on an early access snapshot and things are looking good.
+We expect 0.23 to reduce or eliminate the reliance on backported patches. rmr is not tested yet on 0.23. g Apache Hadoop 1.0.2 has all these patches, kudos to the Hortonworks folks for including them. I ran the checks on this version and things are looking good.
