@@ -7,7 +7,7 @@
 * Additional steps to support structured data better, that is you can use more data frames and less lists in the API
 * Better whirr scripts, more forgiving behavior for package loading and bug fixes
 
-See [New in this release](http://github.com/RevolutionAnalytics/RHadoop/blob/master/rmr/pkg/docs/new-in-this-release.md) for details.
+See [New in this release](http://github.com/RevolutionAnalytics/RHadoop/blob/4efbd435aff3d52cfea116b663100baf637035cc/rmr/pkg/docs/new-in-this-release.md) for details.
 
 ## rmr 1.2 
 * Binary formats
