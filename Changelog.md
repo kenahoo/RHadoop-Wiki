@@ -1,5 +1,15 @@
 #Changelog
-## rmr 1.2 (master branch)
+
+## rmr 1.3 (Master Branch)
+* An optional vectorized API for efficient R programming when dealing with small records.
+* Fast C implementations for serialization and deserialization from and to typedbytes.
+* Other readers and writers work much better in vectorized mode, namely csv and text
+* Additional steps to support structured data better, that is you can use more data frames and less lists in the API
+* Better whirr scripts, more forgiving behavior for package loading and bug fixes
+
+See [New in this release](http://github.com/RevolutionAnalytics/RHadoop/blob/master/rmr/pkg/docs/new-in-this-release.md) for details.
+
+## rmr 1.2 
 * Binary formats
 * Simpler, more powerful I/O format API
 * Native binary format with support for all R data types
