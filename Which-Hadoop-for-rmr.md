@@ -9,9 +9,4 @@ This is a partial list assembled with the help of a user. We can't confirm that 
 
 You can also follow this [writeup](http://blog.ashwanthkumar.in/2012/03/patching-hadoop-to-support-rmr-12.html).
 
-**The distribution of Hadoop that rmr has  been successfully tested on are the following:**
-
-**Cloudera's  CDH3**<br>
-**Apache Hadoop 1.0.2** (thanks to the folks at Hortonworks for including the packages)<br>
-**MapR 1.2.3**  (thanks to Dan Rice at MapR for verifying)<br>
-
+See [Compatibility testing for rmr](http://github.com/RevolutionAnalytics/RHadoop/blob/master/rmr/pkg/docs/compatibility.md) for details.
