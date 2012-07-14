@@ -1,3 +1,6 @@
+#Caution!
+rmr 1.3 has been released and the wiki documentation is being updated. Thanks for your patience.
+
 ###Overview
 This R package allows an R programmer to perform statistical analysis via MapReduce on a Hadoop cluster. 
 
