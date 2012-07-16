@@ -1,5 +1,5 @@
 ##Warning 
-This document will be largely out-of-date with the introduction of rmr v1.2. It will be updated ASAP. See also [Overview of rmr v1.2](https://github.com/RevolutionAnalytics/RHadoop/wiki/rmr-v1.2-Overview) <hr>
+This document refers to an older version of rmr and we are in the process of updating it for 1.3<hr>
 
 * This document responds to several inquiries on data formats and how to get data in and out of the rmr system
 * Still more a collection of snippets than anything organized
