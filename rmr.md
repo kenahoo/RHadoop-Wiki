@@ -1,6 +1,6 @@
 .
 #Caution!
-rmr 1.3 has been released and the wiki documentation is being updated. Thanks for your patience.
+rmr 1.3 has been released and the wiki documentation is being updated. Thanks for your patience. In particular the Tutorial, Getting data in and out, Efficient rmr techniques and Writing Composable Mapreduce jobs should be considered outdated.
 
 ###Overview
 This R package allows an R programmer to perform statistical analysis via MapReduce on a Hadoop cluster. 
