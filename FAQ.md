@@ -4,10 +4,10 @@ I think that documentation should be organized better than a FAQ, but if informa
 R and  all the libraries needed, including rmr and its dependencies and any other library that the developer needs. This is far from perfect and we are aware that some people simply can't install anything on their cluster because of policies, let alone technical difficulties. There seems to be a way around it but it's not very easy to implement. In dev under tools/whirr there is a whirr script that will do this for you, tested on AWS EC2
 
 ### What releases of R are supported?
-2.13.x 
- 
+See [Compatibility](https://github.com/RevolutionAnalytics/RHadoop/blob/master/rmr/pkg/docs/compatibility.md)
+
 ### Is there any mechanism for installing R on the hadoop nodes?
-Only if you use whirr. There are also rpm packages maintained by a user, see [[rmr]]
+As a demo, unsupported, you can look under [tools/whirr](https://github.com/RevolutionAnalytics/RHadoop/tree/master/rmr/pkg/tools/whirr). 
  
 ### What happens when there are R code failures?
 
