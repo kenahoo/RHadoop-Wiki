@@ -9,7 +9,7 @@
 * Hadoop 
     * A working Hadoop cluster is required
     * All there packages were developed and tested on CDH3 standalone, and CDH3 distributed  
-    * Make sure that the environment variables HADOOP_HOME and HADOOP_CONF are properly set.
+    * For rmr, see [[rmr]]. Otherwise, make sure that the environment variables HADOOP_HOME and HADOOP_CONF are properly set.
     Examples:
     <pre>
       HADOOP_HOME=/usr/lib/hadoop
