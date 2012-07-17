@@ -1,8 +1,6 @@
 ###Warning
 
-This page is now outdated and we are in the process of bringing it up to speed with rmr 1.3
-Authoritative versions of all the examples can be found [here](https://github.com/RevolutionAnalytics/RHadoop/tree/master/rmr/pkg/tests) for the stable versions and 
-[here](https://github.com/RevolutionAnalytics/RHadoop/tree/dev/rmr/pkg/tests) for the bleeding edge (the latter, being bleeding, may or may not work on a given day)
+This page is now outdated and we are in the process of bringing it up to speed with rmr 1.3. Please check the new [draft](https://github.com/RevolutionAnalytics/RHadoop/blob/dev/rmr/pkg/docs/tutorial.md).
 
 
 # Mapreduce in R
