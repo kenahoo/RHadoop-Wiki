@@ -1,5 +1,7 @@
 &nbsp;
 # News
+* 7/17/2012 rhdfs (1.0.4) change to handle different classpaths in the init function
+* 7/13/2012 rmr version 1.3 with vectorized API &mdash; see [[Changelog]].
 * 5/18/2012 rhdfs (1.0.3) bug fix in function hdfs.file
 * 4/14/2012 rhbase (1.0.4) and rhdfs (1.0.2) minor bug fixes and some cleanup for R CMD check
 * 3/30/2012 rmr 1.2.2 fixes from.dfs for some obscure platforms and prepares for apache 1.0.2 compatibility (more flexible w.r.t. hadoop layout)
