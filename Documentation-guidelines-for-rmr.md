@@ -8,4 +8,4 @@ code-chunk-here
 ## @knitr end
 ```
 I believe starting on the first column is mandatory.
-* All links from the wiki to the code base should point to the master version because the wiki always refers to the master or stable version. As an exception, for new documents it may be preferable to link to the dev version or other branch than leave a dangling pointer, but a suitable comment should be added to the text.
+* All links from the wiki to the code base should point to the master version because the wiki always refers to the master or stable version. As an exception, for new documents it may be preferable to link to the dev version or other branch than leave a dangling pointer, but a suitable comment should be added to the text. As a further exception, links out of the Changelog point to specific commits, so that they are never updated.
