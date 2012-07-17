@@ -108,6 +108,7 @@ mapreduce(input = ..., reduce = function(k,vv) keyval(k, sum(unlist(vv))), combi
   Actually, there is *no change* because `unlist` can transform a list of vectors into a vector. But assuming that we spent r seconds in the
   R interpreter and c executing C code in the first version, the new version will run in roughly in r/n + c time, approaching C speed for
   large enough n. Further speed gains may be achieved by setting `map = reduce`, thus effecting a data reduction earlier in the process.
+When manipulating the data representation is not feasible, either because processing existing data or because the record definition is mandated by the algorithm, typically in the shuffle phase, one alternative is to use the new [vectorized API](https://github.com/RevolutionAnalytics/RHadoop/blob/master/rmr/pkg/docs/introduction-to-vectorized-API.md) (still in the works, for a draft see [this](https://github.com/RevolutionAnalytics/RHadoop/blob/dev/rmr/pkg/docs/introduction-to-vectorized-API.md)
 
 ## rmr
 
@@ -144,5 +145,4 @@ users. Here are some related activities and improvements that could be helpful:
 ### Related Links
 * [[Comparison of high level languages for mapreduce: k means]]
 * [[Fast k means]]
-
 
