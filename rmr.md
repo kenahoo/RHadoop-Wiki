@@ -11,7 +11,7 @@ This R package allows an R programmer to perform statistical analysis via MapRed
 * Install the following R packages on each node: RJSONIO (0.95-0 or later recommended), itertools and digest
 * rmr itself needs to be installed on each node.
 * Make sure that the packages are installed in a default location accessible to all users (R will run on the cluster as a different user from the one who has started the R interpreter where the mapreduce calls have been executed)
-* Make sure that the environment variables `HADOOP_CMD` and  `HADOOP_STREAMING` are properly set.
+* Make sure that the environment variables `HADOOP_CMD` and  `HADOOP_STREAMING` are properly set. For some distributions, `HADOOP_HOME` is still sufficient for R to find everything that's needed so if that works for you you can keep it that way. 
   
 Examples:
 
