@@ -14,5 +14,5 @@
 1. API has three styles. If you think that's too complicated, I lied to you, there's only one, the first:
   1. Plain vanilla: textbook mapreduce, slow for small records
   2. Vectorized: mapreduce with an R flavor, faster but with simplified serialization, best for small records
-  3. Structured: more R idiomatic, not as general (data must have well homogenous columns
+  3. Structured: more R idiomatic, not as general (data must have well homogenous columns; it's a very important special case for R, Hive, Hcatalog, SQL)
   4. Did I say three? Yes, but one can combine vectorized and structured at least in one place in the API
