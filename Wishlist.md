@@ -1,10 +1,10 @@
 Do you have wishes to add to RHadoop wishlist below? Is there something you’d like to see in the next release? Let us know!
 
-Please email them to rhadoop@revolutionanalytics.com.  
+Please enter a [new issue](https://github.com/RevolutionAnalytics/RHadoop/issues/) or email them to rhadoop@revolutionanalytics.com.  
 
 Better yet, [[contribute to the RHadoop project]], and make this wishlist a reality!!
 
-###Current Wishlist
+### Current Wishlist
 * Add more examples
 * Mahout integration (mainly for data format compatibility, since the two systems have different purposes)
 * Pig "modules" that call R (for example, allowing the user to compute a quantile using R, from Pig, using Pig notation).
