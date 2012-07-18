@@ -14,7 +14,7 @@
 * 9/29/2011 - Version 1.0.1 available - fixes some minor defects with R CMD check tests on the packages 
 
 #About
-RHadoop is a collection of three R packages that allow users to manage and analyze data with Hadoop. The packages have been implemented and tested in Cloudera's distribution of Hadoop <a href="http://www.cloudera.com/hadoop/">(CDH3)</a>.  and R 2.15.0.  THe packages have also been tested with <a href="http://www.revolutionanalytics.com/downloads/">Revolution R 4.3 and 5.0</a>. For rmr see [Compatibility](https://github.com/RevolutionAnalytics/RHadoop/blob/master/rmr/pkg/docs/compatibility.md)
+RHadoop is a collection of three R packages that allow users to manage and analyze data with Hadoop. The packages have been implemented and tested in Cloudera's distribution of Hadoop <a href="http://www.cloudera.com/hadoop/">(CDH3)</a>.  and R 2.15.0.  THe packages have also been tested with <a href="http://www.revolutionanalytics.com/downloads/">Revolution R 4.3 and 5.0</a>. For rmr see [Compatibility](https://github.com/RevolutionAnalytics/RHadoop/blob/master/rmr/pkg/docs/compatibility.md).
 
 
 RHadoop consists of the following packages:
