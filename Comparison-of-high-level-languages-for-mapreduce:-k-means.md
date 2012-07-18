@@ -1,4 +1,6 @@
-This is just a case study based on k-means. This is an implementation from the folks at [Hortonworks](http://www.hortonworks.com/new-apache-pig-features-part-2-embedding/), in python, pig latin and java. Below is an implementation in *just R*. The algorithms are not identical.
+This is just a case study based on k-means. The first is an implementation from the folks at [Hortonworks](http://www.hortonworks.com/new-apache-pig-features-part-2-embedding/), in python, pig latin and java. Below is an implementation in *just R*. The algorithms are not identical.
+
+## Pig
 
 ```python
 #!/usr/bin/python
@@ -104,6 +106,8 @@ public class FindCentroid extends EvalFunc<Double> {
 
 }
 ```
+
+## R
 
 And this is from folks at Revolution, in *just R*
 
