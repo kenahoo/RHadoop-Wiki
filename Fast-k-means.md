@@ -1,3 +1,5 @@
+This page is now outdated. See the [draft version](https://github.com/RevolutionAnalytics/RHadoop/blob/dev/rmr/pkg/docs/fast-k-means.md)
+
 We have covered a basic k-means implementation with `rmr` in the [[Tutorial]]. If you tried it out, though, you probably have noticed that
 its performance leaves to be desired and wonder if anything can be done about it. Or your have read [[Efficient rmr techniques]] and would
 like to see those suggestions put to work beyond the toy "large sums" example used therein. Then this document should be of interest to you
