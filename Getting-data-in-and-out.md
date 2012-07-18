@@ -1,3 +1,6 @@
+This document is seriously outdated. See the new [draft version](https://github.com/RevolutionAnalytics/RHadoop/blob/dev/rmr/pkg/docs/getting-data-in-and-out.md).
+
+
 * This document responds to several inquiries on data formats and how to get data in and out of the rmr system
 * Still more a collection of snippets than anything organized
 * Code is NOT tested
