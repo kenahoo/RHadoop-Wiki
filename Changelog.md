@@ -1,5 +1,12 @@
 #Changelog
 
+## rmr 1.3.1
+
+* Tested on CDH3, CDH4, and Apache Hadoop 1.0.2
+* Completed transition of the code-heavy part of the documentation to Rmd
+
+See [New in this release]() for details.
+
 ## rmr 1.3 (Master Branch)
 * An optional vectorized API for efficient R programming when dealing with small records.
 * Fast C implementations for serialization and deserialization from and to typedbytes.
