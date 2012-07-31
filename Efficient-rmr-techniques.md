@@ -144,5 +144,5 @@ users. Here are some related activities and improvements that could be helpful:
 
 ### Related Links
 * [[Comparison of high level languages for mapreduce: k means]]
-* [[Fast k means]]
+* [Fast k means](https://github.com/RevolutionAnalytics/RHadoop/blob/master/rmr/pkg/docs/fast-k-means.md)
 
