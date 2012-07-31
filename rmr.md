@@ -1,7 +1,4 @@
 &nbsp;
-#Caution!
-rmr 1.3 has been released and the wiki documentation is being updated. Thanks for your patience. In particular the Tutorial, Getting data in and out and Efficient rmr techniques should be considered outdated. Each of those documents now points to an updated draft version. We plan to promote the drafts with the first minor release, since part of the documentation is now versioned with the package.
-
 ###Overview
 This R package allows an R programmer to perform statistical analysis via MapReduce on a Hadoop cluster. 
 
