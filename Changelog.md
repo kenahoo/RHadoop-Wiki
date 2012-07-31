@@ -5,7 +5,7 @@
 * Tested on CDH3, CDH4, and Apache Hadoop 1.0.2
 * Completed transition of the code-heavy part of the documentation to Rmd
 
-See [New in this release]() for details.
+See [New in this release](http://github.com/RevolutionAnalytics/RHadoop/blob/66ca069201d6ed73be548136b06b86361b4f82b3/rmr/pkg/docs/new-in-this-release.md) for details.
 
 ## rmr 1.3 (Master Branch)
 * An optional vectorized API for efficient R programming when dealing with small records.
