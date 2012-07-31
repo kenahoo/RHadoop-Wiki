@@ -27,7 +27,7 @@ If you use Globus Provision, check out this https://github.com/nbest937/gp-rhado
 
 * [[API design]]
 * [[Changelog]]
-* [[Comparison of high level languages for mapreduce: k means]]
+* [Comparison of high level languages for mapreduce: k means](https://github.com/RevolutionAnalytics/RHadoop/wiki/Comparison-of-high-level-languages-for-mapreduce-k-means)
 * [[Debugging rmr programs]]
 * [[Design Philosophy]]
 * [[Documentation guidelines for rmr]]
