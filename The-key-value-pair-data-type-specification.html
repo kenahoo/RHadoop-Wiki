@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<title>Invariants</title>
+
+<base target="_blank"/>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+
+
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+</head>
+
+<body>
+<p>The central data type for rmr is the <strong>key-value pair</strong>. It is a list of any two R objects with an attribute <code>&quot;rmr.keyval&quot;</code> set to <code>TRUE</code>, created with the <code>keyval</code> function. Data sets in mapreduce are seen as collections of key-value pairs. There is an alternate way to represent data sets which is the vectorized key-value pair, which is created with the same <code>keyval</code> function with a third argument <code>vectorized</code> set to TRUE and has an &ldquo;rmr.vectorized&rdquo; attr set to TRUE. This means that the key and value are construed as collection of elementary keys and rows resp. In this case a key or value can be an atomic vector, atomic matrix or data frame with atomic columns. If it has rows ( <code>nrow</code> doesn&#39;t return NULL), then each row <code>[i,]</code> is considered a key, otherwise each element as returned by <code>[[i]]</code>, <code>i</code> an integer within the appropriate range. The same is true for values. The number of elementary keys and values in a pair has to be the same. The reason vectorized key-value pairs exist is efficiency. It&#39;s a lot faster to call <code>keyval(1:10^6, 1:10^6)</code> than <code>lapply(1:10^6, function(i) keyval(i,i))</code>, namely 163 times faster on some systems. For the same reason, vectorized key-value pairs are serialized using a simple serialization format called <em>typedbytes</em> instead of R&#39;s own format, which doesn&#39;t have support for matrices, data frames or atomic vectors, which are converted into lists (row first). Using vectorized key-value pairs is particularly important as return values for the map  and combiner functions, as the precise definition of what the keys are defines the grouping in the combine/reduce phase. Elsewhere it&#39;s probably better to avoid them. Lists of vectorized key-value pairs are possible.</p>
+
+<h2>Invariants</h2>
+
+<pre><code>nrecords(x) = if(is.null(nrow(x)) length (x) else nrow(x))
+</code></pre>
+
+<p><code>keyval(x,y, vectorized = true)</code> \( \iff \) <code>nrecords(x) == nrecords(y)</code><br/>
+\( \forall \) <code>f f(keyval(k, v)) == f(keyval(list(k), list(v), vectorized = TRUE))</code> </p>
+
+<h2>Conversion rules</h2>
+
+<h3>Extracting keys</h3>
+
+<p>The collection of keys (the same is true for values, just replace &ldquo;key&rdquo;&ldquo; with &quot;value&rdquo; in what follows) associated with a key-value collection is defined as follows</p>
+
+<ol>
+<li>The list of all key elements in each of the key-value pair in a collection</li>
+<li>The concatenation of all keys in each of the key-value pairs when they are vectorized</li>
+<li>When the user specifies the data is structured (each record has the same number and type of columns), a matrix or data.frame obtain from the rbind of all the keys if they are matrices or data frames, or a list of list that can represent valid rows of a data frame</li>
+</ol>
+
+</body>
+
+</html>
+
