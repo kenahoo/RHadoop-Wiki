@@ -169,7 +169,7 @@ keyval(x,y, vectorized = true)` $\Rightarrow$ `nrecords(x) == nrecords(y)
 </code></pre></li>
 <li><p>Concatenation:</p>
 
-<pre><code>keys(list(keyval(k1, v1), keyval(k2,v2)) = list(k1, k2)
+<pre><code>keys(list(keyval(k1, v1), keyval(k2,v2)) == list(k1, k2)
 </code></pre>
 
 <p>Same for <code>values</code> and longer lists</p></li>
@@ -186,18 +186,21 @@ keyval(x,y, vectorized = true)` $\Rightarrow$ `nrecords(x) == nrecords(y)
 </code></pre>
 
 <p>Same for <code>values</code>.</p></li>
-</ol>
+<li><p>Merger of vectorized keyval pairs:</p>
 
-<h2>Conversion rules</h2>
+<pre><code>keys(list(keyval(kk1,vv1, vectorized = TRUE), keyval(kk2, vv2, vectorized = TRUE))) 
+== keys(keyval(c.or.rbind(kk1,kk2), c.or.rbind(vv1, vv2)))
+</code></pre>
 
-<h3>Extracting keys</h3>
+<p>where</p>
 
-<p>The collection of keys (the same is true for values, just replace &ldquo;key&rdquo;&ldquo; with &quot;value&rdquo; in what follows) associated with a key-value collection is defined as follows</p>
-
-<ol>
-<li>The list of all key elements in each of the key-value pair in a collection</li>
-<li>The concatenation of all keys in each of the key-value pairs when they are vectorized</li>
-<li>When the user specifies the data is structured (each record has the same number and type of columns), a matrix or data.frame obtain from the rbind of all the keys if they are matrices or data frames, or a list of list that can represent valid rows of a data frame</li>
+<pre><code>c.or.rbind = 
+function(x,y) {
+ switch(is.null(nrow(x)) + is.null(nrow(y)),
+        c(x, y),
+        stop(&quot;Incompatible data structures&quot;),
+        rbind(x,y))}
+</code></pre></li>
 </ol>
 
 </body>

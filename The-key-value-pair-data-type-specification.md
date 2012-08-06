@@ -28,7 +28,7 @@ The reason vectorized key-value pairs exist is efficiency. It's a lot faster to 
  4. Concatenation:
 
    ```
-   keys(list(keyval(k1, v1), keyval(k2,v2)) = list(k1, k2)
+   keys(list(keyval(k1, v1), keyval(k2,v2)) == list(k1, k2)
    ```
    Same for `values` and longer lists
  5. Immersion of vectorized key-value pairs into regular ones:  
@@ -37,18 +37,33 @@ The reason vectorized key-value pairs exist is efficiency. It's a lot faster to 
    keys(keyval(k, v)) == keys(keyval(list(k), list(v), vectorized = TRUE))
    ```
    Same for `values`.
- 6.  Reverse immersion:
+ 6. Reverse immersion:
 
    ```
   keys(lapply(1:n, function(i) keyval(record(kk, i), record(vv, i )))) 
-== keys(keyval(kk, vv, vectorized = TRUE))
+  == keys(keyval(kk, vv, vectorized = TRUE))
    ```
    Same for `values`.
-    
-## Conversion rules
+ 1. Merger of vectorized keyval pairs:
 
-### Extracting keys
- The collection of keys (the same is true for values, just replace "key"" with "value" in what follows) associated with a key-value collection is defined as follows
- 1. The list of all key elements in each of the key-value pair in a collection
- 2. The concatenation of all keys in each of the key-value pairs when they are vectorized
- 3. When the user specifies the data is structured (each record has the same number and type of columns), a matrix or data.frame obtain from the rbind of all the keys if they are matrices or data frames, or a list of list that can represent valid rows of a data frame
+   ```
+   keys(list(keyval(kk1,vv1, vectorized = TRUE), keyval(kk2, vv2, vectorized = TRUE))) 
+   == keys(keyval(c.or.rbind(kk1,kk2), c.or.rbind(vv1, vv2)))
+   ```
+   where
+   ```
+   c.or.rbind = 
+   function(x,y) {
+     switch(is.null(nrow(x)) + is.null(nrow(y)),
+            c(x, y),
+            stop("Incompatible data structures"),
+            rbind(x,y))}
+  ```
+  Please note that `c.or.rbind` can fail in any other number of ways, for instance when applied to data frames or matrices with different number of columns.
+  
+## Structured view
+  This can be applied at the user request to any list of keys or values and it is equivalent to `c.or.rbind` above
+  
+## Limitations
+  Because of the limitations of the `typedbytes` serialization format, vectorized key-value pairs are limited to contain atomic vectors and matrices and data frames with atomic columns. Some meta-data is lost during serialization and therefore the user needs to pr
+    
