@@ -14,12 +14,11 @@ This R package provides basic connectivity to the Hadoop Distributed File System
 
 ###Prerequisites
 * This package has a dependency on rJava
-* Access to HDFS via this R package is dependent upon the `HADOOP_HOME` and `HADOOP_CONF` environment variables. Be sure that these are properly set. If these variables are not properly set, the package will be accessing the local file system instead of HDFS
+* Access to HDFS via this R package is dependent upon the `HADOOP_CMD` environment variable. `HADOOP_CMD` points to the full path for the `hadoop` binary.  If this variable is not properly set, the package will fail when the `init()` function is invoked
 
-Examples:
+Example:
 
-    HADOOP_HOME=/usr/lib/hadoop  
-    HADOOP_CONF=/etc/hadoop/conf
+    HADOOP_CMD=/usr/bin/hadoop  
 
 ###R Objects
 R objects can be serialized to HDFS via the function: `hdfs.write`.  An example is shown below:
