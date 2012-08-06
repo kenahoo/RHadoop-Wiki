@@ -1,3 +1,5 @@
+Best viewed in RStudio preview mode until Github supports mathjax again.
+
 ## Introduction
 
 The central data type for rmr is the **key-value pair**. It is a list of any two R objects with an attribute `"rmr.keyval"` set to `TRUE`, created with the `keyval` function. Data sets in mapreduce are seen as collections of key-value pairs. There is an alternate way to represent data sets which is the vectorized key-value pair, which is created with the same `keyval` function with a third argument `vectorized` set to TRUE and has an "rmr.vectorized" attr set to TRUE. This means that the key and value are construed as collection of elementary keys and rows resp. In this case a key or value can be an atomic vector, atomic matrix or data frame with atomic columns. If it has rows ( `nrow` doesn't return NULL), then each row `[i,]` is considered a key, otherwise each element as returned by `[[i]]`, `i` an integer within the appropriate range. The same is true for values. The number of elementary keys and values in a pair has to be the same. 
@@ -13,7 +15,7 @@ The reason vectorized key-value pairs exist is efficiency. It's a lot faster to 
    ```
    record(x, n) if(is.null(nrow(x))) x[[n]] else x[n, ]
    ```
- 2. Number of records in a key-value pair:
+ 2. Number of records in a vectorized key-value pair (it's one in non-vectorized ones):
 
   ```
   nrecords(x) = if(is.null(nrow(x)) length (x) else nrow(x))
@@ -30,13 +32,13 @@ The reason vectorized key-value pairs exist is efficiency. It's a lot faster to 
    ```
    keys(list(keyval(k1, v1), keyval(k2,v2)) == list(k1, k2)
    ```
-   Same for `values` and longer lists
+   Same for `values` and longer lists.
  5. Immersion of vectorized key-value pairs into regular ones:  
 
    ```
    keys(keyval(k, v)) == keys(keyval(list(k), list(v), vectorized = TRUE))
    ```
-   Same for `values`.
+   Same for `values`. This is not implemented. Unrestricted lists are not allowed for vectorized key-value pairs.
  6. Reverse immersion:
 
    ```

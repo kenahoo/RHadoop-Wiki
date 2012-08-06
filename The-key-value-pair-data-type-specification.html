@@ -143,6 +143,8 @@ hr {
 </head>
 
 <body>
+<p>Best viewed in RStudio preview mode until Github supports mathjax again.</p>
+
 <h2>Introduction</h2>
 
 <p>The central data type for rmr is the <strong>key-value pair</strong>. It is a list of any two R objects with an attribute <code>&quot;rmr.keyval&quot;</code> set to <code>TRUE</code>, created with the <code>keyval</code> function. Data sets in mapreduce are seen as collections of key-value pairs. There is an alternate way to represent data sets which is the vectorized key-value pair, which is created with the same <code>keyval</code> function with a third argument <code>vectorized</code> set to TRUE and has an &ldquo;rmr.vectorized&rdquo; attr set to TRUE. This means that the key and value are construed as collection of elementary keys and rows resp. In this case a key or value can be an atomic vector, atomic matrix or data frame with atomic columns. If it has rows ( <code>nrow</code> doesn&#39;t return NULL), then each row <code>[i,]</code> is considered a key, otherwise each element as returned by <code>[[i]]</code>, <code>i</code> an integer within the appropriate range. The same is true for values. The number of elementary keys and values in a pair has to be the same. </p>
@@ -200,8 +202,18 @@ function(x,y) {
         c(x, y),
         stop(&quot;Incompatible data structures&quot;),
         rbind(x,y))}
-</code></pre></li>
+</code></pre>
+
+<p>Please note that <code>c.or.rbind</code> can fail in any other number of ways, for instance when applied to data frames or matrices with different number of columns.</p></li>
 </ol>
+
+<h2>Structured view</h2>
+
+<p>This can be applied at the user request to any list of keys or values and it is equivalent to <code>c.or.rbind</code> above</p>
+
+<h2>Limitations</h2>
+
+<p>Because of the limitations of the <code>typedbytes</code> serialization format, vectorized key-value pairs are limited to contain atomic vectors and matrices and data frames with atomic columns. Some meta-data is lost during serialization and therefore the user needs to pr</p>
 
 </body>
 
