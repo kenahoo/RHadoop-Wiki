@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-<title>Invariants</title>
+<title>Introduction</title>
 
 <base target="_blank"/>
 
@@ -138,24 +138,55 @@ hr {
 
 
 
-<!-- MathJax scripts -->
-<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
 
 
 </head>
 
 <body>
-<p>The central data type for rmr is the <strong>key-value pair</strong>. It is a list of any two R objects with an attribute <code>&quot;rmr.keyval&quot;</code> set to <code>TRUE</code>, created with the <code>keyval</code> function. Data sets in mapreduce are seen as collections of key-value pairs. There is an alternate way to represent data sets which is the vectorized key-value pair, which is created with the same <code>keyval</code> function with a third argument <code>vectorized</code> set to TRUE and has an &ldquo;rmr.vectorized&rdquo; attr set to TRUE. This means that the key and value are construed as collection of elementary keys and rows resp. In this case a key or value can be an atomic vector, atomic matrix or data frame with atomic columns. If it has rows ( <code>nrow</code> doesn&#39;t return NULL), then each row <code>[i,]</code> is considered a key, otherwise each element as returned by <code>[[i]]</code>, <code>i</code> an integer within the appropriate range. The same is true for values. The number of elementary keys and values in a pair has to be the same. The reason vectorized key-value pairs exist is efficiency. It&#39;s a lot faster to call <code>keyval(1:10^6, 1:10^6)</code> than <code>lapply(1:10^6, function(i) keyval(i,i))</code>, namely 163 times faster on some systems. For the same reason, vectorized key-value pairs are serialized using a simple serialization format called <em>typedbytes</em> instead of R&#39;s own format, which doesn&#39;t have support for matrices, data frames or atomic vectors, which are converted into lists (row first). Using vectorized key-value pairs is particularly important as return values for the map  and combiner functions, as the precise definition of what the keys are defines the grouping in the combine/reduce phase. Elsewhere it&#39;s probably better to avoid them. Lists of vectorized key-value pairs are possible.</p>
+<h2>Introduction</h2>
 
-<h2>Invariants</h2>
+<p>The central data type for rmr is the <strong>key-value pair</strong>. It is a list of any two R objects with an attribute <code>&quot;rmr.keyval&quot;</code> set to <code>TRUE</code>, created with the <code>keyval</code> function. Data sets in mapreduce are seen as collections of key-value pairs. There is an alternate way to represent data sets which is the vectorized key-value pair, which is created with the same <code>keyval</code> function with a third argument <code>vectorized</code> set to TRUE and has an &ldquo;rmr.vectorized&rdquo; attr set to TRUE. This means that the key and value are construed as collection of elementary keys and rows resp. In this case a key or value can be an atomic vector, atomic matrix or data frame with atomic columns. If it has rows ( <code>nrow</code> doesn&#39;t return NULL), then each row <code>[i,]</code> is considered a key, otherwise each element as returned by <code>[[i]]</code>, <code>i</code> an integer within the appropriate range. The same is true for values. The number of elementary keys and values in a pair has to be the same. </p>
+
+<h2>Motivation</h2>
+
+<p>The reason vectorized key-value pairs exist is efficiency. It&#39;s a lot faster to call <code>keyval(1:10^6, 1:10^6)</code> than <code>lapply(1:10^6, function(i) keyval(i,i))</code>, namely 163 times faster on some systems. For the same reason, vectorized key-value pairs are serialized using a simple serialization format called <em>typedbytes</em> instead of R&#39;s own format, which doesn&#39;t have support for matrices, data frames or atomic vectors, which are converted into lists (row first). Using vectorized key-value pairs is particularly important as return values for the map  and combiner functions, as the precise definition of what the keys are defines the grouping in the combine/reduce phase. Elsewhere it&#39;s probably better to avoid them. Lists of vectorized key-value pairs are possible.</p>
+
+<h2>Definitions and Invariants</h2>
+
+<ol>
+<li><p>Record extraction (any R data structure): </p>
+
+<pre><code>record(x, n) if(is.null(nrow(x))) x[[n]] else x[n, ]
+</code></pre></li>
+<li><p>Number of records in a key-value pair:</p>
 
 <pre><code>nrecords(x) = if(is.null(nrow(x)) length (x) else nrow(x))
+keyval(x,y, vectorized = true)` $\Rightarrow$ `nrecords(x) == nrecords(y)
+</code></pre></li>
+<li><p>Key extraction :</p>
+
+<pre><code>keys(keyval(k,v) == list(k); values(keyval(k,v)) == list(v)
+</code></pre></li>
+<li><p>Concatenation:</p>
+
+<pre><code>keys(list(keyval(k1, v1), keyval(k2,v2)) = list(k1, k2)
 </code></pre>
 
-<p><code>keyval(x,y, vectorized = true)</code> \( \iff \) <code>nrecords(x) == nrecords(y)</code><br/>
-\( \forall \) <code>f f(keyval(k, v)) == f(keyval(list(k), list(v), vectorized = TRUE))</code> </p>
+<p>Same for <code>values</code> and longer lists</p></li>
+<li><p>Immersion of vectorized key-value pairs into regular ones:  </p>
+
+<pre><code>keys(keyval(k, v)) == keys(keyval(list(k), list(v), vectorized = TRUE))
+</code></pre>
+
+<p>Same for <code>values</code>.</p></li>
+<li><p>Reverse immersion:</p>
+
+<pre><code>keys(lapply(1:n, function(i) keyval(record(kk, i), record(vv, i )))) 
+== keys(keyval(kk, vv, vectorized = TRUE))
+</code></pre>
+
+<p>Same for <code>values</code>.</p></li>
+</ol>
 
 <h2>Conversion rules</h2>
 
