@@ -11,7 +11,7 @@
   1. All parsers read in big chunks and all writers write in big chunks and the size of the chunk needs to be transparent to the user
   2. The vectorized mode refers to user-level notions like number of elements in a list or rows in a data frame, not records in the underlying format, be it native csv or whatever
   3. For the shuffle phase data, use the typedbytes writer for speed on small records and fall back to native when necessary to avoid data coertion (typedbytes has no data frames, for instance). Progressively extend typedbytes to deal with more R data types.
-  4. The coertion pledge. All data types stay the same through a mapreduce irrespective of vectorized option. In
+  4. The no-coertion pledge. All data types stay the same through a mapreduce irrespective of vectorized option. In
   
   ```r
   from.dfs(mapreduce(to.dfs(keyvals(k1,v1)), 
