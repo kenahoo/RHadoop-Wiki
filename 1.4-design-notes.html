@@ -188,7 +188,7 @@ hljs.initHighlightingOnLoad();
 <li>User want a natural notion like elements of a list of rows of a data frame. These are too small for R to process efficiently. Experiment with splitting data frames show that with airlines data set (30 cols) sweet spot is around 1000 - 10000</li>
 <li>Parsers work better reading bigger chunks, more than a single logical record: read.table, getline. There is no reason not to let them work that way even if the user wants to see the records one at a time. We can always split data before calling<br/></li>
 <li>The only place where small records matter is when writing from a mapper or combiner to a reducer. Then we have to do what it takes for Hadoop to understand records.</li>
-<li>Excessive data coertion. If I write <code>mapreduce(to.dfs(mtcars), map = function(k,v) class(v))</code>, independent of vectorization or any other options that <code>class(v)</code> has to be the same as <code>class(mtcars)</code> and have the same columns and data from a subset of rows, as if we did a <code>split(mtcars), ...)[[i]]</code> </li>
+<li>Excessive data coertion. If I write <code>mapreduce(to.dfs(mtcars), map = function(k,v) v))</code>, independent of vectorization or any other options that <code>v)</code> has to be the same as <code>mtcars)</code> and have the same columns and data from a subset of rows, as if we did a <code>split(mtcars), ...)[[i]]</code> </li>
 </ol>
 
 <h3>Solutions</h3>
@@ -197,7 +197,7 @@ hljs.initHighlightingOnLoad();
 <li>All parsers read in big chunks and all writers write in big chunks and the size of the chunk needs to be transparent to the user</li>
 <li>The vectorized mode refers to user-level notions like number of elements in a list or rows in a data frame, not records in the underlying format, be it native csv or whatever</li>
 <li>For the shuffle phase data, use the typedbytes writer for speed on small records and fall back to native when necessary to avoid data coertion (typedbytes has no data frames, for instance). Progressively extend typedbytes to deal with more R data types.</li>
-<li><p>The coertion pledge. All data types stay the same through a mapreduce irrespective of vectorized option. In</p>
+<li><p>The no-coertion pledge. All data types stay the same through a mapreduce irrespective of vectorized option. In</p>
 
 <pre><code class="r">from.dfs(mapreduce(to.dfs(keyvals(k1,v1)), 
                  map = function(k2,v2) ... keyvals(k3,v3), 
@@ -205,22 +205,24 @@ hljs.initHighlightingOnLoad();
 keyvals(k6, v6)
 </code></pre>
 
-<pre><code class="r">class(k1) == class(k2)
-class(v1) == class(v2)
-class(k3) == class(k4)
-class(v3) == class(vv[[i]])
-class(k5) == class(k6)
-class(v5) == class(v6)
+<p>for some valid range <code>r</code>, index <code>i</code> and some calls of the <code>map</code> and <code>reduce</code> functions</p>
+
+<pre><code class="r">k1[r,] == k2
+v1[r,] == v2
+k3[r,] == k4 
+v3 == vv[[i]] 
+k5 == k6[r,]
+v5 == v6[r,]
 </code></pre>
 
-<p>for data.frames, matrices and atomic vectors. For lists:</p>
+<p>for data.frames, matrices and atomic vectors (for the latter replace <code>[r,] with [r]</code>); for lists:</p>
 
-<pre><code class="r">class(k1[[i]]) == class(k2)
-class(v1[[i]]) == class(v2)
-class(k3[[i]]) == class(k4)
-class(v3) == class(vv)
-class(k5) == class(k6)
-class(v5) == class(v6)
+<pre><code class="r">k1[[i]] == k2
+v1[[i]] == v2
+k3[[i]] == k4
+v3 == vv[r]
+k5 == k6[r]
+v5 == v6[r]
 </code></pre></li>
 </ol>
 

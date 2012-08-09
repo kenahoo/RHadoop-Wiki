@@ -4,7 +4,7 @@
   1. User want a natural notion like elements of a list of rows of a data frame. These are too small for R to process efficiently. Experiment with splitting data frames show that with airlines data set (30 cols) sweet spot is around 1000 - 10000
   2. Parsers work better reading bigger chunks, more than a single logical record: read.table, getline. There is no reason not to let them work that way even if the user wants to see the records one at a time. We can always split data before calling  
   3. The only place where small records matter is when writing from a mapper or combiner to a reducer. Then we have to do what it takes for Hadoop to understand records.
-  4. Excessive data coertion. If I write `mapreduce(to.dfs(mtcars), map = function(k,v) class(v))`, independent of vectorization or any other options that `class(v)` has to be the same as `class(mtcars)` and have the same columns and data from a subset of rows, as if we did a `split(mtcars), ...)[[i]]` 
+  4. Excessive data coertion. If I write `mapreduce(to.dfs(mtcars), map = function(k,v) v))`, independent of vectorization or any other options that `v)` has to be the same as `mtcars)` and have the same columns and data from a subset of rows, as if we did a `split(mtcars), ...)[[i]]` 
  
 
 ### Solutions
@@ -19,21 +19,23 @@
                      reduce = function(k4, vv) ... keyvals(k5, v5))) == 
   keyvals(k6, v6)
   ```
+  for some valid range `r`, index `i` and some calls of the `map` and `reduce` functions
+  
   ```r
-  class(k1) == class(k2)
-  class(v1) == class(v2)
-  class(k3) == class(k4)
-  class(v3) == class(vv[[i]])
-  class(k5) == class(k6)
-  class(v5) == class(v6)
+  k1[r,] == k2
+  v1[r,] == v2
+  k3[r,] == k4 
+  v3 == vv[[i]] 
+  k5 == k6[r,]
+  v5 == v6[r,]
   ```
-  for data.frames, matrices and atomic vectors. For lists:
+  for data.frames, matrices and atomic vectors (for the latter replace `[r,] with [r]`); for lists:
   ```r
-  class(k1[[i]]) == class(k2)
-  class(v1[[i]]) == class(v2)
-  class(k3[[i]]) == class(k4)
-  class(v3) == class(vv)
-  class(k5) == class(k6)
-  class(v5) == class(v6)
+  k1[[i]] == k2
+  v1[[i]] == v2
+  k3[[i]] == k4
+  v3 == vv[r]
+  k5 == k6[r]
+  v5 == v6[r]
   ```
   
