@@ -2,7 +2,6 @@
 
 ### Problems
   1. User want a natural notion like elements of a list of rows of a data frame. These are too small for R to process efficiently. Experiment with splitting data frames show that with airlines data set (30 cols) sweet spot is around 1000 - 10000
-  2. Parsers work better reading bigger chunks, more than a single logical record: read.table, getline. There is no reason not to let them work that way even if the user wants to see the records one at a time. We can always split data before calling  
   3. The only place where small records matter is when writing from a mapper or combiner to a reducer. Then we have to do what it takes for Hadoop to understand records.
   4. Excessive data coertion. If I write `mapreduce(to.dfs(mtcars), map = function(k,v) v))`, independent of vectorization or any other options that `v)` has to be the same as `mtcars)` and have the same columns and data from a subset of rows, as if we did a `split(mtcars), ...)[[i]]` 
  
