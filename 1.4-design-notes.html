@@ -195,7 +195,8 @@ hljs.initHighlightingOnLoad();
 
 <ol>
 <li>All parsers read in big chunks and all writers write in big chunks and the size of the chunk needs to be transparent to the user</li>
-<li><p>The data type of the first chunk read is the data type represented by the file. Right now the model is </p>
+<li><p>The data type of the first chunk read is the data type represented by the file. Right now the model is <br/>
+<div></p>
 
 <ol>
 <li>read a record</li>
@@ -204,11 +205,18 @@ hljs.initHighlightingOnLoad();
 <li>manipulate the list thus defined (so called <code>structured</code> option)</li>
 </ol>
 
-<p>the new model should be<br/>
-1. read a record<br/>
-2. if it is a data frame or matrix, rbind. Otherwise c for lists and vectors<br/>
-3. go back to 1 until done<br/>
-4. don&#39;t need 4 no more</p>
+<p></div></p>
+
+<p>the new model should be</p>
+
+<ol>  
+
+<li> read a record
+<li> if it is a data frame or matrix, rbind. Otherwise c for lists and vectors
+<li> go back to 1 until done
+<li> don&rsquo;t need 4 no more
+
+</ol>
 
 <p>That is we go from a data model where each record represents the element of a list to a model where each records represents a split of data structure.</p></li>
 <li><p>The vectorized mode refers to user-level notions like number of elements in a list or rows in a data frame, not records in the underlying format, be it native csv or whatever</p></li>
