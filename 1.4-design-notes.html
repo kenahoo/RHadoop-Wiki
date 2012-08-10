@@ -220,7 +220,7 @@ hljs.initHighlightingOnLoad();
 
 <p>That is we go from a data model where each record represents the element of a list to a model where each records represents a split of data structure.</p></li>
 <li><p>The vectorized mode refers to user-level notions like number of elements in a list or rows in a data frame, not records in the underlying format, be it native csv or whatever</p></li>
-<li><p>The no-coertion pledge. All data types stay the same through a mapreduce irrespective of vectorized option. In</p>
+<li><p>The no-coertion pledge. All data types stay the same through a mapreduce irrespective of vectorized option. <code>vectorized</code> only controls the size of a range, not element vs range. In</p>
 
 <pre><code class="r">from.dfs(mapreduce(to.dfs(keyvals(k1,v1)), 
                  map = function(k2,v2) ... keyvals(k3,v3), 
@@ -247,6 +247,40 @@ v3[[i]] == vv[[j]]
 k5 == k6[r]
 v5 == v6[r]
 </code></pre></li>
+</ol>
+
+<h2>The new keyval specification</h2>
+
+<p>Definition: the number of records (<code>n.records</code>) in a collection is the number of rows if defined (<code>nrow</code>), otherwise its length (<code>length</code>). The number of records in <code>NULL</code> is undefined.</p>
+
+<ol>
+<li>Constructor is <code>keyval(kk,vv)</code> with two arguments, a collection of keys and one of values. </li>
+<li>It defines <code>n.records(kk)</code> key-value pairs. Hence for example <code>keyval(1:10, 11:20) defines 10 key-value pairs (old</code>vectorized<code>option), whereas</code>keyval(1, 11:20)<code>defines a single one. To define complex keys one can always nest them one level down. e.g</code>keyval(list(1:10), 11:20) defines a single key.</li>
+<li>keyval(NULL, 11:20) defines an unspecified number of key-value pairs obtained by splitting (by row if that is an option) the second argument. So for a data frame or matrix, that means a few rows per record, for a list or vector a few elements per record. Order is not guaranteed, nor is the exact size of the split.</li>
+</ol>
+
+<h2>Invariants:</h2>
+
+<p>Definition: <code>rmr.identical(x,y)</code> returns <code>TRUE</code> <em>iff</em> <code>identical(x[P],y)</code> for some permutation <code>P</code> (<code>identical(x[P,],y)</code>) when rows are defined).</p>
+
+<ol>
+<li><p><code>from dfs</code> <strong>is the inverse of</strong> <code>to.dfs</code>: </p>
+
+<pre><code class="r">rmr.identical(from.dfs(to.dfs(keyval(x,y), format = fmt), format = fmt), keyval(x,y))
+</code></pre>
+
+<p>for any format as long as that format can represent the data in <code>x</code> and <code>y</code>. The <code>native</code> format can represent anything, hence the latter restriction is moot.</p></li>
+<li><p><strong>Identity</strong> <code>mapreduce</code>:</p>
+
+<pre><code class="r">rmr.identical(from.dfs(mapreduce(to.dfs(keyval(x,y)), map = function(k,v) keyval(k,v))))
+</code></pre></li>
+</ol>
+
+<h2>The shuffle and reduce question</h2>
+
+<ol>
+<li>For performance reasons, when using <code>keyval</code> to define multiple keys and values in a map or reduce function, a simplified serialization format is used that does not invole the R functions <code>serialize</code> and <code>unserialize</code>. Therefore for this use case only the arguments to <code>keyval</code> will be cast to something that can be encoded in this simplified serialization format. User can test the effects of this cast by calling <code>rmr.simplify</code>. The goal is to make this function closer to the identity function over time, as the simplified serialization format is enriched to cover more cases. This limitation is already present but it is not clearly exposed to the user.</li>
+<li>There is not <code>structured</code> option. With the new definitions, it is unnecessary on the map side and we realized that the right way to do this conversion on the reduce size was completely application dependent. The two use cases that I have in mind, both from real users, are computing column averages and computing the normal equations. In the first case in <code>reduce = function(k,vv)</code> Each element of <code>vv</code> contained per column sums for subset of rows and the user sought to arrange them in a matrix to perform again column sums. In the second case each element of <code>vv</code> contained a matrix and the user wanted to matrix-sum them with <code>Reduce(&#39;+&#39;, vv)</code>. We have structured data in both cases, but in the second <code>structured = F</code> is the correct option. This reveals that we were supporting at the library level a specific use case, which is not a good thing. In exchange for zapping this option, rmr will offer some pre-defined aggregators to cover the most important use cases, like stacking data frames or summing matrices.</li>
 </ol>
 
 </body>
