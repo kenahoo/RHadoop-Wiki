@@ -1,5 +1,3 @@
-## Separate user-level notion of record and format-level
-
 ### Problems
   1. User want a natural notion like elements of a list of rows of a data frame. These are too small for R to process efficiently. Experiment with splitting data frames show that with airlines data set (30 cols) sweet spot is around 1000 - 10000
   1. Parsers work better reading bigger chunks, more than a single logical record: read.table, getline. There is no reason not to let them work that way even if the user wants to see the records one at a time. We can always split data before calling map.
