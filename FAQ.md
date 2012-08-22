@@ -18,7 +18,7 @@ See [[Debugging rmr programs]]
 
 This isn't an easy question, but let me try. Understanding mapreduce is the first priority (the original google paper is still the reference point). Reading a variety of papers with different applications, probably the ones closer to one's problem domain. Cloudera's Hammerbacher has a [collection on Mendeley](http://www.mendeley.com/groups/1058401/mapreduce-applications/) and another one is on the [atbrox blog](http://atbrox.com/2011/11/09/mapreduce-hadoop-algorithms-in-academic-papers-5th-update-%E2%80%93-nov-2011/). Somewhat off topic, I would also recommend people acquaint themselves with the parallel programming literature for architectures other than mapreduce.
 
-### Jobs fail saying that rmr is not installed, but I installed and I have witnesses to prove it
+### Jobs fail saying that rmr is not installed, but I installed it and I have witnesses to prove it
 
 In many instances this is cause by permissions on or location of the package. When running in pseudo-distributed or distributed mode, the R processes running on the nodes are executed not as "you", the user who issued the mapreduce job, but as some dedicated user (variable depending on specific distro). The sure fire approach seem to install all the needed packages (rmr, dependencies and other package user code needs) in a common location such as `/usr/share/R/library` installing them with 
 
