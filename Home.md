@@ -1,5 +1,6 @@
 &nbsp;
 # News
+* 9/10/2012 branched rmr-2.0 to prepare for the next release. Also provided a tgz file for download. Many changes and documentation still mostly out of date. Try if you are able to read the source code. Feedback is welcome.
 * 7/30/2012 rmr 1.3.1 tested on major Hadoop distros and Rmd docs &mdash; see [[Changelog]]. 
 * 7/17/2012 rhdfs (1.0.4) change to handle different classpaths in the init function
 * 7/13/2012 rmr 1.3 with vectorized API &mdash; see [[Changelog]].
