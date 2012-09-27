@@ -16,7 +16,7 @@ See [[Debugging rmr programs]]
  
 ### Is there some minimal set of things that an R programmer needs to know about hadoop?
 
-This isn't an easy question, but let me try. Understanding mapreduce is the first priority (the original google paper is still the reference point). Reading a variety of papers with different applications, probably the ones closer to one's problem domain. Cloudera's Hammerbacher has a [collection on Mendeley](http://www.mendeley.com/groups/1058401/mapreduce-applications/) and another one is on the [atbrox blog](http://atbrox.com/2011/11/09/mapreduce-hadoop-algorithms-in-academic-papers-5th-update-%E2%80%93-nov-2011/). Somewhat off topic, I would also recommend people acquaint themselves with the parallel programming literature for architectures other than mapreduce.
+This isn't an easy question, but let me try. Understanding mapreduce is the first priority (the original google paper is still the reference point). Reading a variety of papers with different applications, probably the ones closer to one's problem domain. Cloudera's Hammerbacher has a [collection on Mendeley](http://www.mendeley.com/groups/1058401/mapreduce-applications/) and another one is on the [atbrox blog](http://atbrox.com/2011/11/09/mapreduce-hadoop-algorithms-in-academic-papers-5th-update-%E2%80%93-nov-2011/). Somewhat off topic, I would also recommend people acquaint themselves with the parallel programming literature for architectures other than mapreduce. 
 
 ### Jobs fail saying that rmr is not installed, but I installed it and I have witnesses to prove it
 
@@ -30,7 +30,7 @@ That path has to be accessible to R. You can check that with the function .libPa
 
 ### Can I specify a true map only job
 
-Yes, supplying the following argument to mapreduce `backend.parameters = list(hadoop = list(D = 'mapred.reduce.tasks=0'))`. map only will be the default when running without a reducer from version 1.4.
 
+Yes, just leave the `reduce` parameter to its default, `NULL`. This has changed in version 2.0. Before, you needed to supply the following argument to mapreduce `backend.parameters = lisat(hadoop = list(D = 'mapred.reduce.tasks=0'))`. 
 
 *Many thanks to Joe and Iver and other users who provided or suggested content for this page*
