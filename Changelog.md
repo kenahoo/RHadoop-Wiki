@@ -4,7 +4,6 @@
 * Simplified API with better support for vectorization and structured data. As a trade off, some porting of 1.3.1 based code is necessary.
 * Modified native format now combines speed and compatibility in a transparent way; backward compatible with 1.3.x
 * Completely refactored source code
-* Factored out testing package `quickcheck`
 * Added non-core functions for sampling, size testing, debugging and more
 * True map-only jobs
 
