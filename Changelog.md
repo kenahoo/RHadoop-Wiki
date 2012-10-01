@@ -8,7 +8,7 @@
 * Added non-core functions for sampling, size testing, debugging and more
 * True map-only jobs
 
-See [New in this release](TODO)
+See [New in this release](https://github.com/RevolutionAnalytics/RHadoop/blob/6333a200f2501e6e9190ad872c413c8f13a178ab/rmr2/docs/new-in-this-release.md) for details
 
 ## rmr 1.3.1
 
