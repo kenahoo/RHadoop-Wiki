@@ -30,6 +30,7 @@ RHadoop consists of the following packages:
 
 * [Overview of RHadoop](http://blog.revolutionanalytics.com/2011/09/mapreduce-hadoop-r.html), from the [Revolution Analytics blog](http://blog.revolutionanalytics.com).
 * [Slides and Replay](http://www.revolutionanalytics.com/news-events/free-webinars/2011/r-and-hadoop/) of 30-minute presentation about RHadoop, "Leveraging R in Hadoop Environments". 
+* [R in a Nutshell, 2nd edition](http://shop.oreilly.com/product/0636920022008.do) devotes a good part of the last chapter to RHadoop. _"The most mature (and best integrated) project for R and Hadoop is RHadoop."_
 * [[Downloads]] 
 * [Tutorial](https://github.com/RevolutionAnalytics/RHadoop/blob/master/rmr2/docs/tutorial.md)
 * [[Contribute to the RHadoop project]] 
