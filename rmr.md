@@ -33,9 +33,8 @@ If you use Globus Provision, check out this https://github.com/nbest937/gp-rhado
 * [[Documentation guidelines for rmr]]
 * [[Efficient rmr techniques]]
 * [[FAQ]]
-* [Fast k means](https://github.com/RevolutionAnalytics/RHadoop/blob/master/rmr/pkg/docs/fast-k-means.md)
-* [Getting data in and out](https://github.com/RevolutionAnalytics/RHadoop/blob/master/rmr/pkg/docs/getting-data-in-and-out.md)
-* [Tutorial](https://github.com/RevolutionAnalytics/RHadoop/blob/master/rmr/pkg/docs/tutorial.md)
+* [Getting data in and out](https://github.com/RevolutionAnalytics/RHadoop/blob/master/rmr/docs/getting-data-in-and-out.md)
+* [Tutorial](https://github.com/RevolutionAnalytics/RHadoop/blob/master/rmr/docs/tutorial.md)
 * [[Use Cases]]
 * [[Which Hadoop for rmr]]
 * [[Wishlist]]

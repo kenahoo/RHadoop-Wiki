@@ -15,3 +15,5 @@ RHadoop.Rproj
 .Rhistory
 
 *.html
+
+.RData
