@@ -9,7 +9,7 @@ We are limiting the listed downloads to the most recent stable version to simpli
 1. Clone the repo
 2. git tag
 3. find the tag corresponding to the version you want
-4. git checkout <that-tag>
+4. git checkout `<that-tag>`
 5. R CMD build path-to-rmr/pkg
 
 Off you go, you can run vintage rmr-1.0!
