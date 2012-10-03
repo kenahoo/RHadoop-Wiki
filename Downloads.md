@@ -7,10 +7,10 @@
 We are limiting the listed downloads to the most recent stable version to simplify things and prevent people from downloading obsolete versions (and we say that from experience). If you have a very strong reason to want to install an old version, though, there is a way. 
 
 1. Clone the repo
-2. git tag
+2. `git tag`
 3. find the tag corresponding to the version you want
-4. git checkout `<that-tag>`
-5. R CMD build path-to-rmr/pkg
+4. `git checkout <that-tag>`
+5. `R CMD build <path-to-rmr/pkg>`
 
 Off you go, you can run vintage rmr-1.0!
 
