@@ -4,7 +4,7 @@
 <font size=4><b>[rhdfs - 1.0.5](https://github.com/downloads/RevolutionAnalytics/RHadoop/rhdfs_1.0.5.tar.gz)</b></font><br>
 <font size=4><b>[rhbase - 1.0.4](https://github.com/downloads/RevolutionAnalytics/RHadoop/rhbase_1.0.4.tar.gz)</b></font><br>
 
-We are limiting the listed downloads to the most recent stable version to simplify things and prevent people from downloading obsolete version (and we say that from experience). If you have a very strong reason to want to install an old version, though, there is a way. 
+We are limiting the listed downloads to the most recent stable version to simplify things and prevent people from downloading obsolete versions (and we say that from experience). If you have a very strong reason to want to install an old version, though, there is a way. 
 
 1. Clone the repo
 2. git tag
