@@ -33,4 +33,11 @@ That path has to be accessible to R. You can check that with the function .libPa
 
 Yes, just leave the `reduce` parameter to its default, `NULL`. This has changed in version 2.0. Before, you needed to supply the following argument to mapreduce `backend.parameters = lisat(hadoop = list(D = 'mapred.reduce.tasks=0'))`. 
 
+### How do I install rmr from R a version other than stable?
+
+``` 
+install_github('rmr2', repo = 'RHadoop', username='RevolutionAnalytics', branch='rmr-2.0.1', subdir="rmr2/pkg")
+```
+where branch is what you need to change (and the package was called rmr pre 2.0.0). You still have to do this on every node of the cluster, no shortcuts there.
+
 *Many thanks to Joe and Iver and other users who provided or suggested content for this page*
