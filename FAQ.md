@@ -40,4 +40,7 @@ install_github('rmr2', repo = 'RHadoop', username='RevolutionAnalytics', branch=
 ```
 where branch is what you need to change (and the package was called rmr pre 2.0.0). You still have to do this on every node of the cluster, no shortcuts there.
 
+### Things work in R but not in RStudio
+The likely cause is that RStudio does not read your environment. See this [discussion](http://support.rstudio.org/help/discussions/problems/394-setting-up-ld_library_path-for-a-rsession) on the RStudio support site.
+
 *Many thanks to Joe and Iver and other users who provided or suggested content for this page*
