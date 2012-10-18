@@ -2,7 +2,7 @@
 
 <font size=4><b>[rmr - 2.0.0](https://github.com/downloads/RevolutionAnalytics/RHadoop/rmr2_2.0.0.tar.gz)</b></font><br>
 <font size=4><b>[rhdfs - 1.0.5](https://github.com/downloads/RevolutionAnalytics/RHadoop/rhdfs_1.0.5.tar.gz)</b></font><br>
-<font size=4><b>[rhbase - 1.0.4](https://github.com/downloads/RevolutionAnalytics/RHadoop/rhbase_1.0.4.tar.gz)</b></font><br>
+<font size=4><b>[rhbase - 1.1](https://github.com/downloads/RevolutionAnalytics/RHadoop/rhbase_1.1.tar.gz)</b></font><br>
 
 We are limiting the listed downloads to the most recent stable version to simplify things and prevent people from downloading obsolete versions (and we say that from experience). If you have a very strong reason to want to install an old version, though, there is a way. 
 
