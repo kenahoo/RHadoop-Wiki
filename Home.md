@@ -24,6 +24,7 @@ Contact: rhadoop@revolutionanalytics.com
 Questions: Please participate in our [discussion group](https://groups.google.com/forum/?fromgroups#!forum/rhadoop). For private questions, please use the above email address.
 
 # News
+* 10/18/2012 rhbase (1.1) added 'filterstring' support for scan operations on HBase tables (HBase 0.92 or >)
 * 10/1/2012 rmr-2.0 released, simplest and fastest rmr yet, makes everything vectorized and gives first class status to structured data. See [[Changelog]]
 * 9/10/2012 branched rmr-2.0 to prepare for the next release. Also provided a tgz file for download. Many changes and documentation still mostly out of date. Try if you are able to read the source code. Feedback is welcome.
 * 7/30/2012 rmr 1.3.1 tested on major Hadoop distros and Rmd docs &mdash; see [[Changelog]]. 
