@@ -4,7 +4,7 @@ This R package provides basic connectivity to HBASE, using the [Thrift server](h
 * Table Maninpulation <br>
         hb.new.table, hb.delete.table, hb.describe.table, hb.set.table.mode, hb.regions.table
 * Read/Write <br>
-        hb.insert, hb.get, hb.delete, hb.insert.data.frame, hb.get.data.frame, hb.scan
+        hb.insert, hb.get, hb.delete, hb.insert.data.frame, hb.get.data.frame, hb.scan, hb.scan.ex
 * Utility <br>
         hb.list.tables
 * Initialization <br>
@@ -32,5 +32,23 @@ This R package provides basic connectivity to HBASE, using the [Thrift server](h
 
         hb.init(serialize="raw")
 
-     See the sample " /rhbase/pkg/inst/samples/StringSerializer.r" for details
+     See the sample `/rhbase/pkg/inst/samples/StringSerializer.R` for details
  
+### Hbase table scans - using the filterstring option in hb.scan.ex
+In version 1.1 of rhbase, a new function `hb.scan.ex` was introduced.  This function allows the use of a 'filterString' for Hbase table scans (Hbase 0.92 or >).  
+
+Please see the Apache docs (http://hbase.apache.org/book/thrift.html) for details on filterString syntax (be aware that as of this writing, there are some inaccuracies in this documentation).   
+
+Hbase/Thrift is very unforgiving if you get the syntax or spelling wrong.  An exception will be throw 
+
+        rhbase<hbScannerOpenFilterEx>:: (TTransportException) No more data to read.
+
+This basically means that the socket connection to the Thrift server is dead.  The only way to recover, is to reinitialize your connection
+
+        hb.init(serialize="raw")
+
+An example of a filterstring has been added to the sample:
+
+   `/rhbase/pkg/inst/samples/StringSerializer.R` 
+
+
