@@ -11,6 +11,7 @@ RHadoop consists of the following packages:
 
 # More information about RHadoop
 
+* [Having problems?] (https://groups.google.com/forum/#!forum/rhadoop), post a message on the RHadoop Google Group
 * [Overview of RHadoop](http://blog.revolutionanalytics.com/2011/09/mapreduce-hadoop-r.html), from the [Revolution Analytics blog](http://blog.revolutionanalytics.com).
 * [Slides and Replay](http://www.revolutionanalytics.com/news-events/free-webinars/2011/r-and-hadoop/) of 30-minute presentation about RHadoop, "Leveraging R in Hadoop Environments". 
 * [R in a Nutshell, 2nd edition](http://shop.oreilly.com/product/0636920022008.do) devotes a good part of the last chapter to RHadoop. _"The most mature (and best integrated) project for R and Hadoop is RHadoop."_
@@ -40,4 +41,3 @@ Questions: Please participate in our [discussion group](https://groups.google.co
 * 24/1/2012 - Merged branch binary-io into dev.Please note some non-backward compatible changes in the API intended to strike a compromise between flexibility and ease of use in the IO department.
 * 12/7/2011 - Version 1.1 of the package rmr is available. See the [[Changelog]] for details.
 * 9/29/2011 - Version 1.0.1 available - fixes some minor defects with R CMD check tests on the packages 
-
