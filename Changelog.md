@@ -1,6 +1,12 @@
 #Changelog
 
-## rmr 2.0.0  (Master Branch)
+## rmr 2.0.1  (Master Branch)
+* Tested on CDH3, CDH4, Apache Hadoop 1.0.4 and MapR 2.0.1.
+* Many bug fixes including `rmr.sample` and `equijoin`.
+
+See[New in this release](TODO) for details
+
+## rmr 2.0.0  
 * Simplified API with better support for vectorization and structured data. As a trade off, some porting of 1.3.1 based code is necessary.
 * Modified native format now combines speed and compatibility in a transparent way; backward compatible with 1.3.x
 * Completely refactored source code
