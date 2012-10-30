@@ -4,7 +4,7 @@
 * Tested on CDH3, CDH4, Apache Hadoop 1.0.4 and MapR 2.0.1.
 * Many bug fixes including `rmr.sample` and `equijoin`.
 
-See[New in this release](TODO) for details
+See[New in this release](http://github.com/RevolutionAnalytics/RHadoop/blob/d6cac54cdb282f657266f99ec61e0d08f9ea16fe/rmr2/docs/new-in-this-release.md) for details
 
 ## rmr 2.0.0  
 * Simplified API with better support for vectorization and structured data. As a trade off, some porting of 1.3.1 based code is necessary.
