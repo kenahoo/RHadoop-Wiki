@@ -19,7 +19,7 @@ This R package provides basic connectivity to HBASE, using the [Thrift server](h
        2.  Build Thrfit according to instructions:  http://wiki.apache.org/thrift/ThriftInstallation
        3.  Update PKG_CONFIG_PATH:  `export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig/`
        4.  Verifiy pkg-config path is correct:   `pkg-config --cflags thrift`    ,  returns:    `-I/usr/local/include/thrift`
-       5.  Copy Thrift library  `sudo cp /usr/local/lib/libthrift.so.0 /usr/lib/`
+       5.  Copy Thrift library  `sudo cp /usr/local/lib/libthrift-0.8.0.so /usr/lib/`
        <br><br>
 * The Thrift server by default starts on port 9090.
 
@@ -50,5 +50,4 @@ This basically means that the socket connection to the Thrift server is dead.  T
 An example of a filterstring has been added to the sample:
 
    `/rhbase/pkg/inst/samples/StringSerializer.R` 
-
 
