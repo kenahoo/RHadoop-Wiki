@@ -1,7 +1,6 @@
-apriori algorithm is used to find frequent itemsets and association rules efficiently by pruning infrequent candidates.
-The problem here we are trying to address is to find frequent itemsets in a large amount of transaction data. RHadoop give us the ability to find locally frequent itemsets in the mapper, then reducer aggregates the support count for each locally frequent itemset in order to get the global support count for global frequent itemsets.
-It's great that we can control how many records are fed to the mapper each time. The global frequent itemsets may not be(or should not be) locally frequent on every fraction of the data, so increasing the size of the local data set will narrow down the probability of such cases. 
-I use the webdoc dataset to mimic transaction data. Each line of the webdoc dataset contains the words appeared in a webpage. Applying apriori on the dataset will give us which combination of words appeared most frequently. It gives us ability to find frequent itemsets from big transaction data parallelly and efficiently. 14 minutes to mining 1.4Gb 1690000 records of data.
+The problem here we are trying to address is to find frequent itemsets in a large amount of transaction data.
+The apriori algorithm is used to find frequent itemsets and association rules efficiently by pruning infrequent candidates. RHadoop give us the ability to find locally frequent itemsets in the mapper, then reducer aggregates the support count for each locally frequent itemset in order to get the global support count for global frequent itemsets.
+It's great that we can control how many records are fed to the mapper each time. The global frequent itemsets may not be(or should not be) locally frequent on every fraction of the data, so increasing the size of the local data set will narrow down the probability of such cases. I use the webdoc dataset to mimic transaction data. Each line of the webdoc dataset contains the words appeared in a webpage. Applying apriori on the dataset will give us which combination of words appeared most frequently. It gives us ability to find frequent itemsets from big transaction data parallelly and efficiently. 14 minutes to mining 1.4Gb 1690000 records of data.
 
 
 ```
@@ -104,3 +103,5 @@ library(arules)
         inspect(fItemL)
 
 ```
+
+Contributed by  cyang05 <superman3000@163.com>, with minimal editing by Revolution.
