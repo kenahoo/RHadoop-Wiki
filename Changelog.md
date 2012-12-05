@@ -2,7 +2,7 @@
 
 ## rmr 2.0.2 (Master Branch)
 * Lighter dependencies, compatible with R 2.15.2 and numerous bug fixes, many related to `equijoin`.
-See [New in this release](http://github.com/RevolutionAnalytics/RHadoop/blob/c6b77a84c99a77a4ee54cb6c2892256dd8b77472/rmr2/docs/new-in-this-release.Rmd) for details
+See [New in this release](http://github.com/RevolutionAnalytics/RHadoop/blob/c6b77a84c99a77a4ee54cb6c2892256dd8b77472/rmr2/docs/new-in-this-release.md) for details
 
 ## rmr 2.0.1  
 * Tested on CDH3, CDH4, Apache Hadoop 1.0.4 and MapR 2.0.1.
