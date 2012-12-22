@@ -1,6 +1,6 @@
 ### Download Latest Official RHadoop Releases
 
-<font size=4><b>[rmr - 2.0.1](https://github.com/downloads/RevolutionAnalytics/RHadoop/rmr2_2.0.2.tar.gz)</b></font><br>
+<font size=4><b>[rmr - 2.0.2](https://github.com/downloads/RevolutionAnalytics/RHadoop/rmr2_2.0.2.tar.gz)</b></font><br>
 <font size=4><b>[rhdfs - 1.0.5](https://github.com/downloads/RevolutionAnalytics/RHadoop/rhdfs_1.0.5.tar.gz)</b></font><br>
 <font size=4><b>[rhbase - 1.1](https://github.com/downloads/RevolutionAnalytics/RHadoop/rhbase_1.1.tar.gz)</b></font><br>
 
