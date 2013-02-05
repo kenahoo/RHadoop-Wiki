@@ -4,7 +4,7 @@ I think that documentation should be organized better than a FAQ, but if informa
 R and  all the libraries needed, including rmr and its dependencies and any other library that the developer needs. This is far from perfect and we are aware that some people simply can't install anything on their cluster because of policies, let alone technical difficulties. There seems to be a way around it but it's not very easy to implement. In dev under tools/whirr there is a whirr script that will do this for you, tested on AWS EC2.
 
 ### Is there any mechanism for installing R on the hadoop nodes?
-As a demo, unsupported, you can look under [tools/whirr](https://github.com/RevolutionAnalytics/RHadoop/tree/master/rmr2/pkg/tools/whirr). 
+As a demo, unsupported, you can look under [tools/whirr](https://github.com/RevolutionAnalytics/rmr2/tree/master/pkg/tools/whirr). 
  
 ### What happens when there are R code errors during a mapreduce job?
 

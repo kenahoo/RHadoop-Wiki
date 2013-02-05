@@ -1,1 +1,1 @@
-This page has [moved](https://github.com/RevolutionAnalytics/RHadoop/blob/master/rmr2/docs/getting-data-in-and-out.md).
+This page has [moved](https://github.com/RevolutionAnalytics/rmr2/blob/master/docs/getting-data-in-and-out.md).

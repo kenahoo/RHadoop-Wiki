@@ -1,6 +1,6 @@
 Do you have wishes to add to RHadoop wishlist below? Is there something you’d like to see in the next release? Let us know!
 
-Please enter a [new issue](https://github.com/RevolutionAnalytics/RHadoop/issues/) or email them to rhadoop@revolutionanalytics.com.  
+Please enter a new issue into one of the issue trackers ([rhdfs](https://github.com/RevolutionAnalytics/rhdfs/issues), [rhbase](https://github.com/RevolutionAnalytics/rhbase/issues), [rmr2](https://github.com/RevolutionAnalytics/rmr2/issues)) or email them to rhadoop@revolutionanalytics.com.  
 
 Better yet, [[contribute to the RHadoop project]], and make this wishlist a reality!!
 

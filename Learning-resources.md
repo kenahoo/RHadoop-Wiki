@@ -1,4 +1,4 @@
 * [Big data step-by-step](https://jeffreybreen.wordpress.com/2012/03/10/big-data-step-by-step-slides/) by Jeffrey Breen
 * [Code](https://github.com/ekohlwey/rhadoop-examples) for the RHadoop Tutorial at Strata NY 2012 by Ed Kohlwey and Stephanie Beben.
-* The project's own built in [Tutorial](https://github.com/RevolutionAnalytics/RHadoop/blob/master/rmr2/docs/tutorial.md)
-* Some all-code [presentation slides](http://htmlpreview.github.com/?https://github.com/RevolutionAnalytics/RHadoop/blob/master/rmr2/docs/tutorial-slides/tutorial-slides.html). Code is from rmr2 own [test set](https://github.com/RevolutionAnalytics/RHadoop/tree/master/rmr2/pkg/tests) 
+* The project's own built in [Tutorial](https://github.com/RevolutionAnalytics/rmr2/blob/master/docs/tutorial.md)
+* Some all-code [presentation slides](http://htmlpreview.github.com/?https://github.com/RevolutionAnalytics/rmr2/blob/master/docs/tutorial-slides/tutorial-slides.html). Code is from rmr2 own [test set](https://github.com/RevolutionAnalytics/rmr2/tree/master/pkg/tests) 
