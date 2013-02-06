@@ -25,6 +25,7 @@ Contact: rhadoop@revolutionanalytics.com
 Questions: Please participate in our [discussion group](https://groups.google.com/forum/?fromgroups#!forum/rhadoop). For private questions, please use the above email address.
 
 # News
+* 2/5/2013 Created package-specific repos to better support development. See the [announcement](https://groups.google.com/d/topic/rhadoop/CwyaTCdiDdg/discussion).
 * 12/4/2012 rmr-2.0.2 released with ligther dependencies and multiple bug fixes. See [[Changelog]].
 * 10/29/2012 rmr-2.0.1 released with multiple bug fixes and tested against most major Hadoop distros. See [[Changelog]].
 * 10/18/2012 rhbase (1.1) added 'filterstring' support for scan operations on HBase tables (HBase 0.92 or >)
