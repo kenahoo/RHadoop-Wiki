@@ -1,21 +1,26 @@
-### Download Latest Official RHadoop Releases
+### Download The Latest Official RHadoop Releases
 
 * [__rmr-2.0.2__](https://github.com/RevolutionAnalytics/rmr2/blob/master/build/rmr2_2.0.2.tar.gz?raw=true)
 * [__rhdfs-1.0.5__](https://github.com/RevolutionAnalytics/rhdfs/blob/master/build/rhdfs_1.0.5.tar.gz?raw=true)
 * [__rhbase-1.1__](https://github.com/RevolutionAnalytics/rhbase/blob/master/build/rhbase_1.1.tar.gz?raw=true)
 
+We are limiting the listed downloads to the most recent stable version to simplify things and prevent people from downloading obsolete versions (and we say that from experience). If you have a very strong reason to want to install an old version, though, there is a way.
 
-
-We are limiting the listed downloads to the most recent stable version to simplify things and prevent people from downloading obsolete versions (and we say that from experience). If you have a very strong reason to want to install an old version, though, there is a way. 
-
-1. Clone the repo
+1. Clone the repo for the package you need
 2. `git tag`
 3. find the tag corresponding to the version you want
 4. `git checkout <that-tag>`
 5. `R CMD build <path-to-rmr/pkg>`
 
-Off you go, you can run vintage rmr-1.0!
+From the web interface:
 
+1. Go to repo for the package you need (for rmr < 2.0 go to the now retired RHadoop repo)
+2. In the Code tab there is a tag link somewhere in the upper right corner
+3. Select release of interest and download
+4. Unzip
+5. `R CMD build <path-to-rmr/pkg>`
+
+Either way, you can now continue with normal installation instructions
 
 ###Prerequisites and Installation
 
