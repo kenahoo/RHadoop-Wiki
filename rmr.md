@@ -1,8 +1,8 @@
 &nbsp;
-###Overview
+### Overview
 This R package allows an R programmer to perform statistical analysis via MapReduce on a Hadoop cluster. 
 
-###Prerequisites and installation
+## Prerequisites and installation
 * A Hadoop cluster, CDH3 and higher or Apache 1.0.2 and higher but limited to mr1, not mr2. For more details on Hadoop compatibility see see [[Which Hadoop for rmr]] and [Compatibility](https://github.com/RevolutionAnalytics/rmr2/blob/master/docs/compatibility.md).
 * R installed on each node of the cluster (developed and tested on R 2.14.1). Revolution R Community 4.3 or 5.0 can be used, if you upgrade to RJSONIO 0.95 (which must be downloaded from CRAN, as it is not available in the REVO 2.12 repository) and create a symbolic link from /usr/bin/Revoscript to /usr/bin/Rscript. See [Compatibility](https://github.com/RevolutionAnalytics/rmr2/blob/master/docs/compatibility.md)
 * Install the following R packages on each node: Rcpp, RJSONIO (>= 0.8-2),  digest, functional, stringr, plyr
