@@ -25,11 +25,12 @@ Contact: rhadoop@revolutionanalytics.com
 Questions: Please participate in our [discussion group](https://groups.google.com/forum/?fromgroups#!forum/rhadoop). For private questions, please use the above email address.
 
 # News
+* 2/25/2013 rmr 2.1.0 released, improves speed, adds in-memory combiners and more vectorization, status and counters, hbase input and more. See [[Changelog]].
 * 2/5/2013 Created package-specific repos to better support development. See the [announcement](https://groups.google.com/d/topic/rhadoop/CwyaTCdiDdg/discussion).
-* 12/4/2012 rmr-2.0.2 released with ligther dependencies and multiple bug fixes. See [[Changelog]].
-* 10/29/2012 rmr-2.0.1 released with multiple bug fixes and tested against most major Hadoop distros. See [[Changelog]].
+* 12/4/2012 rmr 2.0.2 released with ligther dependencies and multiple bug fixes. See [[Changelog]].
+* 10/29/2012 rmr 2.0.1 released with multiple bug fixes and tested against most major Hadoop distros. See [[Changelog]].
 * 10/18/2012 rhbase (1.1) added 'filterstring' support for scan operations on HBase tables (HBase 0.92 or >)
-* 10/1/2012 rmr-2.0 released, simplest and fastest rmr yet, makes everything vectorized and gives first class status to structured data. See [[Changelog]]
+* 10/1/2012 rmr 2.0 released, simplest and fastest rmr yet, makes everything vectorized and gives first class status to structured data. See [[Changelog]]
 * 9/10/2012 branched rmr-2.0 to prepare for the next release. Also provided a tgz file for download. Many changes and documentation still mostly out of date. Try it if you are able to read the source code. Feedback is welcome.
 * 7/30/2012 rmr 1.3.1 tested on major Hadoop distros and Rmd docs &mdash; see [[Changelog]]. 
 * 7/17/2012 rhdfs (1.0.4) change to handle different classpaths in the init function
