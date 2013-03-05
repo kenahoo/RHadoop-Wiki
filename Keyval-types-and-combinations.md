@@ -8,6 +8,6 @@
 <table>
 <tr><td>c.keyval</td><td>	0-length</td><td>	NULL keys</td><td>	normal case</td>
 </tr><tr><td>0-length</td><td>	0-length</td><td>	NULL keys</td><td>	normal case</td>
-</tr><tr><td></td><td>NULL keys</td><td>		NULL keys</td><td>	NO</td>
-</tr><tr><td></td><td></td><td>normal case</td><td>			normal case</td><td>
+</tr><tr><td>NULL keys</td><td></td><td>		NULL keys</td><td>	NO</td>
+</tr><tr><td>normal case</td><td></td><td></td><td>			normal case</td><td>
 </tr></table>
