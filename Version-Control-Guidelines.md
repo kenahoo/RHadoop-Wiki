@@ -1,6 +1,6 @@
 We are aiming to simplify our git usage by adopting a simpler workflow (what branches we use and how, and what tags) inspired by that used by the git project itself. We are moving away from the one implemented in git-flow.
 
-We have three long lived branches: _enterprise, master and dev_
+We have three long lived branches: _enterprise, master and dev_. 
 _enterprise_ is for development of the current Enterprise Version and _master_ for the current version, which represent two tradeoffs between stability and features. We don't expect x.y.0 versions to be enterprise versions since they have new untested (in the field) features. Both branches can receive only bug fixes or documentation improvements. No new feature can go directly into these branches. dev is where the next release is prepared and can receive new features. Changes can go directly into the dev branch if they are minor, otherwise they come from feature branches.  
 
 Feature branches are dedicated branches where work on  new features takes place. There can also be integration branches were complex integrations are attempted before going into dev (if the merger requires collaboration).
