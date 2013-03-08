@@ -25,6 +25,7 @@ Contact: rhadoop@revolutionanalytics.com
 Questions: Please participate in our [discussion group](https://groups.google.com/forum/?fromgroups#!forum/rhadoop). For private questions, please use the above email address.
 
 # News
+* 3/7/2013 rhbase 1.1.1 released, fixes an issue with CR/LF breaking the build on some platforms
 * 2/25/2013 rmr 2.1.0 released, improves speed, adds in-memory combiners and more vectorization, status and counters, hbase input and more. See [[Changelog]].
 * 2/5/2013 Created package-specific repos to better support development. See the [announcement](https://groups.google.com/d/topic/rhadoop/CwyaTCdiDdg/discussion).
 * 12/4/2012 rmr 2.0.2 released with ligther dependencies and multiple bug fixes. See [[Changelog]].
