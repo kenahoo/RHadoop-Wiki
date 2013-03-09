@@ -62,7 +62,7 @@ plus = function(delta) function(x) x + delta
 tmp = sapply(1:5, plus(1))
 tmp
 sapply(tmp, plus(2))
-sapply(1:5, function(x)plus(2)(plus(1)(x)))
+sapply(1:5, function(x)plus(2)(plus(1)(x))) 
 ```
 
 ## Implementation plan
