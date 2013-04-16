@@ -1,4 +1,4 @@
-Users that have deployed rmr2 in production have raised the issue of controlling the amount of memory used by by R while running as a mapper or reducer on the nodes of a cluster. After reviewing some exchanges among Rhipe users and devs and on a Cloudera user forum, we can recommend the following approach, which is based on setting a number of properties in the haddop-site.xml file.
+Users that have deployed rmr2 in production have raised the issue of controlling the amount of memory used by by R while running as a mapper or reducer on the nodes of a cluster. After reviewing some exchanges among Rhipe users and devs and on a Cloudera user forum, we can recommend the following approach, which is based on setting a number of properties in the `hadoop-site.xml` file.
 First pair is controlling the amount of memory allocated to Java (for map or reduce)
 
 ```
@@ -11,6 +11,7 @@ First pair is controlling the amount of memory allocated to Java (for map or red
   <value>-Xmx2000m</value> 
 </property> 
 ```
+Here set to 2G for both. I am not endorsing a specific setting, only showing how to change them.
 Then we have a pair controlling the memory limits at the unix level (ulimit)
 
 ```
