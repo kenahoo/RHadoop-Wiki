@@ -1,5 +1,15 @@
 # Changelog
 
+## rmr 2.2.0
+* `equijoin` now accepts I/O format specs like `mapreduce`.
+* `rmr.options` now give access to a `dfs.tempdir` setting to set the HDFS tempdir to a different setting from the R tempdir. 
+* `rmr.str` returns its own argument, which allows less intrusive code changes when adding logging.
+* Made some error messages more informative.
+* Bugs affecting `c.keyval`, `equijoin`, `keyval`, the CSV input and ouput formats, the "reduce calls" counter and the `backend.parametrs` option to `mapreduce`
+
+See [New in this release](https://github.com/RevolutionAnalytics/rmr2/blob/2.2.0/docs/new-in-this-release.md) for details.
+
+
 ## rmr 2.1.0
 * Faster, with both behind-the-API work and some additional features focused on accelerating the reduce phase. 
   * Reduce functions can be vectorized w.r.t to the keys, in addition to the values, for the case of small reduce groups. 
@@ -8,18 +18,18 @@
 * HBase input format to process directly HBase tables 
 * `c.keyval` function that helps creating complex key-value pairs. 
 
-See [New in this release](https://github.com/RevolutionAnalytics/rmr2/blob/2.1.0/docs/new-in-this-release.md) for details
+See [New in this release](https://github.com/RevolutionAnalytics/rmr2/blob/2.1.0/docs/new-in-this-release.md) for details.
 
 ## rmr 2.0.2
 * Lighter dependencies, compatible with R 2.15.2 and numerous bug fixes, many related to `equijoin`.
 
-See [New in this release](http://github.com/RevolutionAnalytics/rmr2/blob/rmr-2.0.2/docs/new-in-this-release.md) for details
+See [New in this release](http://github.com/RevolutionAnalytics/rmr2/blob/rmr-2.0.2/docs/new-in-this-release.md) for details.
 
 ## rmr 2.0.1  
 * Tested on CDH3, CDH4, Apache Hadoop 1.0.4 and MapR 2.0.1.
 * Many bug fixes including `rmr.sample` and `equijoin`.
 
-See [New in this release](http://github.com/RevolutionAnalytics/rmr2/blob/rmr-2.0.1/docs/new-in-this-release.md) for details
+See [New in this release](http://github.com/RevolutionAnalytics/rmr2/blob/rmr-2.0.1/docs/new-in-this-release.md) for details.
 
 ## rmr 2.0.0  
 * Simplified API with better support for vectorization and structured data. As a trade off, some porting of 1.3.1 based code is necessary.
@@ -28,7 +38,7 @@ See [New in this release](http://github.com/RevolutionAnalytics/rmr2/blob/rmr-2.
 * Added non-core functions for sampling, size testing, debugging and more
 * True map-only jobs
 
-See [New in this release](http://github.com/RevolutionAnalytics/rmr2/blob/rmr-2.0.0/docs/new-in-this-release.md) for details
+See [New in this release](http://github.com/RevolutionAnalytics/rmr2/blob/rmr-2.0.0/docs/new-in-this-release.md) for details.
 
 ## rmr 1.3.1
 
