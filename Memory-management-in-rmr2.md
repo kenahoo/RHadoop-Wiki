@@ -1,35 +1,51 @@
-Users that have deployed rmr2 in production have raised the issue of controlling the amount of memory used by by R while running as a mapper or reducer on the nodes of a cluster. After reviewing some exchanges among Rhipe users and devs and on a Cloudera user forum, we can recommend the following approach, which is based on setting a number of properties in the `hadoop-site.xml` file.
-First pair is controlling the amount of memory allocated to Java (for map or reduce)
+Users that have deployed rmr2 in production have raised the issue of controlling the amount of memory used by by R while running as a mapper or reducer on the nodes of a cluster. After reviewing some exchanges among Rhipe users and devs and on a Cloudera user forum, we can suggest the approach described below. 
+
+## The problem
+
+The hadoop scheduler before YARN, which is not recommended for production yet, schedules a maximum number of map tasks and reduce tasks per node. If they use memory in an unconstrained fashion, hardware resources may be exceeded resulting in run-time errors. These errors are particularly worrisome for two reasons: 
+* they can be hard to reproduce as they depend on the load on a specific cluster node at the time of execution
+* the process that failed is not necessarily the one to blame, and it may be hard to actually assign the blame even having a complete list of processes running on a node.
+
+A solution often recommended is to limit each process to use an amount of memory such that each node has enough memory to run the maximum allowed number of map and reduce tasks. It doesn't ensure great utilization but it makes Out of Memory failures again "local" that is whenever one occurs the culprit is the process that failed.
+
+There is an additional twist when running streaming jobs, which is how rmr2 jobs are implemented. Unlike a pure Java mapreduce job, here there are two processes running: one is hadoop streaming and the other is the mapper or reducer. In the case of rmr2, that's an instance of the R interpreter. So simply bounding the amount of memory used by a JVM instance is not enough, we need to ensure that the R interpreter stays within predetermined bounds.
+
+
+## One solution
+The approach described here consists of setting a number of properties in the `hadoop-site.xml` file.
+First pair of properties is controlling the amount of memory allocated to the JVM (for map or reduce)
 
 ```
 <property> 
   <name>mapred.map.child.java.opts</name> 
-  <value>-Xmx2000m</value> 
+  <value>-Xmx1000m</value> 
 </property> 
 <property> 
   <name>mapred.reduce.child.java.opts</name> 
-  <value>-Xmx2000m</value> 
+  <value>-Xmx1000m</value> 
 </property> 
 ```
-Here set to 2G for both. I am not endorsing a specific setting, only showing how to change them.
-Then we have a pair controlling the memory limits at the unix level (ulimit)
+
+Here they are set to 1G for both; I suspect for streaming, where most of the work is done in R, this could be lower. We will try to suggest some specific settings in the future.
+
+Then we have a pair controlling the memory limits at the unix level (ulimit):
 
 ```
 <property> 
   <name>mapred.map.child.ulimit</name> 
-  <value>1126400</value> 
+  <value>2097152</value> 
   <final>true</final> 
 </property> 
 <property> 
   <name>mapred.reduce.child.ulimit</name> 
-  <value>1126400</value> 
+  <value>2097152</value> 
   <final>true</final> 
 </property> 
 ```
 
-These should take into account both the java process and the R process. That is subtract what was set in the previous pair of properties and what is left is what R has available.
+The values are in KBs. In CDH4 and other recent distros you may want to use the shorter version which drops the "child" part from the name. These should take into account both the java process and the R process. That is subtract what was set in the previous pair of properties and what is left is what R has available. In the above examples R has 1G available.
 
-Finally since setting limits does not increase the amount of memory available, you may want to run fewer concurrent map and reduce tasks on each node.
+Finally since setting limits does not increase the amount of memory available in hardware, you may want to run fewer concurrent map and reduce tasks on each node.
 
 ```
 <property> 
@@ -44,4 +60,7 @@ Finally since setting limits does not increase the amount of memory available, y
 </property> 
 ```
 
-1 being the lowest possible setting, but not the only one to consider. This looks helpful for a cluster that has one type of load, but in the presence of a mixed load of high mem and low mem jobs I think the capacity scheduler is the way to go and we will try to support it as soon as it is more widely available.
+1 being the lowest possible setting, but not the only one to consider. 
+
+## The future
+I think for better utilization with mixed loads the [capacity scheduler](https://hadoop.apache.org/docs/stable/capacity_scheduler.html) is very promising. While we are unable to support it at the moment (because of streaming incompatibility with YARN), we are tracking the developments on that front and hope to make it available to rmr2 users as soon as it is feasible.
