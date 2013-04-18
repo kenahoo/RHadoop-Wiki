@@ -25,7 +25,7 @@ Contact: rhadoop@revolutionanalytics.com
 Questions: Please participate in our [discussion group](https://groups.google.com/forum/?fromgroups#!forum/rhadoop). For private questions, please use the above email address.
 
 # News
-* 4/18/2013 rmr 2.2.0 released, with flexible I/) formats for equijoins, configurable HDFS tempdir, a more convenient `rmr.str` for debugging, better error messages and many bugfixes. See [[Changelog]]
+* 4/18/2013 rmr 2.2.0 released, with flexible I/O formats for equijoins, configurable HDFS tempdir, a more convenient `rmr.str` for debugging, better error messages and many bugfixes. See [[Changelog]]
 * 3/7/2013 rhbase 1.1.1 released, fixes an issue with CR/LF breaking the build on some platforms
 * 2/25/2013 rmr 2.1.0 released, improves speed, adds in-memory combiners and more vectorization, status and counters, hbase input and more. See [[Changelog]].
 * 2/5/2013 Created package-specific repos to better support development. See the [announcement](https://groups.google.com/d/topic/rhadoop/CwyaTCdiDdg/discussion).
