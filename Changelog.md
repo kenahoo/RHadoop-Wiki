@@ -5,7 +5,7 @@
 * `rmr.options` now give access to a `dfs.tempdir` setting to set the HDFS tempdir to a different setting from the R tempdir. 
 * `rmr.str` returns its own argument, which allows less intrusive code changes when adding logging.
 * Made some error messages more informative.
-* Bugs affecting `c.keyval`, `equijoin`, `keyval`, the CSV input and ouput formats, the "reduce calls" counter and the `backend.parametrs` option to `mapreduce`
+* Bugs affecting `c.keyval`, `equijoin`, `keyval`, the CSV input and ouput formats, the "reduce calls" counter and the `backend.parameters` option to `mapreduce`
 
 See [New in this release](https://github.com/RevolutionAnalytics/rmr2/blob/2.2.0/docs/new-in-this-release.md) for details.
 
