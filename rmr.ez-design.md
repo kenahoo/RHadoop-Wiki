@@ -23,6 +23,7 @@ alternative: fold back changes into rmr2 if loss of generality can be avoided
    * if it is an integer or a string, it selects a column and that column is used as keys
    * if it is a function, it is applied to the only map argument and the return values used as keys
    * several predefined options: random reducer, single reducer, hash, bins?
+* `from.dfs` is redefined as `function(x) values(from.dfs(x))`. Alternative: `function(x) do.call(cbind, from.dfs(x))`
 
 ##API
 
@@ -38,6 +39,10 @@ Assume
 
 ```
 input = to.dfs(mtcars)
+constant(k =  1) function(x) k
+altogether = constant()
+random = function(x) runif(nrow(x))
+hash = function(index, range) function(x) apply(x[,index],2, cksum)%%range
 ```
 
 ### Identity
@@ -88,7 +93,7 @@ transfold(input, transform = function(x) x[,1:2])
 ### Sum
 
 ```
-transfold(input, transform = colSums, group.by = function(x) 1, fold = colSums)
+transfold(input, transform = colSums, group.by = altogether, fold = colSums)
 ```
 
 problem: need to activate the combiner here, that is necessary but also advanced
@@ -124,7 +129,7 @@ wordcount =
     output = NULL,
     pattern = " ") {
     wc.transform  = 
-      function(x) 1
+      constant(1)
     wc.group.by = 
       function(x) 
         unlist(
@@ -135,9 +140,42 @@ wordcount =
       input = input,
       output = output,
       transform = wc.transfowm,
-      group.by = wc.group.by,
+      group.by = altogether,
       fold = wc.fold)}
 ```
+
+### Logistic Regression
+
+```
+logistic.regression = 
+  function(input, iterations, dims, alpha) {
+   lr.transform =          
+    function(M) {
+      Y = M[,1] 
+      X = M[,-1]
+      Y * X * 
+        g(-Y * as.numeric(X %*% t(plane)))}
+  lr.fold =
+    function(Z) 
+      t(as.matrix(apply(Z,2,sum)))
+  
+    plane = t(rep(0, dims))
+    g = function(z) 1/(1 + exp(-z))
+    for (i in 1:iterations) {
+      gradient = 
+        values(
+          from.dfs(
+            transfold(
+              input,
+              transform = lr.transform,
+              group.by = altogether,
+              fold = lr.fold)))
+      plane = plane + alpha * gradient }
+    plane }
+```
+
+### k-means
+  
 
 ##Implementation
 
