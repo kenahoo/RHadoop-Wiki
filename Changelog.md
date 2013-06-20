@@ -1,5 +1,13 @@
 # Changelog
 
+## rmr 2.2.1
+
+* Compatible with Hortonworks Data Platform for windows.
+* Speed improvements
+* A number of bug fixes affecting, among others, `equijoin` and the local backend.
+
+See [New in this release](https://github.com/RevolutionAnalytics/rmr2/blob/2.2.1/docs/new-in-this-release.md) for details.
+
 ## rmr 2.2.0
 * `equijoin` now accepts I/O format specs like `mapreduce`.
 * `rmr.options` now give access to a `dfs.tempdir` setting to set the HDFS tempdir to a different setting from the R tempdir. 
