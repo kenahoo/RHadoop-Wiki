@@ -4,7 +4,7 @@
 * [__rmr-2.2.1__ for Windows](http://goo.gl/DWTKl)
 * [__rhdfs-1.0.6__](https://github.com/RevolutionAnalytics/rhdfs/blob/master/build/rhdfs_1.0.6.tar.gz?raw=true)
 * [__rhdfs-1.0.6__ for Windows](https://github.com/RevolutionAnalytics/rhdfs/blob/master/build/rhdfs_1.0.6.zip?raw=true)
-* [__rhbase-1.1.1__](https://github.com/RevolutionAnalytics/rhbase/blob/master/build/rhbase_1.1.1.tar.gz?raw=true)
+* [__rhbase-1.2.0__](https://github.com/RevolutionAnalytics/rhbase/blob/master/build/rhbase_1.2.0.tar.gz?raw=true)
 
 We are limiting the listed downloads to the most recent stable version to simplify things and prevent people from downloading obsolete versions (and we say that from experience). If you have a very strong reason to want to install an old version, though, there is a way.
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## rhbase 1.2.0
+
+* Adds "character" serialization which inherits the behavior of what was "raw" in the previous release. "raw" is now really raw, meaning database contents are represented as raw vectors, no transformations applied.
+
 ## rhdfs 1.0.6
 
 * Compatible with Hortonworks Data Platform for windows.
