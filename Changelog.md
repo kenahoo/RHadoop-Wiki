@@ -1,5 +1,9 @@
 # Changelog
 
+## rhdfs 1.0.6
+
+* Compatible with Hortonworks Data Platform for windows.
+
 ## rmr 2.2.1
 
 * Compatible with Hortonworks Data Platform for windows.
