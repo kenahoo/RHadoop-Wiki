@@ -1,5 +1,12 @@
 # Changelog
 
+## rmr 2.2.2
+
+* Fixes two bugs, one of which can cause occasional, hard to detect data corruption. Recommended upgrade.
+
+See [New in this release](https://github.com/RevolutionAnalytics/rmr2/blob/2.2.2/docs/new-in-this-release.md) for details.
+
+
 ## rhbase 1.2.0
 
 * Adds "character" serialization which inherits the behavior of what was "raw" in the previous release. "raw" is now really raw, meaning database contents are represented as raw vectors, no transformations applied.
