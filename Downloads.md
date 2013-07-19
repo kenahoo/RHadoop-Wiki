@@ -1,7 +1,7 @@
 ### Download The Latest Official RHadoop Releases
 
 * [__rmr-2.2.2__](http://goo.gl/jRn47)
- HOLD OFF WITH THE WIN VERSION, we need to replace the build, stay tuned
+* HOLD OFF WITH THE WIN VERSION, we need to replace the build, stay tuned
 * [__rmr-2.2.2__ for Windows](http://goo.gl/Jt6bF)
 * [__rhdfs-1.0.6__](https://github.com/RevolutionAnalytics/rhdfs/blob/master/build/rhdfs_1.0.6.tar.gz?raw=true)
 * [__rhdfs-1.0.6__ for Windows](https://github.com/RevolutionAnalytics/rhdfs/blob/master/build/rhdfs_1.0.6.zip?raw=true)
