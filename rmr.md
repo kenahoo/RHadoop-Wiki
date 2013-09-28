@@ -1,5 +1,5 @@
 &nbsp;
-### Overview
+## Overview
 This R package allows an R programmer to perform statistical analysis via MapReduce on a Hadoop cluster. 
 
 ## Prerequisites and installation
