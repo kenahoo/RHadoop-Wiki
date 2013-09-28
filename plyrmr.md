@@ -16,8 +16,8 @@ This package has a [Github repo](http://github/com/RevolutionAnalytics/plyrmr), 
 
 ## Prerequisites and installation
 
- * [[rmr]] installed from the dev branch, see [[rmr]] for the necessary steps but instead of downloading the pre-built package start from the [source, dev branch](https://github.com/RevolutionAnalytics/rmr2/archive/dev.zip). Install with `R CMD INSTALL dev.zip`.
- * `plyrmr` installed on each node of a Hadoop cluster together with its dependencies (see the [DESCRIPTION file](https://github.com/RevolutionAnalytics/plyrmr/blob/master/DESCRIPTION), `depends:` line). Install from [source, master branch](https://github.com/RevolutionAnalytics/plyrmr/archive/master.zip) with `R CMD INSTALL master.zip`
+ * [[rmr]] installed from the dev branch, see [[rmr]] for the necessary steps but instead of downloading the pre-built package start from the [source, dev branch](https://github.com/RevolutionAnalytics/rmr2/archive/dev.zip). Install with `unzip rmr2-dev.zip; R CMD INSTALL rmr2-dev/pkg `. You can also clone the repo if familiar with git.
+ * `plyrmr` installed on each node of a Hadoop cluster together with its dependencies (see the [DESCRIPTION file](https://github.com/RevolutionAnalytics/plyrmr/blob/master/DESCRIPTION), `depends:` line). Install from [source, master branch](https://github.com/RevolutionAnalytics/plyrmr/archive/master.zip) with `unzip plyrmr-master.zip; R CMD INSTALL plyrmr-master`. You can also clone the repo if familiar with git.
  * The need to build from source will go away with the first plyrmr and the next rmr releases, which will be coordinated.
  
 ## Contents
