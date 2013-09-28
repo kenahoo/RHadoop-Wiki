@@ -5,9 +5,11 @@ RHadoop is a collection of three R packages that allow users to manage and analy
 
 RHadoop consists of the following packages:
 
+* NEW! [[plyrmr]] - higher level plyr-like data processing for structured data, powered by rmr
 * [[rmr]] - functions providing Hadoop MapReduce functionality in R 
 * [[rhdfs]] - functions providing file management of the HDFS from within R 
 * [[rhbase]] - functions providing database management for the HBase distributed database from within R
+
 
 # More information about RHadoop
 
@@ -25,6 +27,7 @@ Contact: rhadoop@revolutionanalytics.com
 Questions: Please participate in our [discussion group](https://groups.google.com/forum/?fromgroups#!forum/rhadoop). For private questions, please use the above email address.
 
 # News
+* 9/27/2013 Preview for [[plyrmr]] is available.
 * 6/18/2013 rmr 2.2.2 released, two bug fixes, one very important, upgrade recommended. See [[Changelog]].
 * 6/21/2013 rhbase 1.2.0 released, adds `character` serialization, fixes `raw`. 
 * 6/21/2013 rhdfs 1.0.6 released, adds windows compatibility.
