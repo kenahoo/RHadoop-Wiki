@@ -2,3 +2,4 @@
 ## [[rhdfs]]
 ## [[rhbase]]
 ## [[rmr]]
+## [[plyrmr]]
