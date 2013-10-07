@@ -27,6 +27,7 @@ Contact: rhadoop@revolutionanalytics.com
 Questions: Please participate in our [discussion group](https://groups.google.com/forum/?fromgroups#!forum/rhadoop). For private questions, please use the above email address.
 
 # News
+* 10/7/2013 [[rmr]] 2.3 is available. See [[Changelog]].
 * 9/27/2013 Preview for [[plyrmr]] is available.
 * 6/18/2013 rmr 2.2.2 released, two bug fixes, one very important, upgrade recommended. See [[Changelog]].
 * 6/21/2013 rhbase 1.2.0 released, adds `character` serialization, fixes `raw`. 

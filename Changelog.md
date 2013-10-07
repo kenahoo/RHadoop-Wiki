@@ -1,5 +1,16 @@
 # Changelog
 
+## rmr 2.3.0
+
+* Supports the upcoming [[plyrmr]] package, now in preview.
+* New backend independent file operations 
+* New "pig.hive" format to import/export from/to those systems
+* Speed improvements when using data frames.
+* Better key normalization, prevents occasional grouping errors.
+* Limit broadcasting of large objects for efficiency reasons, under user contol.
+
+See [New in this release](https://github.com/RevolutionAnalytics/rmr2/blob/2.3.0/docs/new-in-this-release.md) for details.
+
 ## rmr 2.2.2
 
 * Fixes two bugs, one of which can cause occasional, hard to detect data corruption. Recommended upgrade.

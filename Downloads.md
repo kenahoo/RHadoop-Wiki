@@ -1,7 +1,7 @@
 ### Download The Latest Official RHadoop Releases
 
-* [__rmr-2.2.2__](http://goo.gl/jRn47)
-* [__rmr-2.2.2__ for Windows](http://goo.gl/Jt6bF)
+* [__rmr-2.3.0__](http://goo.gl/RA6VaH)
+* [__rmr-2.3.0__ for Windows](http://goo.gl/ZQL8sF)
 * [__rhdfs-1.0.6__](https://github.com/RevolutionAnalytics/rhdfs/blob/master/build/rhdfs_1.0.6.tar.gz?raw=true)
 * [__rhdfs-1.0.6__ for Windows](https://github.com/RevolutionAnalytics/rhdfs/blob/master/build/rhdfs_1.0.6.zip?raw=true)
 * [__rhbase-1.2.0__](https://github.com/RevolutionAnalytics/rhbase/blob/master/build/rhbase_1.2.0.tar.gz?raw=true)
@@ -31,5 +31,3 @@ See the package specific pages:
 * [[rhdfs]]
 * [[rhbase]]
 * [[rmr]]
-
-Contact: rhadoop@revolutionanalytics.com
