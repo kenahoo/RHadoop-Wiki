@@ -32,3 +32,4 @@ See the package specific pages:
 * [[rhdfs]]
 * [[rhbase]]
 * [[rmr]]
+* [[plyrmr]]
