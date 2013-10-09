@@ -8,17 +8,17 @@ This R package enables the R user to perform common data manipulation operations
 * Simple but powerful ways of aggregating data: `group`, `group.f`, `gather` and `ungroup`.
 * All of the above can be combined by normal functional composition: delayed evaluation helps mitigating any performance penalty of doing so by minimizing the number of Hadoop jobs launched to evaluate an expression.
 * New data frame functions which are also Hadoop-capable that are more suitable for development than some of the above: `select` and `where`.
+* Much more still under active development.
 
 ## Status
-We are close to releasing a 0.1 version. As the numbering suggests, the package should be considered work in progress and the API is not cast in stone yet. We seek feedback at an early time to drive further development.
+The current version has a major release number of zero (0.x.y). As the numbering suggests, the package should be considered work in progress and the API is not cast in stone yet. We seek feedback at an early time to drive further development.
 This package has a [Github repo](http://github/com/RevolutionAnalytics/plyrmr), please feel free to enter an issue there to discuss problems, existing or missing features and what not (anything that requires an answer from the devs). For general discussions head to the [RHadoop forum](https://groups.google.com/forum/?hl=en-US&fromgroups#!forum/rhadoop)
 
 
 ## Prerequisites and installation
 
  * [[rmr]] 2.3 or higher.
- * `plyrmr` installed on each node of a Hadoop cluster together with its dependencies (see the [DESCRIPTION file](https://github.com/RevolutionAnalytics/plyrmr/blob/master/DESCRIPTION), `depends:` line). Install from [source, master branch](https://github.com/RevolutionAnalytics/plyrmr/archive/master.zip) with `unzip plyrmr-master.zip; R CMD INSTALL plyrmr-master`. You can also clone the repo if familiar with git.
- * The need to build from source will go away with the first plyrmr relase.
+ * `plyrmr` installed on each node of a Hadoop cluster together with its dependencies (see the [DESCRIPTION file](https://github.com/RevolutionAnalytics/plyrmr/blob/master/DESCRIPTION), `depends:` line). See [[Downloads]]
  
  
 ## Contents
