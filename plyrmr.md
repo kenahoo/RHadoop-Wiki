@@ -12,7 +12,7 @@ This R package enables the R user to perform common data manipulation operations
 
 ## Status
 The current version has a major release number of zero (0.x.y). As the numbering suggests, the package should be considered work in progress and the API is not cast in stone yet. We seek feedback at an early time to drive further development.
-This package has a [Github repo](http://github/com/RevolutionAnalytics/plyrmr), please feel free to enter an issue there to discuss problems, existing or missing features and what not (anything that requires an answer from the devs). For general discussions head to the [RHadoop forum](https://groups.google.com/forum/?hl=en-US&fromgroups#!forum/rhadoop)
+This package has a [Github repo](http://github/com/RevolutionAnalytics/plyrmr), please feel free to enter an issue there to discuss problems, existing or missing features and what not (anything that requires an answer from the devs). For general discussions head to the [RHadoop forum](https://groups.google.com/forum/?hl=en-US&fromgroups#!forum/rhadoop).
 
 
 ## Prerequisites and installation
