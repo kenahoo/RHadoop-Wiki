@@ -17,6 +17,7 @@ export HADOOP_CMD=/usr/bin/hadoop
 export HADOOP_STREAMING=/usr/lib/hadoop/contrib/streaming/hadoop-streaming-<version>.jar  
 ```
 
+Because of the variabilty between distros, we have collected some observations about these settings in a dedicated [page](rmr2-settings.md).
 For people who use RPMs for their deployments, courtesy of jseidman, we have RPMs for rmr and its dependencies. These RPMs are available in this repo: https://github.com/jseidman/pkgs. Note that currently there's only CentOS 5.5 64bit RPMs, but the source files to create the RPMs are in the same repo, so it should be easy to build for other RH-based distros. jseidman reports using RPMs along with Puppet to deploy all packages, applications, etc. to their (Orbitz) Hadoop clusters.
 
 For people who use EC2 (not EMR), in the source package under the tools directory there is a whirr script to fire up an EC2 rmr cluster. 
