@@ -73,6 +73,7 @@ backend.parameters =
         D = "mapred.reduce.child.ulimit=2097152",
         D = "mapred.tasktracker.map.tasks.maximum=1",
         D = "mapred.tasktracker.reduce.tasks.maximum=1))
+```
 
 Again that `1` will have to be raised to something like 0.95 of available reduce slots in your cluster.
 
