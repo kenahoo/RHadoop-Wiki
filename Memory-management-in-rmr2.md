@@ -62,5 +62,19 @@ Finally since setting limits does not increase the amount of memory available in
 
 1 being the lowest possible setting, but not the only one to consider. 
 
+If you don't have access to the configuration files or don't want to change them because the settings are not appropriate for every job, you can set them on job-by-job basis with the `backend.parameter` option to `mapreduce`. The above settings would look like:
+
+```
+backend.parameters = 
+  list(
+    hadoop = 
+      list(
+        D = "mapred.map.child.ulimit=2097152",
+        D = "mapred.reduce.child.ulimit=2097152",
+        D = "mapred.tasktracker.map.tasks.maximum=1",
+        D = "mapred.tasktracker.reduce.tasks.maximum=1))
+
+Again that `1` will have to be raised to something like 0.95 of available reduce slots in your cluster.
+
 ## The future
-I think for better utilization with mixed loads the [capacity scheduler](https://hadoop.apache.org/docs/stable/capacity_scheduler.html) is very promising. While we are unable to support it at the moment (because of streaming incompatibility with YARN), we are tracking the developments on that front and hope to make it available to rmr2 users as soon as it is feasible.
+I think for better utilization with mixed loads the [capacity scheduler](https://hadoop.apache.org/docs/stable/capacity_scheduler.html) is very promising. 
