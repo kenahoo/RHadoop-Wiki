@@ -1,5 +1,16 @@
 # Changelog
 
+## rmr 3.0.0
+
+* Faster than 2.3.0 where that version was slow, 10X in some cases, and in general more predictable as far as performance.
+* Removes confusing `keyval.length` option giving responsability to each format for how much to read and write.
+* Adds `dfs.exists` to check if a file exists (backend independent).
+* Fixes a problem with the hbase format.
+* Fixes the reduce call counter.
+* Allows to set the `HDFS_CMD` environment variable to help rmr2 find the `hdfs` command, avoid annoying deprecation warnings.
+
+See [New in this release](https://github.com/RevolutionAnalytics/rmr2/blob/3.0.0/docs/new-in-this-release.md) for details.
+
 ## rmr 2.3.0
 
 * Supports the upcoming [[plyrmr]] package, now in preview.

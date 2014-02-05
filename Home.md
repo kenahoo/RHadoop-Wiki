@@ -27,6 +27,7 @@ Contact: rhadoop@revolutionanalytics.com
 Questions: Please participate in our [discussion group](https://groups.google.com/forum/?fromgroups#!forum/rhadoop). For private questions, please use the above email address.
 
 # News
+* 2/TODO/2014 rmr 3.0.0 released. Faster, do I need to say more? See [[Changelog]]
 * 11/11/2013 rhdfs 1.0.8 released. Compatibility with Hadoop 3.0.0.
 * 10/14/2013 rhdfs 1.0.7 released. Update for HDP 1.3 Windows
 * 10/9/2013 [[plyrmr]] 0.1.0 is available. See [[plyrmr]].
