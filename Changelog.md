@@ -1,4 +1,3 @@
-# Changelog
 
 ## rmr 3.0.0
 
