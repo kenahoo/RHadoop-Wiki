@@ -2,17 +2,19 @@ This should look like a checklist, but it doesn't thanks to the geniuses at Gith
 
 
  - [ ] update version #
- - [ ] update date
+ - [ ] what's new
  - [ ] test local and debug
  - [ ] update Rd help()
- - [ ] update Rmd docs
- - [ ] compatibility
- - [ ] what's new
+ - [ ] merge into master
  - [ ] push master
  - [ ] test remote and debug
+ - [ ] compatibility doc
  - [ ] test additional distros
  - [ ] apply necessary fixes
- - [ ] make tar gz, tag and push
+ - [ ] update date
+ - [ ] make tar gz,
+ - [ ] make zip for windows
+ - [ ] tag and push
  - [ ] push --tags
  - [ ] update md docs (wiki) -- download link in particular and push
  - [ ] announce on group
