@@ -22,9 +22,7 @@ RHadoop consists of the following packages:
 * [[Contribute to the RHadoop project]] 
 * [Live from the net](https://friendfeed.com/rhadoop)
 
-Contact: rhadoop@revolutionanalytics.com
-
-Questions: Please participate in our [discussion group](https://groups.google.com/forum/?fromgroups#!forum/rhadoop). For private questions, please use the above email address.
+Questions: Please participate in our [discussion group](https://groups.google.com/forum/?fromgroups#!forum/rhadoop). 
 
 # News
 * 2/10/2014 rmr 3.0.0 released. Faster, do I need to say more? See [[Changelog]]

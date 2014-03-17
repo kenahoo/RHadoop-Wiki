@@ -1,7 +1,6 @@
 Do you have wishes to add to RHadoop wishlist below? Is there something you’d like to see in the next release? Let us know!
 
-Please enter a new issue into one of the issue trackers ([rhdfs](https://github.com/RevolutionAnalytics/rhdfs/issues), [rhbase](https://github.com/RevolutionAnalytics/rhbase/issues), [rmr2](https://github.com/RevolutionAnalytics/rmr2/issues)) or email them to rhadoop@revolutionanalytics.com.  
-
+Please enter a new issue into one of the issue trackers ([rhdfs](https://github.com/RevolutionAnalytics/rhdfs/issues), [rhbase](https://github.com/RevolutionAnalytics/rhbase/issues) or [rmr2](https://github.com/RevolutionAnalytics/rmr2/issues)), depending on which package is most closely related. Or post your idea on our [Google Group](https://groups.google.com/forum/?fromgroups#!forum/rhadoop).
 Better yet, [[contribute to the RHadoop project]], and make this wishlist a reality!!
 
 ### Current Wishlist
