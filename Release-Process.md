@@ -7,9 +7,11 @@ This should look like a checklist, but it doesn't thanks to the geniuses at Gith
 - [ ] merge into master
 - [ ] push master
 - [ ] Repeat until tests pass
+
   - [ ] test remote and debug
   - [ ] test additional distros
   - [ ] apply necessary fixes   
+
 - [ ] compatibility doc
 - [ ] update date
 - [ ] make tar gz,
