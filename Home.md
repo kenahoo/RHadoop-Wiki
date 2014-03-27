@@ -25,6 +25,7 @@ RHadoop consists of the following packages:
 Questions: Please participate in our [discussion group](https://groups.google.com/forum/?fromgroups#!forum/rhadoop). 
 
 # News
+* 3/27/2014 rmr 3.1.0 released. More flexible tmp dir selection, hbase input filters and many bugs squashed. See [[Changelog]]
 * 2/10/2014 rmr 3.0.0 released. Faster, do I need to say more? See [[Changelog]]
 * 11/11/2013 rhdfs 1.0.8 released. Compatibility with Hadoop 3.0.0.
 * 10/14/2013 rhdfs 1.0.7 released. Update for HDP 1.3 Windows

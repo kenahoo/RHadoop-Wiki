@@ -1,3 +1,12 @@
+## rmr 3.1.0
+
+* New option `hdfs.tempfile`, gone `dfs.tempfile`, splits the tmp for the two backends.
+* Hbase format gains start and stop row and regex filtering capability, courtesy @khharut.
+* Fixes an efficiency problem with serialization when data frames used as keys.
+* Fixes a problem with factors used as keys and reduce groups.
+* More bugs squashed.
+
+See [New in this release](https://github.com/RevolutionAnalytics/rmr2/blob/3.1.0/docs/new-in-this-release.md) for details.
 
 ## rmr 3.0.0
 
