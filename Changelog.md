@@ -1,3 +1,12 @@
+## plyrmr 0.2.0
+
+* redesigned API for simplicity
+* special argument `.data` for global data frame operation as opposed to column-level ones
+* too many to squeeze in a changelog
+
+See [New in this release](https://github.com/RevolutionAnalytics/plyrmr/blob/0.2.0/docs/new-in-this-release.md) for details.
+
+
 ## rmr 3.1.0
 
 * New option `hdfs.tempfile`, gone `dfs.tempfile`, splits the tmp for the two backends.
