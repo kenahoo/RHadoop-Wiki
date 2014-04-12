@@ -1,7 +1,7 @@
 ###Overview
 This R package provides basic connectivity to HBASE, using the [Thrift server](http://thrift.apache.org/). R programmers can browse, read, write, and modify tables stored in HBASE. The following functions are part of this package
 
-* Table Maninpulation <br>
+* Table Manipulation <br>
         hb.new.table, hb.delete.table, hb.describe.table, hb.set.table.mode, hb.regions.table
 * Read/Write <br>
         hb.insert, hb.get, hb.delete, hb.insert.data.frame, hb.get.data.frame, hb.scan, hb.scan.ex
@@ -16,7 +16,7 @@ This R package provides basic connectivity to HBASE, using the [Thrift server](h
     Here is an example for building the libraries on CentOS:
        <br><br>
        1.  Install all Thrift pre-requisites:   http://wiki.apache.org/thrift/GettingCentOS5Packages
-       2.  Build Thrfit according to instructions:  http://wiki.apache.org/thrift/ThriftInstallation
+       2.  Build Thrift according to instructions:  http://wiki.apache.org/thrift/ThriftInstallation
        3.  Update PKG_CONFIG_PATH:  `export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig/`
        4.  Verifiy pkg-config path is correct:   `pkg-config --cflags thrift`    ,  returns:    `-I/usr/local/include/thrift`
        5.  Copy Thrift library  `sudo cp /usr/local/lib/libthrift-0.8.0.so /usr/lib/`
@@ -39,11 +39,11 @@ In version 1.1 of rhbase, a new function `hb.scan.ex` was introduced.  This func
 
 Please see the Apache docs (http://hbase.apache.org/book/thrift.html) for details on filterString syntax (be aware that as of this writing, there are some inaccuracies in this documentation).   
 
-Hbase/Thrift is very unforgiving if you get the syntax or spelling wrong.  An exception will be throw 
+Hbase/Thrift is very unforgiving if you get the syntax or spelling wrong.  An exception will be thrown:
 
         rhbase<hbScannerOpenFilterEx>:: (TTransportException) No more data to read.
 
-This basically means that the socket connection to the Thrift server is dead.  The only way to recover, is to reinitialize your connection
+This basically means that the socket connection to the Thrift server is dead.  The only way to recover is to reinitialize your connection:
 
         hb.init(serialize="raw")
 
